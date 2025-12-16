@@ -1,11 +1,29 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Header from '@/components/Header';
+import Hero from '@/components/Hero';
+import AgentsSection from '@/components/AgentsSection';
+import MetricsSection from '@/components/MetricsSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import OnboardingSection from '@/components/OnboardingSection';
+import ContactSection from '@/components/ContactSection';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen overflow-x-hidden selection:bg-primary selection:text-primary-foreground">
+      {/* Dot Grid Background */}
+      <div className="fixed inset-0 dot-grid pointer-events-none z-0 opacity-40" />
+      
+      <div className="relative z-10">
+        <Header />
+        <main>
+          <Hero />
+          <AgentsSection />
+          <MetricsSection />
+          <TestimonialsSection />
+          <OnboardingSection />
+          <ContactSection />
+        </main>
+        <Footer />
       </div>
     </div>
   );
