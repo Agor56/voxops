@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
 import { toast } from 'sonner';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -12,34 +11,77 @@ const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    clinic: '',
+    website: '',
     phone: '',
-    message: ''
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validatePhone = (phone: string): boolean => {
+    // Israeli phone: 10 digits starting with 05
+    const cleanPhone = phone.replace(/\D/g, '');
+    return /^05\d{8}$/.test(cleanPhone);
+  };
+
+  const validateEmail = (email: string): boolean => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = isRTL ? 'שדה חובה' : 'Required';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = isRTL ? 'שדה חובה' : 'Required';
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = isRTL ? 'אימייל לא תקין' : 'Invalid email';
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = isRTL ? 'שדה חובה' : 'Required';
+    } else if (!validatePhone(formData.phone)) {
+      newErrors.phone = isRTL ? 'מספר טלפון לא תקין (05XXXXXXXX)' : 'Invalid phone (05XXXXXXXX)';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
 
-    // Simulate form submission
+    // Simulate form submission - webhook will be added later
     await new Promise(resolve => setTimeout(resolve, 1500));
     toast.success(t.contact.form.success);
     setFormData({
       name: '',
       email: '',
-      clinic: '',
+      website: '',
       phone: '',
-      message: ''
     });
+    setErrors({});
     setIsSubmitting(false);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: value
     }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   return (
@@ -82,21 +124,21 @@ const ContactSection = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className={`text-sm font-medium mb-2 block ${isRTL ? 'text-right' : 'text-left'}`}>
-                    {t.contact.form.name}
+                    {t.contact.form.name} <span className="text-primary">*</span>
                   </label>
                   <Input
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     placeholder={t.contact.form.namePlaceholder}
-                    required
-                    className={isRTL ? 'text-right' : 'text-left'}
+                    className={`${isRTL ? 'text-right' : 'text-left'} ${errors.name ? 'border-red-500' : ''}`}
                     dir={isRTL ? 'rtl' : 'ltr'}
                   />
+                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                 </div>
                 <div>
                   <label className={`text-sm font-medium mb-2 block ${isRTL ? 'text-right' : 'text-left'}`}>
-                    {t.contact.form.email}
+                    {t.contact.form.email} <span className="text-primary">*</span>
                   </label>
                   <Input
                     name="email"
@@ -104,9 +146,10 @@ const ContactSection = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder={t.contact.form.emailPlaceholder}
-                    required
+                    className={errors.email ? 'border-red-500' : ''}
                     dir="ltr"
                   />
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                 </div>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -115,17 +158,16 @@ const ContactSection = () => {
                     {t.contact.form.website}
                   </label>
                   <Input
-                    name="clinic"
-                    value={formData.clinic}
+                    name="website"
+                    value={formData.website}
                     onChange={handleChange}
                     placeholder={t.contact.form.websitePlaceholder}
-                    className={isRTL ? 'text-right' : 'text-left'}
-                    dir={isRTL ? 'rtl' : 'ltr'}
+                    dir="ltr"
                   />
                 </div>
                 <div>
                   <label className={`text-sm font-medium mb-2 block ${isRTL ? 'text-right' : 'text-left'}`}>
-                    {t.contact.form.phone}
+                    {t.contact.form.phone} <span className="text-primary">*</span>
                   </label>
                   <Input
                     name="phone"
@@ -133,23 +175,11 @@ const ContactSection = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder={t.contact.form.phonePlaceholder}
+                    className={errors.phone ? 'border-red-500' : ''}
                     dir="ltr"
                   />
+                  {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                 </div>
-              </div>
-              <div>
-                <label className={`text-sm font-medium mb-2 block ${isRTL ? 'text-right' : 'text-left'}`}>
-                  {t.contact.form.message}
-                </label>
-                <Textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder={t.contact.form.messagePlaceholder}
-                  rows={4}
-                  className={isRTL ? 'text-right' : 'text-left'}
-                  dir={isRTL ? 'rtl' : 'ltr'}
-                />
               </div>
               <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? t.contact.form.submitting : t.contact.form.submit}
