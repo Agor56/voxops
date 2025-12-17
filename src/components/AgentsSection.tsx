@@ -13,7 +13,13 @@ const AgentsSection = () => {
   const [selectedAgent, setSelectedAgent] = useState<'marcus' | 'david'>('marcus');
 
   const handleSofiaClick = () => {
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}`, '_blank');
+    const link = document.createElement('a');
+    link.href = `https://wa.me/${WHATSAPP_NUMBER}`;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleVoiceAgentClick = (agent: 'marcus' | 'david') => {
