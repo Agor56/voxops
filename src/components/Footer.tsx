@@ -82,25 +82,9 @@ const Footer = () => {
           </div>
 
           {/* Links */}
-          <div className={isRTL ? 'text-right' : 'text-left'}>
-            <h4 className="font-semibold mb-4">{t.footer.product}</h4>
-            <ul className="space-y-3">
-              {footerLinks.product.map(link => <li key={link.label}>
-                  <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors text-sm">
-                    {link.label}
-                  </a>
-                </li>)}
-            </ul>
-          </div>
+          
 
-          <div className={isRTL ? 'text-right' : 'text-left'}>
-            <h4 className="font-semibold mb-4">{t.footer.company}</h4>
-            <ul className="space-y-3">
-              {footerLinks.company.map(link => <li key={link.label}>
-                  
-                </li>)}
-            </ul>
-          </div>
+          
 
           <div className={isRTL ? 'text-right' : 'text-left'}>
             <h4 className="font-semibold mb-4">{t.footer.support}</h4>
