@@ -181,7 +181,7 @@ export const translations = {
           'Trained on your treatments, prices, and protocols',
           'Speaks Hebrew, English, Russian, Arabic, and more',
         ],
-        cta: 'Try Sofia',
+        cta: 'Try Ora',
       },
       marcus: {
         name: 'Or - Voice Reception Agent',
@@ -194,7 +194,7 @@ export const translations = {
           'Updates CRM with detailed notes after every call',
           'Speaks Hebrew, English, Russian, Arabic, and more',
         ],
-        cta: 'Call Marcus',
+        cta: 'Talk to Or',
       },
       david: {
         name: 'Adam - Outbound Sales Agent',
@@ -207,7 +207,7 @@ export const translations = {
           'Re-engages dormant patients after 6+ months',
           'Trained on your specific treatments and pricing',
         ],
-        cta: 'Hear David',
+        cta: 'Hear Adam',
       },
     },
     // Metrics Section
@@ -391,7 +391,7 @@ export const translations = {
           'מאומנת על הטיפולים, המחירים והפרוטוקולים שלכם',
           'דוברת עברית, אנגלית, רוסית, ערבית, ועוד',
         ],
-        cta: 'נסו את סופיה',
+        cta: 'נסו את אורה',
       },
       marcus: {
         name: 'אור - סוכן קבלה קולי',
@@ -404,7 +404,7 @@ export const translations = {
           'מעדכן CRM עם הערות מפורטות אחרי כל שיחה',
           'דובר עברית, אנגלית, רוסית, ערבית, ועוד',
         ],
-        cta: 'התקשרו למרקוס',
+        cta: 'דברו עם אור',
       },
       david: {
         name: 'אדם - סוכן מכירות יוצא',
@@ -417,7 +417,7 @@ export const translations = {
           'מחזיר מטופלים רדומים אחרי 6+ חודשים',
           'מאומן על הטיפולים והמחירים הספציפיים שלכם',
         ],
-        cta: 'שמעו את דייויד',
+        cta: 'שמעו את אדם',
       },
     },
     // Metrics Section
