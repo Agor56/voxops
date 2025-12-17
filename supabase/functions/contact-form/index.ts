@@ -7,9 +7,11 @@ const corsHeaders = {
 
 interface ContactFormData {
   name: string;
-  email: string;
+  email?: string;
   website?: string;
   phone: string;
+  type?: string;
+  agent?: string;
 }
 
 serve(async (req) => {
@@ -47,12 +49,15 @@ serve(async (req) => {
       website: formData.website || 'Not provided',
     });
 
+    // Determine source based on form type
+    const source = formData.type === 'voice_callback' ? 'Agent Call' : 'Demo Call';
+
     // Build webhook payload - only include email if provided
     const webhookPayload: Record<string, unknown> = {
       name: formData.name,
       phone: internationalPhone,
       timestamp: new Date().toISOString(),
-      source: 'Demo Call',
+      source: source,
     };
     
     if (formData.email && formData.email.trim()) {
@@ -61,6 +66,10 @@ serve(async (req) => {
     
     if (formData.website && formData.website.trim()) {
       webhookPayload.website = formData.website;
+    }
+    
+    if (formData.agent) {
+      webhookPayload.agent = formData.agent;
     }
 
     // Forward to webhook
