@@ -1,26 +1,28 @@
 import { Activity, Linkedin, Twitter, Instagram } from 'lucide-react';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const Footer = () => {
+  const { t, isRTL } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
     product: [
-      { label: 'Features', href: '#agents' },
-      { label: 'Pricing', href: '#' },
-      { label: 'Demo', href: '#contact' },
-      { label: 'Integrations', href: '#' },
+      { label: t.footer.links.features, href: '#agents' },
+      { label: t.footer.links.pricing, href: '#' },
+      { label: t.footer.links.demo, href: '#contact' },
+      { label: t.footer.links.integrations, href: '#' },
     ],
     company: [
-      { label: 'About Us', href: '#' },
-      { label: 'Careers', href: '#' },
-      { label: 'Blog', href: '#' },
-      { label: 'Press', href: '#' },
+      { label: t.footer.links.about, href: '#' },
+      { label: t.footer.links.careers, href: '#' },
+      { label: t.footer.links.blog, href: '#' },
+      { label: t.footer.links.press, href: '#' },
     ],
     support: [
-      { label: 'Help Center', href: '#' },
-      { label: 'Contact', href: '#contact' },
-      { label: 'Privacy Policy', href: '#' },
-      { label: 'Terms of Service', href: '#' },
+      { label: t.footer.links.helpCenter, href: '#' },
+      { label: t.footer.links.contact, href: '#contact' },
+      { label: t.footer.links.privacyPolicy, href: '#' },
+      { label: t.footer.links.terms, href: '#' },
     ],
   };
 
@@ -33,20 +35,19 @@ const Footer = () => {
   return (
     <footer className="border-t border-border/50 pt-16 pb-8">
       <div className="container mx-auto">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
+        <div className={`grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12 ${isRTL ? 'direction-rtl' : ''}`}>
           {/* Brand */}
-          <div className="lg:col-span-2">
-            <a href="#" className="flex items-center gap-2 mb-4">
+          <div className={`lg:col-span-2 ${isRTL ? 'text-right' : 'text-left'}`}>
+            <a href="#" className={`flex items-center gap-2 mb-4 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
               <div className="feature-icon">
                 <Activity className="w-5 h-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold">VidLeads</span>
             </a>
             <p className="text-muted-foreground mb-6 max-w-sm">
-              AI-powered patient admin solutions for med spas and clinics. 
-              Never miss a lead, reduce no-shows, and grow your practice.
+              {t.footer.description}
             </p>
-            <div className="flex gap-4">
+            <div className={`flex gap-4 ${isRTL ? 'justify-end' : ''}`}>
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -61,39 +62,69 @@ const Footer = () => {
           </div>
 
           {/* Links */}
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
-              <h4 className="font-semibold mb-4 capitalize">{title}</h4>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className={isRTL ? 'text-right' : 'text-left'}>
+            <h4 className="font-semibold mb-4">{t.footer.product}</h4>
+            <ul className="space-y-3">
+              {footerLinks.product.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={isRTL ? 'text-right' : 'text-left'}>
+            <h4 className="font-semibold mb-4">{t.footer.company}</h4>
+            <ul className="space-y-3">
+              {footerLinks.company.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={isRTL ? 'text-right' : 'text-left'}>
+            <h4 className="font-semibold mb-4">{t.footer.support}</h4>
+            <ul className="space-y-3">
+              {footerLinks.support.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className={`border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
           <p className="text-sm text-muted-foreground">
-            © {currentYear} VidLeads. All rights reserved.
+            © {currentYear} VidLeads. {t.footer.copyright}
           </p>
-          <div className="flex gap-6">
+          <div className={`flex gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Privacy
+              {t.footer.privacy}
             </a>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Terms
+              {t.footer.termsShort}
             </a>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Cookies
+              {t.footer.cookies}
             </a>
           </div>
         </div>

@@ -1,43 +1,27 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
-
-const testimonials = [
-  {
-    name: 'Dr. Sarah Cohen',
-    role: 'Medical Director',
-    clinic: 'Glow Aesthetics',
-    quote: "VidLeads transformed how we handle patient inquiries. We went from losing leads overnight to converting them while we sleep. Our booking rate increased by 45% in the first month.",
-    stat: '+45% bookings',
-    image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=face',
-  },
-  {
-    name: 'Dr. Michael Chen',
-    role: 'Clinic Owner',
-    clinic: 'Premier Med Spa',
-    quote: "The no-show reduction alone paid for the entire system. Our patients love the WhatsApp reminders, and our front desk finally has time to focus on in-person care.",
-    stat: '38% fewer no-shows',
-    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop&crop=face',
-  },
-  {
-    name: 'Emma Rodriguez',
-    role: 'Operations Manager',
-    clinic: 'Beauty & Wellness Center',
-    quote: "We were skeptical about AI handling patient communication, but the responses are so natural that patients often don't realize they're talking to a bot until we tell them.",
-    stat: '92% satisfaction rate',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face',
-  },
-];
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const TestimonialsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { t, isRTL } = useLanguage();
+
+  const testimonials = t.testimonials.items.map((item, index) => ({
+    ...item,
+    image: [
+      'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face',
+    ][index],
+  }));
 
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % testimonials.length);
     }, 8000);
     return () => clearInterval(timer);
-  }, []);
+  }, [testimonials.length]);
 
   const goToNext = () => setActiveIndex((prev) => (prev + 1) % testimonials.length);
   const goToPrev = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
@@ -45,7 +29,7 @@ const TestimonialsSection = () => {
   return (
     <section id="testimonials" className="py-24 relative overflow-hidden">
       {/* Background */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none -translate-y-1/2" />
+      <div className={`absolute top-0 ${isRTL ? 'left-0' : 'right-0'} w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none -translate-y-1/2`} />
       
       <div className="container mx-auto relative z-10">
         {/* Header */}
@@ -56,12 +40,12 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-6">
+          <div className={`inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <Quote className="w-4 h-4 text-primary" />
-            <span className="text-sm text-muted-foreground">Testimonials</span>
+            <span className="text-sm text-muted-foreground">{t.testimonials.badge}</span>
           </div>
           <h2 className="section-title mb-4">
-            Don't Just Take <span className="gradient-text">Our Word</span>
+            {t.testimonials.title} <span className="gradient-text">{t.testimonials.titleHighlight}</span>
           </h2>
         </motion.div>
 
@@ -71,36 +55,36 @@ const TestimonialsSection = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
+                exit={{ opacity: 0, x: isRTL ? 50 : -50 }}
                 transition={{ duration: 0.5 }}
                 className="glass-card p-8 md:p-12 rounded-3xl"
               >
                 {/* Stars */}
-                <div className="flex gap-1 mb-6">
+                <div className={`flex gap-1 mb-6 ${isRTL ? 'justify-end' : ''}`}>
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-primary text-primary" />
                   ))}
                 </div>
 
                 {/* Quote */}
-                <blockquote className="text-xl md:text-2xl font-medium mb-8 leading-relaxed">
+                <blockquote className={`text-xl md:text-2xl font-medium mb-8 leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
                   "{testimonials[activeIndex].quote}"
                 </blockquote>
 
                 {/* Author */}
-                <div className="flex items-center justify-between flex-wrap gap-4">
-                  <div className="flex items-center gap-4">
+                <div className={`flex items-center justify-between flex-wrap gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <img
                       src={testimonials[activeIndex].image}
                       alt={testimonials[activeIndex].name}
                       className="w-14 h-14 rounded-full object-cover border-2 border-primary/30"
                     />
-                    <div>
+                    <div className={isRTL ? 'text-right' : 'text-left'}>
                       <div className="font-semibold">{testimonials[activeIndex].name}</div>
                       <div className="text-sm text-muted-foreground">
-                        {testimonials[activeIndex].role} at {testimonials[activeIndex].clinic}
+                        {testimonials[activeIndex].role} {t.testimonials.at}{testimonials[activeIndex].clinic}
                       </div>
                     </div>
                   </div>
@@ -114,9 +98,9 @@ const TestimonialsSection = () => {
             </AnimatePresence>
 
             {/* Navigation */}
-            <div className="flex justify-center gap-4 mt-8">
+            <div className={`flex justify-center gap-4 mt-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <button
-                onClick={goToPrev}
+                onClick={isRTL ? goToNext : goToPrev}
                 className="glass-card p-3 rounded-full hover:border-primary/30 transition-colors"
                 aria-label="Previous testimonial"
               >
@@ -135,7 +119,7 @@ const TestimonialsSection = () => {
                 ))}
               </div>
               <button
-                onClick={goToNext}
+                onClick={isRTL ? goToPrev : goToNext}
                 className="glass-card p-3 rounded-full hover:border-primary/30 transition-colors"
                 aria-label="Next testimonial"
               >

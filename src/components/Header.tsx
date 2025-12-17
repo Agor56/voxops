@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Activity } from 'lucide-react';
+import { Menu, X, Activity, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t, isRTL } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +18,15 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { label: 'Solutions', href: '#agents' },
-    { label: 'Demo', href: '#demo' },
-    { label: 'Results', href: '#metrics' },
-    { label: 'Testimonials', href: '#testimonials' },
+    { label: t.nav.solutions, href: '#agents' },
+    { label: t.nav.demo, href: '#demo' },
+    { label: t.nav.results, href: '#metrics' },
+    { label: t.nav.testimonials, href: '#testimonials' },
   ];
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'he' : 'en');
+  };
 
   return (
     <header
@@ -28,9 +34,9 @@ const Header = () => {
         isScrolled ? 'glass-card py-3' : 'py-5 bg-transparent'
       }`}
     >
-      <div className="container mx-auto flex items-center justify-between">
+      <div className={`container mx-auto flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2">
+        <a href="#" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <div className="feature-icon">
             <Activity className="w-5 h-5 text-primary-foreground" />
           </div>
@@ -38,7 +44,7 @@ const Header = () => {
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className={`hidden md:flex items-center gap-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
           {navItems.map((item) => (
             <a
               key={item.label}
@@ -50,10 +56,18 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* CTA */}
-        <div className="hidden md:block">
+        {/* CTA + Language Toggle */}
+        <div className={`hidden md:flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <button
+            onClick={toggleLanguage}
+            className="glass-card p-2 rounded-lg hover:border-primary/30 transition-colors flex items-center gap-2"
+            aria-label="Toggle language"
+          >
+            <Globe className="w-4 h-4" />
+            <span className="text-sm font-medium">{language === 'en' ? 'עב' : 'EN'}</span>
+          </button>
           <Button variant="hero" size="lg" asChild>
-            <a href="#contact">Book a Demo</a>
+            <a href="#contact">{t.nav.bookDemo}</a>
           </Button>
         </div>
 
@@ -87,8 +101,15 @@ const Header = () => {
                   {item.label}
                 </a>
               ))}
+              <button
+                onClick={toggleLanguage}
+                className="glass-card p-3 rounded-lg hover:border-primary/30 transition-colors flex items-center justify-center gap-2"
+              >
+                <Globe className="w-4 h-4" />
+                <span className="text-sm font-medium">{language === 'en' ? 'עברית' : 'English'}</span>
+              </button>
               <Button variant="hero" className="w-full mt-2" asChild>
-                <a href="#contact">Book a Demo</a>
+                <a href="#contact">{t.nav.bookDemo}</a>
               </Button>
             </nav>
           </motion.div>
