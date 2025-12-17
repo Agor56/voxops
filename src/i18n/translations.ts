@@ -100,8 +100,6 @@ export interface TranslationShape {
       websitePlaceholder: string;
       phone: string;
       phonePlaceholder: string;
-      message: string;
-      messagePlaceholder: string;
       submit: string;
       submitting: string;
       privacy: string;
@@ -313,11 +311,9 @@ export const translations = {
         email: 'Email',
         emailPlaceholder: 'jane@clinic.com',
         website: 'Website (Optional)',
-        websitePlaceholder: 'Glow Aesthetics',
+        websitePlaceholder: 'www.myclinic.co.il',
         phone: 'Phone',
-        phonePlaceholder: '+1 (555) 000-0000',
-        message: 'Tell us about your needs',
-        messagePlaceholder: 'What challenges are you facing with patient communication?',
+        phonePlaceholder: '0501234567',
         submit: 'Book Your Free Demo',
         submitting: 'Sending...',
         privacy: "By submitting, you agree to our Privacy Policy. We'll never spam you.",
@@ -528,11 +524,9 @@ export const translations = {
         email: 'אימייל',
         emailPlaceholder: 'doctor@clinic.co.il',
         website: 'אתר (אופציונלי)',
-        websitePlaceholder: 'שם המרפאה',
+        websitePlaceholder: 'www.myclinic.co.il',
         phone: 'טלפון',
-        phonePlaceholder: '050-000-0000',
-        message: 'ספרו לנו על הצרכים שלכם',
-        messagePlaceholder: 'אילו אתגרים אתם מתמודדים איתם בתקשורת עם מטופלים?',
+        phonePlaceholder: '0501234567',
         submit: 'קבעו הדגמה חינמית',
         submitting: 'שולח...',
         privacy: 'בשליחה אתם מסכימים למדיניות הפרטיות שלנו. לעולם לא נשלח ספאם.',
