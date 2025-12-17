@@ -13,8 +13,11 @@ const AgentsSection = () => {
   const [selectedAgent, setSelectedAgent] = useState<'marcus' | 'david'>('marcus');
 
   const handleSofiaClick = () => {
+    const message = isRTL 
+      ? 'שלום, אשמח לשמוע עוד על סוכני ה-AI שלכם' 
+      : 'Hi, I would like to learn more about your AI agents';
     const link = document.createElement('a');
-    link.href = `https://wa.me/${WHATSAPP_NUMBER}`;
+    link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
     document.body.appendChild(link);
