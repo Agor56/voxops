@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { toast } from 'sonner';
-import { Phone, User } from 'lucide-react';
+import { Phone, User, Building2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface VoiceAgentDialogProps {
@@ -15,24 +15,26 @@ interface VoiceAgentDialogProps {
 
 const VoiceAgentDialog = ({ open, onOpenChange, agentName }: VoiceAgentDialogProps) => {
   const { isRTL } = useLanguage();
-  const [formData, setFormData] = useState({ name: '', phone: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', businessType: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const translations = {
     en: {
       marcus: {
-        title: 'Talk to Marcus',
-        subtitle: 'Enter your details and Marcus will call you right away',
+        title: 'Talk to Or',
+        subtitle: 'Enter your details and Or will call you right away',
       },
       david: {
-        title: 'Talk to David',
-        subtitle: 'Enter your details and David will call you to qualify your needs',
+        title: 'Talk to Adam',
+        subtitle: 'Enter your details and Adam will call you to qualify your needs',
       },
       name: 'Your Name',
       namePlaceholder: 'John Doe',
       phone: 'Phone Number',
       phonePlaceholder: '0501234567',
+      businessType: 'Type of Business',
+      businessTypePlaceholder: 'e.g., Med Spa, Dental Clinic...',
       submit: 'Call Me Now',
       submitting: 'Submitting...',
       success: 'We will call you shortly!',
@@ -40,21 +42,24 @@ const VoiceAgentDialog = ({ open, onOpenChange, agentName }: VoiceAgentDialogPro
         nameRequired: 'Name is required',
         phoneRequired: 'Phone number is required',
         phoneInvalid: 'Enter a valid Israeli phone (05XXXXXXXX)',
+        businessTypeRequired: 'Business type is required',
       },
     },
     he: {
       marcus: {
-        title: 'דברו עם מרקוס',
-        subtitle: 'הזינו את הפרטים שלכם ומרקוס יתקשר אליכם מיד',
+        title: 'דברו עם אור',
+        subtitle: 'הזינו את הפרטים שלכם ואור יתקשר אליכם מיד',
       },
       david: {
-        title: 'דברו עם דוד',
-        subtitle: 'הזינו את הפרטים שלכם ודוד יתקשר אליכם להסמכת הצרכים שלכם',
+        title: 'דברו עם אדם',
+        subtitle: 'הזינו את הפרטים שלכם ואדם יתקשר אליכם להסמכת הצרכים שלכם',
       },
       name: 'השם שלך',
       namePlaceholder: 'ישראל ישראלי',
       phone: 'מספר טלפון',
       phonePlaceholder: '0501234567',
+      businessType: 'סוג העסק',
+      businessTypePlaceholder: 'למשל: מרפאת ספא, מרפאת שיניים...',
       submit: 'התקשרו אליי עכשיו',
       submitting: 'שולח...',
       success: 'ניצור קשר בהקדם!',
@@ -62,6 +67,7 @@ const VoiceAgentDialog = ({ open, onOpenChange, agentName }: VoiceAgentDialogPro
         nameRequired: 'שדה חובה',
         phoneRequired: 'שדה חובה',
         phoneInvalid: 'הזינו מספר טלפון תקין (05XXXXXXXX)',
+        businessTypeRequired: 'שדה חובה',
       },
     },
   };
@@ -87,6 +93,10 @@ const VoiceAgentDialog = ({ open, onOpenChange, agentName }: VoiceAgentDialogPro
       newErrors.phone = t.errors.phoneInvalid;
     }
 
+    if (!formData.businessType.trim()) {
+      newErrors.businessType = t.errors.businessTypeRequired;
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -103,13 +113,14 @@ const VoiceAgentDialog = ({ open, onOpenChange, agentName }: VoiceAgentDialogPro
         body: {
           name: formData.name.trim(),
           phone: formData.phone.replace(/\D/g, ''),
+          businessType: formData.businessType.trim(),
           agent: agentName,
           type: 'voice_callback',
         },
       });
 
       toast.success(t.success);
-      setFormData({ name: '', phone: '' });
+      setFormData({ name: '', phone: '', businessType: '' });
       setErrors({});
       onOpenChange(false);
     } catch (error) {
@@ -157,6 +168,24 @@ const VoiceAgentDialog = ({ open, onOpenChange, agentName }: VoiceAgentDialogPro
               />
             </div>
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+          </div>
+
+          <div>
+            <label className={`text-sm font-medium mb-2 block ${isRTL ? 'text-right' : 'text-left'}`}>
+              {t.businessType} <span className="text-primary">*</span>
+            </label>
+            <div className="relative">
+              <Building2 className={`absolute top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground ${isRTL ? 'right-3' : 'left-3'}`} />
+              <Input
+                name="businessType"
+                value={formData.businessType}
+                onChange={handleChange}
+                placeholder={t.businessTypePlaceholder}
+                className={`${isRTL ? 'pr-10 text-right' : 'pl-10'} ${errors.businessType ? 'border-red-500' : ''}`}
+                dir={isRTL ? 'rtl' : 'ltr'}
+              />
+            </div>
+            {errors.businessType && <p className="text-red-500 text-xs mt-1">{errors.businessType}</p>}
           </div>
 
           <div>

@@ -12,6 +12,7 @@ interface ContactFormData {
   phone: string;
   type?: string;
   agent?: string;
+  businessType?: string;
 }
 
 serve(async (req) => {
@@ -70,6 +71,10 @@ serve(async (req) => {
     
     if (formData.agent) {
       webhookPayload.agent = formData.agent;
+    }
+    
+    if (formData.businessType && formData.businessType.trim()) {
+      webhookPayload.businessType = formData.businessType;
     }
 
     // Forward to webhook
