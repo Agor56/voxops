@@ -298,7 +298,7 @@ export const translations = {
       title: 'Ready to',
       titleHighlight: 'Transform',
       titleEnd: 'Your Clinic?',
-      subtitle: "Book a free demo and see how our AI agents can automate your patient journey. No commitment, no pressure—just a conversation about what's possible.",
+      subtitle: "Book a free 15-minute video call - we'll review your reception processes together, identify where you're losing patients, and build you a personalized automation action plan.",
       form: {
         name: 'Your Name',
         namePlaceholder: 'Dr. Jane Smith',
@@ -502,7 +502,7 @@ export const translations = {
       title: 'מוכנים',
       titleHighlight: 'לשנות',
       titleEnd: 'את המרפאה שלכם?',
-      subtitle: 'קבעו הדגמה חינמית וראו איך סוכני ה-AI שלנו יכולים לאוטומט את מסע המטופל. ללא התחייבות, ללא לחץ - רק שיחה על מה שאפשרי.',
+      subtitle: 'קבעו שיחת וידאו חינמית של 15 דקות - נעבור יחד על תהליכי הקבלה שלכם, נזהה איפה אתם מאבדים מטופלים, ונבנה לכם תוכנית פעולה מותאמת אישית לאוטומציה.',
       form: {
         name: 'השם שלך',
         namePlaceholder: 'ד"ר ישראל ישראלי',
