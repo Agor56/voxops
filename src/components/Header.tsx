@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import DemoBookingDialog from './DemoBookingDialog';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -68,8 +69,9 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA + Language Toggle */}
+          {/* CTA + Language Toggle + Theme Toggle */}
           <div className={`hidden md:flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <ThemeToggle />
             <button
               onClick={toggleLanguage}
               className="glass-card p-2 rounded-lg hover:border-primary/30 transition-colors flex items-center gap-2"
@@ -113,13 +115,16 @@ const Header = () => {
                     {item.label}
                   </a>
                 ))}
-                <button
-                  onClick={toggleLanguage}
-                  className="glass-card p-3 rounded-lg hover:border-primary/30 transition-colors flex items-center justify-center gap-2"
-                >
-                  <Globe className="w-4 h-4" />
-                  <span className="text-sm font-medium">{language === 'en' ? 'עברית' : 'English'}</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <ThemeToggle />
+                  <button
+                    onClick={toggleLanguage}
+                    className="glass-card p-3 rounded-lg hover:border-primary/30 transition-colors flex items-center justify-center gap-2 flex-1"
+                  >
+                    <Globe className="w-4 h-4" />
+                    <span className="text-sm font-medium">{language === 'en' ? 'עברית' : 'English'}</span>
+                  </button>
+                </div>
                 <Button variant="hero" className="w-full mt-2" asChild>
                   <a href="#contact">{t.nav.bookDemo}</a>
                 </Button>
