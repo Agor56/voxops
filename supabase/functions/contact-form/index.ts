@@ -31,12 +31,37 @@ serve(async (req) => {
 
     const formData: ContactFormData = await req.json();
     
+    // Convert Israeli phone to international format (05xxxxxxxx -> 9725xxxxxxxx)
+    let internationalPhone = formData.phone;
+    if (formData.phone.startsWith('05')) {
+      internationalPhone = '972' + formData.phone.slice(1);
+    } else if (formData.phone.startsWith('0')) {
+      internationalPhone = '972' + formData.phone.slice(1);
+    }
+    
     console.log('Received contact form submission:', {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
+      internationalPhone: internationalPhone,
       website: formData.website || 'Not provided',
     });
+
+    // Build webhook payload - only include email if provided
+    const webhookPayload: Record<string, unknown> = {
+      name: formData.name,
+      phone: internationalPhone,
+      timestamp: new Date().toISOString(),
+      source: 'VidLeads Landing Page',
+    };
+    
+    if (formData.email && formData.email.trim()) {
+      webhookPayload.email = formData.email;
+    }
+    
+    if (formData.website && formData.website.trim()) {
+      webhookPayload.website = formData.website;
+    }
 
     // Forward to webhook
     const webhookResponse = await fetch(webhookUrl, {
@@ -44,11 +69,7 @@ serve(async (req) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        ...formData,
-        timestamp: new Date().toISOString(),
-        source: 'VidLeads Landing Page',
-      }),
+      body: JSON.stringify(webhookPayload),
     });
 
     console.log('Webhook response status:', webhookResponse.status);

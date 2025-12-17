@@ -52,7 +52,8 @@ const DemoBookingDialog = ({ open, onOpenChange }: DemoBookingDialogProps) => {
         body: {
           name: formData.name.trim(),
           phone: formData.phone.replace(/\D/g, ''),
-          email: 'demo@request.com', // Placeholder for demo requests
+          email: '', // No email for demo requests
+          website: '',
         },
       });
 
