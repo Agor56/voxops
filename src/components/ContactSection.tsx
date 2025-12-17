@@ -29,27 +29,44 @@ const ContactSection = () => {
   // Load Cal.com embed script when calendar should be shown
   useEffect(() => {
     if (showCalendar) {
-      // Load the Cal.com embed script
-      const script = document.createElement('script');
-      script.src = 'https://app.cal.com/embed/embed.js';
-      script.async = true;
-      script.onload = () => {
-        if (window.Cal) {
-          window.Cal('init', 'callback', { origin: 'https://app.cal.com' });
-          window.Cal.ns.callback('inline', {
-            elementOrSelector: '#my-cal-inline-callback',
-            config: { layout: 'month_view' },
-            calLink: 'vidleads/callback',
-          });
-          window.Cal.ns.callback('ui', { hideEventTypeDetails: false, layout: 'month_view' });
-        }
-      };
-      document.head.appendChild(script);
+      // Initialize Cal.com with their IIFE pattern
+      (function (C: any, A: string, L: string) {
+        const p = function (a: any, ar: any) { a.q.push(ar); };
+        const d = C.document;
+        C.Cal = C.Cal || function () {
+          const cal = C.Cal;
+          const ar = arguments;
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            const script = d.head.appendChild(d.createElement("script"));
+            script.src = A;
+            cal.loaded = true;
+          }
+          if (ar[0] === L) {
+            const api = function () { p(api, arguments); };
+            const namespace = ar[1];
+            api.q = api.q || [];
+            if (typeof namespace === "string") {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p(cal.ns[namespace], ar);
+              p(cal, ["initNamespace", namespace]);
+            } else {
+              p(cal, ar);
+            }
+            return;
+          }
+          p(cal, ar);
+        };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
 
-      return () => {
-        // Cleanup script on unmount
-        document.head.removeChild(script);
-      };
+      window.Cal("init", "callback", { origin: "https://app.cal.com" });
+      window.Cal.ns.callback("inline", {
+        elementOrSelector: "#my-cal-inline-callback",
+        config: { layout: "month_view" },
+        calLink: "vidleads/callback",
+      });
+      window.Cal.ns.callback("ui", { hideEventTypeDetails: false, layout: "month_view" });
     }
   }, [showCalendar]);
 
