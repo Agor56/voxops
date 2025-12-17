@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Bot, MessageSquare, Calendar, Bell, ArrowRight, Check } from 'lucide-react';
+import { Bot, MessageSquare, Phone, PhoneOutgoing, ArrowRight, Check } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -8,27 +8,42 @@ const AgentsSection = () => {
 
   const agents = [
     {
-      name: t.agents.leadResponse.name,
+      key: 'sofia',
       icon: MessageSquare,
-      color: 'orange',
-      description: t.agents.leadResponse.description,
-      features: t.agents.leadResponse.features,
+      color: 'green' as const,
+      data: t.agents.sofia,
     },
     {
-      name: t.agents.booking.name,
-      icon: Calendar,
-      color: 'blue',
-      description: t.agents.booking.description,
-      features: t.agents.booking.features,
+      key: 'marcus',
+      icon: Phone,
+      color: 'blue' as const,
+      data: t.agents.marcus,
     },
     {
-      name: t.agents.followUp.name,
-      icon: Bell,
-      color: 'orange',
-      description: t.agents.followUp.description,
-      features: t.agents.followUp.features,
+      key: 'david',
+      icon: PhoneOutgoing,
+      color: 'orange' as const,
+      data: t.agents.david,
     },
   ];
+
+  const colorStyles = {
+    green: {
+      icon: 'bg-green-500',
+      check: 'bg-green-500/20 text-green-500',
+      border: 'hover:border-green-500/30',
+    },
+    blue: {
+      icon: 'bg-secondary',
+      check: 'bg-secondary/20 text-secondary',
+      border: 'hover:border-secondary/30',
+    },
+    orange: {
+      icon: 'bg-primary',
+      check: 'bg-primary/20 text-primary',
+      border: 'hover:border-primary/30',
+    },
+  };
 
   return (
     <section id="agents" className="py-24 relative">
@@ -59,39 +74,32 @@ const AgentsSection = () => {
         {/* Agent Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {agents.map((agent, index) => {
-            const isOrange = agent.color === 'orange';
+            const styles = colorStyles[agent.color];
             
             return (
               <motion.div
-                key={agent.name}
+                key={agent.key}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ y: -8 }}
-                className={`glass-card-hover p-8 rounded-2xl h-full flex flex-col ${
-                  isOrange ? 'hover:border-primary/30' : 'hover:border-secondary/30'
-                }`}
+                className={`glass-card-hover p-8 rounded-2xl h-full flex flex-col ${styles.border}`}
               >
                 {/* Icon */}
-                <div className={`${isOrange ? 'feature-icon' : 'feature-icon-blue'} mb-6 ${isRTL ? 'self-end' : 'self-start'}`}>
-                  <agent.icon className="w-5 h-5 text-primary-foreground" />
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${styles.icon} ${isRTL ? 'self-end' : 'self-start'}`}>
+                  <agent.icon className="w-5 h-5 text-white" />
                 </div>
 
                 {/* Title */}
-                <h3 className={`text-xl font-bold mb-3 ${isRTL ? 'text-right' : 'text-left'}`}>{agent.name}</h3>
-                
-                {/* Description */}
-                <p className={`text-muted-foreground mb-6 ${isRTL ? 'text-right' : 'text-left'}`}>{agent.description}</p>
+                <h3 className={`text-xl font-bold mb-6 ${isRTL ? 'text-right' : 'text-left'}`}>{agent.data.name}</h3>
 
                 {/* Features */}
                 <ul className="space-y-3 mb-8 flex-grow">
-                  {agent.features.map((feature, i) => (
+                  {agent.data.features.map((feature, i) => (
                     <li key={i} className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
-                      <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                        isOrange ? 'bg-primary/20' : 'bg-secondary/20'
-                      }`}>
-                        <Check className={`w-3 h-3 ${isOrange ? 'text-primary' : 'text-secondary'}`} />
+                      <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${styles.check.split(' ')[0]}`}>
+                        <Check className={`w-3 h-3 ${styles.check.split(' ')[1]}`} />
                       </div>
                       <span className="text-sm text-muted-foreground">{feature}</span>
                     </li>
@@ -100,12 +108,12 @@ const AgentsSection = () => {
 
                 {/* CTA */}
                 <Button 
-                  variant={isOrange ? "hero" : "heroBlue"} 
+                  variant="hero" 
                   className="w-full group"
                   asChild
                 >
                   <a href="#contact" className={`flex items-center justify-center ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    {t.agents.learnMore}
+                    {agent.data.cta}
                     <ArrowRight className={`w-4 h-4 group-hover:translate-x-1 transition-transform ${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2'}`} />
                   </a>
                 </Button>
