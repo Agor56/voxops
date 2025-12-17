@@ -1,105 +1,102 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, ArrowRight, ArrowLeft, Check } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { toast } from 'sonner';
 import { useLanguage } from '@/i18n/LanguageContext';
-import { supabase } from '@/integrations/supabase/client';
+import { Progress } from './ui/progress';
 
 const ContactSection = () => {
   const { t, isRTL } = useLanguage();
+  const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    website: '',
-    phone: '',
+    businessType: '',
+    challenge: '',
+    goals: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validatePhone = (phone: string): boolean => {
-    // Israeli phone: 10 digits starting with 05
-    const cleanPhone = phone.replace(/\D/g, '');
-    return /^05\d{8}$/.test(cleanPhone);
-  };
+  const totalSteps = 3;
+  const progressValue = (currentStep / totalSteps) * 100;
 
-  const validateEmail = (email: string): boolean => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validateForm = (): boolean => {
+  const validateCurrentStep = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = isRTL ? 'שדה חובה' : 'Required';
+    if (currentStep === 1 && !formData.businessType.trim()) {
+      newErrors.businessType = t.contact.form.required;
     }
-
-    if (!formData.email.trim()) {
-      newErrors.email = isRTL ? 'שדה חובה' : 'Required';
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = isRTL ? 'אימייל לא תקין' : 'Invalid email';
+    if (currentStep === 2 && !formData.challenge.trim()) {
+      newErrors.challenge = t.contact.form.required;
     }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = isRTL ? 'שדה חובה' : 'Required';
-    } else if (!validatePhone(formData.phone)) {
-      newErrors.phone = isRTL ? 'מספר טלפון לא תקין (05XXXXXXXX)' : 'Invalid phone (05XXXXXXXX)';
+    if (currentStep === 3 && !formData.goals.trim()) {
+      newErrors.goals = t.contact.form.required;
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const { data, error } = await supabase.functions.invoke('contact-form', {
-        body: {
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          website: formData.website.trim() || undefined,
-          phone: formData.phone.replace(/\D/g, ''),
-        },
-      });
-
-      if (error) {
-        throw error;
+  const handleNext = () => {
+    if (validateCurrentStep()) {
+      if (currentStep < totalSteps) {
+        setCurrentStep(currentStep + 1);
       }
-
-      toast.success(t.contact.form.success);
-      setFormData({
-        name: '',
-        email: '',
-        website: '',
-        phone: '',
-      });
-      setErrors({});
-    } catch (error) {
-      console.error('Form submission error:', error);
-      toast.error(isRTL ? 'שגיאה בשליחת הטופס. נסו שוב.' : 'Error submitting form. Please try again.');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+  const handleBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+      setErrors({});
     }
+  };
+
+  const handleSubmit = () => {
+    if (validateCurrentStep()) {
+      // Redirect to booking URL
+      window.location.href = 'https://cal.com/vidleads/callback';
+    }
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const handleGoalSelect = (goal: string) => {
+    setFormData(prev => ({ ...prev, goals: goal }));
+    if (errors.goals) {
+      setErrors(prev => ({ ...prev, goals: '' }));
+    }
+  };
+
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? (isRTL ? -100 : 100) : (isRTL ? 100 : -100),
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      x: direction < 0 ? (isRTL ? -100 : 100) : (isRTL ? 100 : -100),
+      opacity: 0,
+    }),
+  };
+
+  const [direction, setDirection] = useState(0);
+
+  const goNext = () => {
+    setDirection(1);
+    handleNext();
+  };
+
+  const goBack = () => {
+    setDirection(-1);
+    handleBack();
   };
 
   return (
@@ -138,75 +135,173 @@ const ContactSection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <form onSubmit={handleSubmit} className="glass-card p-8 rounded-2xl space-y-6">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label className={`text-sm font-medium mb-2 block ${isRTL ? 'text-right' : 'text-left'}`}>
-                    {t.contact.form.name} <span className="text-primary">*</span>
-                  </label>
-                  <Input
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder={t.contact.form.namePlaceholder}
-                    className={`${isRTL ? 'text-right' : 'text-left'} ${errors.name ? 'border-red-500' : ''}`}
-                    dir={isRTL ? 'rtl' : 'ltr'}
-                  />
-                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+            <div className="glass-card p-8 rounded-2xl">
+              {/* Progress Indicator */}
+              <div className="mb-8">
+                <div className={`flex items-center justify-between mb-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <span className="text-sm text-muted-foreground">
+                    {currentStep} {t.contact.form.stepOf} {totalSteps}
+                  </span>
+                  <div className={`flex gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    {[1, 2, 3].map((step) => (
+                      <div
+                        key={step}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
+                          step < currentStep
+                            ? 'bg-primary text-primary-foreground'
+                            : step === currentStep
+                            ? 'bg-primary/20 text-primary border-2 border-primary'
+                            : 'bg-muted text-muted-foreground'
+                        }`}
+                      >
+                        {step < currentStep ? <Check className="w-4 h-4" /> : step}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div>
-                  <label className={`text-sm font-medium mb-2 block ${isRTL ? 'text-right' : 'text-left'}`}>
-                    {t.contact.form.email} <span className="text-primary">*</span>
-                  </label>
-                  <Input
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder={t.contact.form.emailPlaceholder}
-                    className={errors.email ? 'border-red-500' : ''}
-                    dir="ltr"
-                  />
-                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-                </div>
+                <Progress value={progressValue} className="h-2" />
               </div>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label className={`text-sm font-medium mb-2 block ${isRTL ? 'text-right' : 'text-left'}`}>
-                    {t.contact.form.website}
-                  </label>
-                  <Input
-                    name="website"
-                    value={formData.website}
-                    onChange={handleChange}
-                    placeholder={t.contact.form.websitePlaceholder}
-                    dir="ltr"
-                  />
-                </div>
-                <div>
-                  <label className={`text-sm font-medium mb-2 block ${isRTL ? 'text-right' : 'text-left'}`}>
-                    {t.contact.form.phone} <span className="text-primary">*</span>
-                  </label>
-                  <Input
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder={t.contact.form.phonePlaceholder}
-                    className={errors.phone ? 'border-red-500' : ''}
-                    dir="ltr"
-                  />
-                  {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
-                </div>
+
+              {/* Form Steps */}
+              <div className="min-h-[200px] relative overflow-hidden">
+                <AnimatePresence mode="wait" custom={direction}>
+                  {currentStep === 1 && (
+                    <motion.div
+                      key="step1"
+                      custom={direction}
+                      variants={slideVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.3 }}
+                      className="space-y-4"
+                    >
+                      <label className={`text-lg font-medium block ${isRTL ? 'text-right' : 'text-left'}`}>
+                        {t.contact.form.step1Question}
+                      </label>
+                      <Input
+                        value={formData.businessType}
+                        onChange={(e) => handleInputChange('businessType', e.target.value)}
+                        placeholder={t.contact.form.step1Placeholder}
+                        className={`text-lg py-6 ${isRTL ? 'text-right' : 'text-left'} ${errors.businessType ? 'border-red-500' : ''}`}
+                        dir={isRTL ? 'rtl' : 'ltr'}
+                      />
+                      {errors.businessType && (
+                        <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
+                          {errors.businessType}
+                        </p>
+                      )}
+                    </motion.div>
+                  )}
+
+                  {currentStep === 2 && (
+                    <motion.div
+                      key="step2"
+                      custom={direction}
+                      variants={slideVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.3 }}
+                      className="space-y-4"
+                    >
+                      <label className={`text-lg font-medium block ${isRTL ? 'text-right' : 'text-left'}`}>
+                        {t.contact.form.step2Question}
+                      </label>
+                      <Input
+                        value={formData.challenge}
+                        onChange={(e) => handleInputChange('challenge', e.target.value)}
+                        placeholder={t.contact.form.step2Placeholder}
+                        className={`text-lg py-6 ${isRTL ? 'text-right' : 'text-left'} ${errors.challenge ? 'border-red-500' : ''}`}
+                        dir={isRTL ? 'rtl' : 'ltr'}
+                      />
+                      {errors.challenge && (
+                        <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
+                          {errors.challenge}
+                        </p>
+                      )}
+                    </motion.div>
+                  )}
+
+                  {currentStep === 3 && (
+                    <motion.div
+                      key="step3"
+                      custom={direction}
+                      variants={slideVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.3 }}
+                      className="space-y-4"
+                    >
+                      <label className={`text-lg font-medium block ${isRTL ? 'text-right' : 'text-left'}`}>
+                        {t.contact.form.step3Question}
+                      </label>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {t.contact.form.step3Options.map((option, index) => (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => handleGoalSelect(option)}
+                            className={`p-4 rounded-xl border-2 transition-all text-sm font-medium ${
+                              formData.goals === option
+                                ? 'border-primary bg-primary/10 text-primary'
+                                : 'border-border hover:border-primary/50 text-foreground'
+                            } ${isRTL ? 'text-right' : 'text-left'}`}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </div>
+                      {errors.goals && (
+                        <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
+                          {errors.goals}
+                        </p>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-              <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? t.contact.form.submitting : t.contact.form.submit}
-                <Send className={`w-4 h-4 ${isRTL ? 'mr-2' : 'ml-2'}`} />
-              </Button>
-              <p className="text-xs text-center text-muted-foreground">
-                {t.contact.form.privacy}
-              </p>
-            </form>
+
+              {/* Navigation Buttons */}
+              <div className={`flex gap-4 mt-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                {currentStep > 1 && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="lg"
+                    onClick={goBack}
+                    className="flex-1"
+                  >
+                    {isRTL ? <ArrowRight className="w-4 h-4 ml-2" /> : <ArrowLeft className="w-4 h-4 mr-2" />}
+                    {t.contact.form.back}
+                  </Button>
+                )}
+                {currentStep < totalSteps ? (
+                  <Button
+                    type="button"
+                    variant="hero"
+                    size="lg"
+                    onClick={goNext}
+                    className="flex-1"
+                  >
+                    {t.contact.form.next}
+                    {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="hero"
+                    size="lg"
+                    onClick={handleSubmit}
+                    className="flex-1"
+                  >
+                    {t.contact.form.continue}
+                    {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
+                  </Button>
+                )}
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

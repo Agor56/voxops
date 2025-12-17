@@ -95,18 +95,17 @@ export interface TranslationShape {
     titleEnd: string;
     subtitle: string;
     form: {
-      name: string;
-      namePlaceholder: string;
-      email: string;
-      emailPlaceholder: string;
-      website: string;
-      websitePlaceholder: string;
-      phone: string;
-      phonePlaceholder: string;
-      submit: string;
-      submitting: string;
-      privacy: string;
-      success: string;
+      step1Question: string;
+      step1Placeholder: string;
+      step2Question: string;
+      step2Placeholder: string;
+      step3Question: string;
+      step3Options: readonly string[];
+      next: string;
+      back: string;
+      continue: string;
+      required: string;
+      stepOf: string;
     };
   };
   footer: {
@@ -304,20 +303,19 @@ export const translations = {
       title: 'Ready to',
       titleHighlight: 'Transform',
       titleEnd: 'Your Clinic?',
-      subtitle: "Book a free 15-minute video call - we'll review your reception processes together, identify where you're losing patients, and build you a personalized automation action plan.",
+      subtitle: "Answer a few quick questions and book your free consultation.",
       form: {
-        name: 'Your Name',
-        namePlaceholder: 'Dr. Jane Smith',
-        email: 'Email',
-        emailPlaceholder: 'jane@clinic.com',
-        website: 'Website (Optional)',
-        websitePlaceholder: 'www.myclinic.co.il',
-        phone: 'Phone',
-        phonePlaceholder: '0501234567',
-        submit: 'Book Your Demo Call',
-        submitting: 'Sending...',
-        privacy: "By submitting, you agree to our Privacy Policy. We'll never spam you.",
-        success: "Thanks! We'll be in touch within 24 hours.",
+        step1Question: 'What type of business do you run?',
+        step1Placeholder: 'e.g., Med Spa, Dental Clinic, Aesthetic Clinic...',
+        step2Question: 'What challenge are you trying to solve with AI agents?',
+        step2Placeholder: 'e.g., Missed calls, slow response times, no-shows...',
+        step3Question: 'What are your goals for improving?',
+        step3Options: ['Lead capture', 'Qualification', 'Appointment booking', 'All of the above'],
+        next: 'Next',
+        back: 'Back',
+        continue: 'Continue to Booking',
+        required: 'This field is required',
+        stepOf: 'of',
       },
     },
     // Footer
@@ -514,20 +512,19 @@ export const translations = {
       title: 'מוכנים',
       titleHighlight: 'לשנות',
       titleEnd: 'את המרפאה שלכם?',
-      subtitle: 'קבעו שיחת וידאו חינמית של 15 דקות - נעבור יחד על תהליכי הקבלה שלכם, נזהה איפה אתם מאבדים מטופלים, ונבנה לכם תוכנית פעולה מותאמת אישית לאוטומציה.',
+      subtitle: 'ענו על מספר שאלות קצרות וקבעו את הייעוץ החינמי שלכם.',
       form: {
-        name: 'השם שלך',
-        namePlaceholder: 'ד"ר ישראל ישראלי',
-        email: 'אימייל',
-        emailPlaceholder: 'doctor@clinic.co.il',
-        website: 'אתר (אופציונלי)',
-        websitePlaceholder: 'www.myclinic.co.il',
-        phone: 'טלפון',
-        phonePlaceholder: '0501234567',
-        submit: 'קבעו שיחת הדגמה',
-        submitting: 'שולח...',
-        privacy: 'בשליחה אתם מסכימים למדיניות הפרטיות שלנו. לעולם לא נשלח ספאם.',
-        success: 'תודה! ניצור קשר תוך 24 שעות.',
+        step1Question: 'איזה סוג עסק יש לכם?',
+        step1Placeholder: 'למשל: מרפאת ספא, מרפאת שיניים, קליניקת אסתטיקה...',
+        step2Question: 'איזה אתגר אתם מנסים לפתור עם סוכני AI?',
+        step2Placeholder: 'למשל: שיחות שהוחמצו, זמני תגובה איטיים, אי-הגעות...',
+        step3Question: 'מהן המטרות שלכם לשיפור?',
+        step3Options: ['לכידת לידים', 'סינון והכשרה', 'קביעת תורים', 'כל הנ"ל'],
+        next: 'הבא',
+        back: 'חזרה',
+        continue: 'המשך להזמנה',
+        required: 'שדה זה הוא חובה',
+        stepOf: 'מתוך',
       },
     },
     // Footer
