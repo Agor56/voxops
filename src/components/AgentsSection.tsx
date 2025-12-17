@@ -16,13 +16,8 @@ const AgentsSection = () => {
     const message = isRTL 
       ? 'שלום, אשמח לשמוע עוד על סוכני ה-AI שלכם' 
       : 'Hi, I would like to learn more about your AI agents';
-    const link = document.createElement('a');
-    link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Open WhatsApp with pre-filled message
+    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   };
 
   const handleVoiceAgentClick = (agent: 'marcus' | 'david') => {
