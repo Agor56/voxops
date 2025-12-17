@@ -171,7 +171,7 @@ export const translations = {
       titleHighlight: 'AI Reception Team',
       subtitle: 'Three specialized agents handling every patient interaction – capture more leads, reduce no-shows, and free your staff',
       sofia: {
-        name: 'Sofia - WhatsApp Patient Agent',
+        name: 'Ora - WhatsApp Patient Agent',
         description: 'Instantly engages new leads with personalized responses, qualifying them and answering FAQs 24/7.',
         features: [
           'Responds within seconds, not hours',
@@ -179,10 +179,10 @@ export const translations = {
           'Qualifies leads by treatment interest',
           'Multi-language support',
         ],
-        cta: 'Try Sofia',
+        cta: 'Try Ora',
       },
       marcus: {
-        name: 'Marcus - Voice Reception Agent',
+        name: 'Or - Voice Reception Agent',
         description: 'Automatically schedules consultations, syncs with your calendar, and sends confirmations.',
         features: [
           'Direct calendar integration',
@@ -190,10 +190,10 @@ export const translations = {
           'Instant booking confirmations',
           'Reschedule & cancellation handling',
         ],
-        cta: 'Talk to Marcus',
+        cta: 'Talk to Or',
       },
       david: {
-        name: 'David - Outbound Qualification Agent',
+        name: 'Adam - Outbound Qualification Agent',
         description: 'Reduces no-shows with automated reminders via WhatsApp, SMS, and voice calls.',
         features: [
           'Multi-channel reminders',
@@ -201,7 +201,7 @@ export const translations = {
           'No-show recovery sequences',
           'Post-visit follow-ups',
         ],
-        cta: 'Talk to David',
+        cta: 'Talk to Adam',
       },
     },
     // Metrics Section
@@ -375,18 +375,18 @@ export const translations = {
       titleHighlight: 'צוות הקבלה ה-AI שלכם',
       subtitle: 'שלושה סוכנים מתמחים שמטפלים בכל אינטראקציה עם מטופלים – לכידת יותר לידים, הפחתת אי-הגעות, ושחרור הצוות שלכם',
       sofia: {
-        name: 'סוכן תגובה לפניות',
-        description: 'מגיב באופן מיידי לפניות חדשות עם מענה מותאם אישית, מסנן אותן ועונה על שאלות נפוצות 24/7.',
+        name: 'אורה - סוכנת WhatsApp',
+        description: 'מגיבה באופן מיידי לפניות חדשות עם מענה מותאם אישית, מסננת אותן ועונה על שאלות נפוצות 24/7.',
         features: [
           'תגובה בשניות, לא בשעות',
           'מענה אוטומטי לשאלות נפוצות',
           'סינון לידים לפי תחום טיפול',
           'תמיכה רב-לשונית',
         ],
-        cta: 'נסו את סופיה',
+        cta: 'נסו את אורה',
       },
       marcus: {
-        name: 'סוכן קביעת תורים',
+        name: 'אור - סוכן קבלה קולי',
         description: 'קובע ייעוצים אוטומטית, מסנכרן עם היומן שלכם, ושולח אישורים.',
         features: [
           'אינטגרציה ישירה ליומן',
@@ -394,10 +394,10 @@ export const translations = {
           'אישורי הזמנה מיידיים',
           'טיפול בדחיות וביטולים',
         ],
-        cta: 'דברו עם מרקוס',
+        cta: 'דברו עם אור',
       },
       david: {
-        name: 'סוכן מעקב',
+        name: 'אדם - סוכן מעקב',
         description: 'מפחית אי-הגעות עם תזכורות אוטומטיות דרך WhatsApp, SMS ושיחות קוליות.',
         features: [
           'תזכורות רב-ערוציות',
@@ -405,7 +405,7 @@ export const translations = {
           'רצפי שחזור אי-הגעות',
           'מעקבים לאחר ביקור',
         ],
-        cta: 'דברו עם דוד',
+        cta: 'דברו עם אדם',
       },
     },
     // Metrics Section
