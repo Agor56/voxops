@@ -32,21 +32,20 @@ export interface TranslationShape {
     title: string;
     titleHighlight: string;
     subtitle: string;
-    learnMore: string;
-    leadResponse: {
+    sofia: {
       name: string;
-      description: string;
       features: readonly string[];
+      cta: string;
     };
-    booking: {
+    marcus: {
       name: string;
-      description: string;
       features: readonly string[];
+      cta: string;
     };
-    followUp: {
+    david: {
       name: string;
-      description: string;
       features: readonly string[];
+      cta: string;
     };
   };
   metrics: {
@@ -170,36 +169,47 @@ export const translations = {
       title: 'Meet Your',
       titleHighlight: 'AI Admin Team',
       subtitle: 'Three specialized AI agents working together to automate your patient journey from first contact to post-treatment follow-up.',
-      learnMore: 'Learn More',
-      leadResponse: {
-        name: 'Lead Response Agent',
-        description: 'Instantly engages new leads with personalized responses, qualifying them and answering FAQs 24/7.',
+      sofia: {
+        name: 'Sofia - WhatsApp Patient Agent 💬',
         features: [
-          'Responds within seconds, not hours',
-          'Handles FAQs automatically',
-          'Qualifies leads by treatment interest',
-          'Multi-language support',
+          'Responds to all WhatsApp inquiries instantly (24/7)',
+          'Qualifies and pre-screens patient leads',
+          'Sends personalized treatment recommendations',
+          'Books consultations directly into your calendar',
+          'Sends appointment reminders (cuts no-shows by 38%)',
+          'Handles rescheduling and cancellation requests',
+          'Updates CRM in real-time with every conversation',
+          'Speaks Hebrew, English, Russian, Arabic fluently',
         ],
+        cta: 'Test Sofia',
       },
-      booking: {
-        name: 'Booking Agent',
-        description: 'Automatically schedules consultations, syncs with your calendar, and sends confirmations.',
+      marcus: {
+        name: 'Marcus - Voice Reception Agent ☎️',
         features: [
-          'Direct calendar integration',
-          'Smart slot recommendations',
-          'Instant booking confirmations',
-          'Reschedule & cancellation handling',
+          'Handles all incoming calls professionally 24/7',
+          'Provides detailed treatment information instantly',
+          'Books consultation appointments automatically',
+          'Schedules follow-up calls on the spot',
+          'Qualifies leads during the conversation',
+          'Forwards urgent calls to on-call staff immediately',
+          'Handles 85% of routine calls without staff',
+          'Speaks Hebrew, English, Russian, Arabic naturally',
         ],
+        cta: 'Test Marcus',
       },
-      followUp: {
-        name: 'Follow-Up Agent',
-        description: 'Reduces no-shows with automated reminders via WhatsApp, SMS, and voice calls.',
+      david: {
+        name: 'David - Outbound Qualification Agent 📞',
         features: [
-          'Multi-channel reminders',
-          'Automated confirmation requests',
-          'No-show recovery sequences',
-          'Post-visit follow-ups',
+          'Calls new leads within 60 minutes (65% higher conversion)',
+          'Qualifies with discovery questions professionally',
+          'Provides detailed treatment information and pricing',
+          'Books qualified consultations automatically',
+          'Follows up with warm leads on 3-day and 7-day sequences',
+          'Re-activates dormant patients after 6+ months',
+          'Filters tire-kickers before wasting staff time',
+          'Updates CRM with detailed qualification notes',
         ],
+        cta: 'Test David',
       },
     },
     // Metrics Section
@@ -374,36 +384,47 @@ export const translations = {
       title: 'הכירו את',
       titleHighlight: 'צוות ה-AI שלכם',
       subtitle: 'שלושה סוכני AI מתמחים שעובדים יחד לאוטומציה של מסע המטופל מהפנייה הראשונה ועד המעקב שאחרי הטיפול.',
-      learnMore: 'למידע נוסף',
-      leadResponse: {
-        name: 'סוכן תגובה לפניות',
-        description: 'מגיב באופן מיידי לפניות חדשות עם מענה מותאם אישית, מסנן אותן ועונה על שאלות נפוצות 24/7.',
+      sofia: {
+        name: 'סופיה - סוכנת מטופלים בוואטסאפ 💬',
         features: [
-          'תגובה בשניות, לא בשעות',
-          'מענה אוטומטי לשאלות נפוצות',
-          'סינון לידים לפי תחום טיפול',
-          'תמיכה רב-לשונית',
+          'מגיבה לכל פניות הוואטסאפ באופן מיידי (24/7)',
+          'מסננת ובודקת לידים מראש',
+          'שולחת המלצות טיפול מותאמות אישית',
+          'קובעת ייעוצים ישירות ביומן שלכם',
+          'שולחת תזכורות לתורים (מפחיתה אי-הגעות ב-38%)',
+          'מטפלת בבקשות לשינוי וביטול תורים',
+          'מעדכנת את ה-CRM בזמן אמת עם כל שיחה',
+          'דוברת עברית, אנגלית, רוסית, ערבית בשטף',
         ],
+        cta: 'בדקו את סופיה',
       },
-      booking: {
-        name: 'סוכן קביעת תורים',
-        description: 'קובע ייעוצים אוטומטית, מסנכרן עם היומן שלכם, ושולח אישורים.',
+      marcus: {
+        name: 'מרקוס - סוכן קבלה קולי ☎️',
         features: [
-          'אינטגרציה ישירה ליומן',
-          'המלצות חכמות לזמנים פנויים',
-          'אישורי הזמנה מיידיים',
-          'טיפול בדחיות וביטולים',
+          'מטפל בכל השיחות הנכנסות באופן מקצועי 24/7',
+          'מספק מידע מפורט על טיפולים באופן מיידי',
+          'קובע תורי ייעוץ אוטומטית',
+          'מתזמן שיחות מעקב במקום',
+          'מסנן לידים במהלך השיחה',
+          'מעביר שיחות דחופות לצוות כונן מיידית',
+          'מטפל ב-85% מהשיחות השגרתיות ללא צוות',
+          'דובר עברית, אנגלית, רוסית, ערבית באופן טבעי',
         ],
+        cta: 'בדקו את מרקוס',
       },
-      followUp: {
-        name: 'סוכן מעקב',
-        description: 'מפחית אי-הגעות עם תזכורות אוטומטיות דרך WhatsApp, SMS ושיחות קוליות.',
+      david: {
+        name: 'דוד - סוכן הסמכת לידים יוצא 📞',
         features: [
-          'תזכורות רב-ערוציות',
-          'בקשות אישור אוטומטיות',
-          'רצפי שחזור אי-הגעות',
-          'מעקבים לאחר ביקור',
+          'מתקשר ללידים חדשים תוך 60 דקות (65% יותר המרות)',
+          'מסנן עם שאלות גילוי מקצועיות',
+          'מספק מידע מפורט על טיפולים ומחירים',
+          'קובע ייעוצים מוסמכים אוטומטית',
+          'עוקב אחרי לידים חמים ברצפי 3 ו-7 ימים',
+          'מפעיל מחדש מטופלים רדומים אחרי 6+ חודשים',
+          'מסנן מתעניינים לא רציניים לפני בזבוז זמן צוות',
+          'מעדכן את ה-CRM עם הערות הסמכה מפורטות',
         ],
+        cta: 'בדקו את דוד',
       },
     },
     // Metrics Section
