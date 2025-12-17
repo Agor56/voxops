@@ -136,6 +136,12 @@
     display: none !important;
   }
 
+  /* Form placeholder text at 50% opacity */
+  input::placeholder,
+  textarea::placeholder {
+    opacity: 0.5;
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Plus Jakarta Sans', sans-serif;
