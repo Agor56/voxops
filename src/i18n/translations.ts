@@ -34,16 +34,19 @@ export interface TranslationShape {
     subtitle: string;
     sofia: {
       name: string;
+      description: string;
       features: readonly string[];
       cta: string;
     };
     marcus: {
       name: string;
+      description: string;
       features: readonly string[];
       cta: string;
     };
     david: {
       name: string;
+      description: string;
       features: readonly string[];
       cta: string;
     };
@@ -169,39 +172,36 @@ export const translations = {
       subtitle: 'Three specialized agents handling every patient interaction – capture more leads, reduce no-shows, and free your staff',
       sofia: {
         name: 'Sofia - WhatsApp Patient Agent',
+        description: 'Instantly engages new leads with personalized responses, qualifying them and answering FAQs 24/7.',
         features: [
-          'Responds to WhatsApp inquiries in under 60 seconds, 24/7',
-          'Qualifies leads and books consultations into your calendar',
-          'Sends appointment reminders (cuts no-shows by 38%)',
-          'Handles rescheduling without staff involvement',
-          'Updates CRM in real-time automatically',
-          'Speaks Hebrew, English, Russian, Arabic',
+          'Responds within seconds, not hours',
+          'Handles FAQs automatically',
+          'Qualifies leads by treatment interest',
+          'Multi-language support',
         ],
-        cta: 'Test Sofia',
+        cta: 'Learn More',
       },
       marcus: {
         name: 'Marcus - Voice Reception Agent',
+        description: 'Automatically schedules consultations, syncs with your calendar, and sends confirmations.',
         features: [
-          'Answers all incoming calls 24/7 (no voicemail ever)',
-          'Provides treatment information and pricing instantly',
-          'Books consultations automatically while on the call',
-          'Forwards urgent calls to on-call staff immediately',
-          'Handles 85% of calls without staff intervention',
-          'Speaks Hebrew, English, Russian, Arabic',
+          'Direct calendar integration',
+          'Smart slot recommendations',
+          'Instant booking confirmations',
+          'Reschedule & cancellation handling',
         ],
-        cta: 'Test Marcus',
+        cta: 'Learn More',
       },
       david: {
         name: 'David - Outbound Qualification Agent',
+        description: 'Reduces no-shows with automated reminders via WhatsApp, SMS, and voice calls.',
         features: [
-          'Calls new leads within 60 minutes (65% higher conversion)',
-          'Qualifies serious patients vs tire-kickers automatically',
-          'Books qualified consultations into your calendar',
-          'Follows up with warm leads until they book or opt out',
-          'Re-activates dormant patients after 6+ months',
-          'Updates CRM with detailed qualification notes',
+          'Multi-channel reminders',
+          'Automated confirmation requests',
+          'No-show recovery sequences',
+          'Post-visit follow-ups',
         ],
-        cta: 'Test David',
+        cta: 'Learn More',
       },
     },
     // Metrics Section
@@ -375,40 +375,37 @@ export const translations = {
       titleHighlight: 'צוות הקבלה ה-AI שלכם',
       subtitle: 'שלושה סוכנים מתמחים שמטפלים בכל אינטראקציה עם מטופלים – לכידת יותר לידים, הפחתת אי-הגעות, ושחרור הצוות שלכם',
       sofia: {
-        name: 'סופיה - סוכנת וואטסאפ למטופלים',
+        name: 'סוכן תגובה לפניות',
+        description: 'מגיב באופן מיידי לפניות חדשות עם מענה מותאם אישית, מסנן אותן ועונה על שאלות נפוצות 24/7.',
         features: [
-          'מגיבה לפניות וואטסאפ תוך פחות מ-60 שניות, 24/7',
-          'מסננת לידים וקובעת ייעוצים ישירות ביומן שלכם',
-          'שולחת תזכורות לתורים (מפחיתה אי-הגעות ב-38%)',
-          'מטפלת בשינויי תורים ללא מעורבות צוות',
-          'מעדכנת CRM בזמן אמת אוטומטית',
-          'דוברת עברית, אנגלית, רוסית, ערבית',
+          'תגובה בשניות, לא בשעות',
+          'מענה אוטומטי לשאלות נפוצות',
+          'סינון לידים לפי תחום טיפול',
+          'תמיכה רב-לשונית',
         ],
-        cta: 'בדקו את סופיה',
+        cta: 'למידע נוסף',
       },
       marcus: {
-        name: 'מרקוס - סוכן קבלה קולי',
+        name: 'סוכן קביעת תורים',
+        description: 'קובע ייעוצים אוטומטית, מסנכרן עם היומן שלכם, ושולח אישורים.',
         features: [
-          'עונה לכל השיחות הנכנסות 24/7 (בלי תא קולי)',
-          'מספק מידע על טיפולים ומחירים מיידית',
-          'קובע ייעוצים אוטומטית תוך כדי השיחה',
-          'מעביר שיחות דחופות לצוות כונן מיידית',
-          'מטפל ב-85% מהשיחות ללא התערבות צוות',
-          'דובר עברית, אנגלית, רוסית, ערבית',
+          'אינטגרציה ישירה ליומן',
+          'המלצות חכמות לזמנים פנויים',
+          'אישורי הזמנה מיידיים',
+          'טיפול בדחיות וביטולים',
         ],
-        cta: 'בדקו את מרקוס',
+        cta: 'למידע נוסף',
       },
       david: {
-        name: 'דוד - סוכן הסמכה יוצא',
+        name: 'סוכן מעקב',
+        description: 'מפחית אי-הגעות עם תזכורות אוטומטיות דרך WhatsApp, SMS ושיחות קוליות.',
         features: [
-          'מתקשר ללידים חדשים תוך 60 דקות (65% יותר המרות)',
-          'מזהה מטופלים רציניים לעומת מתעניינים בלבד',
-          'קובע ייעוצים מוסמכים ישירות ביומן שלכם',
-          'עוקב אחרי לידים חמים עד שקובעים או מבטלים',
-          'מפעיל מחדש מטופלים רדומים אחרי 6+ חודשים',
-          'מעדכן CRM עם הערות הסמכה מפורטות',
+          'תזכורות רב-ערוציות',
+          'בקשות אישור אוטומטיות',
+          'רצפי שחזור אי-הגעות',
+          'מעקבים לאחר ביקור',
         ],
-        cta: 'בדקו את דוד',
+        cta: 'למידע נוסף',
       },
     },
     // Metrics Section

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Bot, MessageSquare, Phone, PhoneOutgoing } from 'lucide-react';
+import { Bot, MessageSquare, Phone, PhoneOutgoing, Check, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -10,31 +10,49 @@ const AgentsSection = () => {
     {
       key: 'sofia',
       icon: MessageSquare,
-      color: 'green',
-      gradient: 'from-green-500 to-green-600',
-      bgGlow: 'bg-green-500/20',
+      variant: 'orange' as const,
       data: t.agents.sofia,
       delay: 0,
     },
     {
       key: 'marcus',
       icon: Phone,
-      color: 'blue',
-      gradient: 'from-blue-500 to-blue-600',
-      bgGlow: 'bg-blue-500/20',
+      variant: 'blue' as const,
       data: t.agents.marcus,
       delay: 0.15,
     },
     {
       key: 'david',
       icon: PhoneOutgoing,
-      color: 'orange',
-      gradient: 'from-primary to-orange-600',
-      bgGlow: 'bg-primary/20',
+      variant: 'orangeOutline' as const,
       data: t.agents.david,
       delay: 0.3,
     },
   ];
+
+  const variantStyles = {
+    orange: {
+      iconBg: 'bg-primary',
+      iconColor: 'text-white',
+      checkBg: 'bg-primary/20',
+      checkColor: 'text-primary',
+      buttonVariant: 'hero' as const,
+    },
+    blue: {
+      iconBg: 'bg-secondary',
+      iconColor: 'text-white',
+      checkBg: 'bg-secondary/20',
+      checkColor: 'text-secondary',
+      buttonVariant: 'heroBlue' as const,
+    },
+    orangeOutline: {
+      iconBg: 'bg-primary/10 border border-primary',
+      iconColor: 'text-primary',
+      checkBg: 'bg-primary/20',
+      checkColor: 'text-primary',
+      buttonVariant: 'hero' as const,
+    },
+  };
 
   return (
     <section id="agents" className="py-24 relative">
@@ -66,6 +84,7 @@ const AgentsSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
           {agents.map((agent) => {
             const IconComponent = agent.icon;
+            const styles = variantStyles[agent.variant];
             
             return (
               <motion.div
@@ -75,32 +94,34 @@ const AgentsSection = () => {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: agent.delay, ease: "easeOut" }}
                 whileHover={{ y: -4 }}
-                className="glass-card-hover p-8 rounded-2xl flex flex-col h-full transition-all duration-200"
+                className="glass-card-hover p-8 rounded-2xl flex flex-col h-full"
               >
-                {/* Icon Container */}
-                <div className={`relative w-20 h-20 mx-auto mb-8 ${isRTL ? 'self-center' : 'self-center'}`}>
-                  {/* Glow effect */}
-                  <div className={`absolute inset-0 ${agent.bgGlow} rounded-2xl blur-xl`} />
-                  {/* Icon box */}
-                  <div className={`relative w-full h-full rounded-2xl bg-gradient-to-br ${agent.gradient} flex items-center justify-center shadow-lg`}>
-                    <IconComponent className="w-10 h-10 text-white" strokeWidth={1.5} />
-                  </div>
+                {/* Icon - Top Left */}
+                <div className={`w-12 h-12 rounded-xl ${styles.iconBg} flex items-center justify-center mb-6 ${isRTL ? 'self-end' : 'self-start'}`}>
+                  <IconComponent className={`w-5 h-5 ${styles.iconColor}`} />
                 </div>
 
                 {/* Title */}
-                <h3 className={`text-xl font-bold text-foreground mb-4 text-center`}>
+                <h3 className={`text-xl font-bold text-foreground mb-3 ${isRTL ? 'text-right' : 'text-left'}`}>
                   {agent.data.name}
                 </h3>
 
-                {/* Features */}
+                {/* Description */}
+                <p className={`text-muted-foreground mb-6 ${isRTL ? 'text-right' : 'text-left'}`}>
+                  {agent.data.description}
+                </p>
+
+                {/* Features with checkmarks */}
                 <ul className="space-y-3 mb-8 flex-grow">
                   {agent.data.features.map((feature, i) => (
                     <li 
                       key={i} 
                       className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse text-right' : ''}`}
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 mt-2" />
-                      <span className="text-sm text-muted-foreground leading-relaxed">
+                      <div className={`w-5 h-5 rounded-full ${styles.checkBg} flex items-center justify-center shrink-0 mt-0.5`}>
+                        <Check className={`w-3 h-3 ${styles.checkColor}`} />
+                      </div>
+                      <span className="text-sm text-muted-foreground">
                         {feature}
                       </span>
                     </li>
@@ -109,12 +130,13 @@ const AgentsSection = () => {
 
                 {/* CTA Button */}
                 <Button 
-                  variant="hero" 
-                  className="w-full font-bold"
+                  variant={styles.buttonVariant}
+                  className="w-full group"
                   asChild
                 >
-                  <a href="#contact">
+                  <a href="#contact" className={`flex items-center justify-center ${isRTL ? 'flex-row-reverse' : ''}`}>
                     {agent.data.cta}
+                    <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2'}`} />
                   </a>
                 </Button>
               </motion.div>
