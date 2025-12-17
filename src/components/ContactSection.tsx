@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, ArrowRight, ArrowLeft, Check } from 'lucide-react';
 import { Button } from './ui/button';
@@ -6,9 +6,16 @@ import { Input } from './ui/input';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Progress } from './ui/progress';
 
+declare global {
+  interface Window {
+    Cal?: any;
+  }
+}
+
 const ContactSection = () => {
   const { t, isRTL } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
+  const [showCalendar, setShowCalendar] = useState(false);
   const [formData, setFormData] = useState({
     businessType: '',
     challenge: '',
@@ -18,6 +25,33 @@ const ContactSection = () => {
 
   const totalSteps = 3;
   const progressValue = (currentStep / totalSteps) * 100;
+
+  // Load Cal.com embed script when calendar should be shown
+  useEffect(() => {
+    if (showCalendar) {
+      // Load the Cal.com embed script
+      const script = document.createElement('script');
+      script.src = 'https://app.cal.com/embed/embed.js';
+      script.async = true;
+      script.onload = () => {
+        if (window.Cal) {
+          window.Cal('init', 'callback', { origin: 'https://app.cal.com' });
+          window.Cal.ns.callback('inline', {
+            elementOrSelector: '#my-cal-inline-callback',
+            config: { layout: 'month_view' },
+            calLink: 'vidleads/callback',
+          });
+          window.Cal.ns.callback('ui', { hideEventTypeDetails: false, layout: 'month_view' });
+        }
+      };
+      document.head.appendChild(script);
+
+      return () => {
+        // Cleanup script on unmount
+        document.head.removeChild(script);
+      };
+    }
+  }, [showCalendar]);
 
   const validateCurrentStep = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -53,8 +87,8 @@ const ContactSection = () => {
 
   const handleSubmit = () => {
     if (validateCurrentStep()) {
-      // Redirect to booking URL
-      window.location.href = 'https://cal.com/vidleads/callback';
+      // Show the Cal.com inline calendar
+      setShowCalendar(true);
     }
   };
 
@@ -107,203 +141,228 @@ const ContactSection = () => {
       <div className={`absolute top-0 ${isRTL ? 'left-0' : 'right-0'} w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[120px] pointer-events-none`} />
       
       <div className="container mx-auto relative z-10">
-        <div className={`grid lg:grid-cols-2 gap-12 items-center ${isRTL ? 'direction-rtl' : ''}`}>
-          {/* Left Content */}
+        {showCalendar ? (
+          // Cal.com Calendar Embed
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className={isRTL ? 'text-right' : 'text-left'}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-4xl mx-auto"
           >
-            <div className={`inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <Send className="w-4 h-4 text-primary" />
-              <span className="text-sm text-muted-foreground">{t.contact.badge}</span>
+            <div className={`text-center mb-8 ${isRTL ? 'text-right' : 'text-left'}`}>
+              <h2 className="section-title mb-4">
+                {isRTL ? 'בחרו זמן לשיחה' : 'Choose a Time to Talk'}
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                {isRTL ? 'בחרו את הזמן הנוח לכם לשיחת ההיכרות' : 'Select a convenient time for your discovery call'}
+              </p>
             </div>
-            <h2 className="section-title mb-6">
-              {t.contact.title} <span className="gradient-text">{t.contact.titleHighlight}</span> {t.contact.titleEnd}
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              {t.contact.subtitle}
-            </p>
+            <div className="glass-card p-4 rounded-2xl">
+              <div 
+                id="my-cal-inline-callback" 
+                style={{ width: '100%', height: '600px', overflow: 'auto' }}
+              />
+            </div>
           </motion.div>
+        ) : (
+          <div className={`grid lg:grid-cols-2 gap-12 items-center ${isRTL ? 'direction-rtl' : ''}`}>
+            {/* Left Content */}
+            <motion.div
+              initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className={isRTL ? 'text-right' : 'text-left'}
+            >
+              <div className={`inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <Send className="w-4 h-4 text-primary" />
+                <span className="text-sm text-muted-foreground">{t.contact.badge}</span>
+              </div>
+              <h2 className="section-title mb-6">
+                {t.contact.title} <span className="gradient-text">{t.contact.titleHighlight}</span> {t.contact.titleEnd}
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                {t.contact.subtitle}
+              </p>
+            </motion.div>
 
-          {/* Right Form */}
-          <motion.div
-            initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="glass-card p-8 rounded-2xl">
-              {/* Progress Indicator */}
-              <div className="mb-8">
-                <div className={`flex items-center justify-between mb-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <span className="text-sm text-muted-foreground">
-                    {currentStep} {t.contact.form.stepOf} {totalSteps}
-                  </span>
-                  <div className={`flex gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    {[1, 2, 3].map((step) => (
-                      <div
-                        key={step}
-                        className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
-                          step < currentStep
-                            ? 'bg-primary text-primary-foreground'
-                            : step === currentStep
-                            ? 'bg-primary/20 text-primary border-2 border-primary'
-                            : 'bg-muted text-muted-foreground'
-                        }`}
-                      >
-                        {step < currentStep ? <Check className="w-4 h-4" /> : step}
-                      </div>
-                    ))}
+            {/* Right Form */}
+            <motion.div
+              initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="glass-card p-8 rounded-2xl">
+                {/* Progress Indicator */}
+                <div className="mb-8">
+                  <div className={`flex items-center justify-between mb-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    <span className="text-sm text-muted-foreground">
+                      {currentStep} {t.contact.form.stepOf} {totalSteps}
+                    </span>
+                    <div className={`flex gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                      {[1, 2, 3].map((step) => (
+                        <div
+                          key={step}
+                          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
+                            step < currentStep
+                              ? 'bg-primary text-primary-foreground'
+                              : step === currentStep
+                              ? 'bg-primary/20 text-primary border-2 border-primary'
+                              : 'bg-muted text-muted-foreground'
+                          }`}
+                        >
+                          {step < currentStep ? <Check className="w-4 h-4" /> : step}
+                        </div>
+                      ))}
+                    </div>
                   </div>
+                  <Progress value={progressValue} className="h-2" />
                 </div>
-                <Progress value={progressValue} className="h-2" />
-              </div>
 
-              {/* Form Steps */}
-              <div className="min-h-[200px] relative overflow-hidden">
-                <AnimatePresence mode="wait" custom={direction}>
-                  {currentStep === 1 && (
-                    <motion.div
-                      key="step1"
-                      custom={direction}
-                      variants={slideVariants}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ duration: 0.3 }}
-                      className="space-y-4"
+                {/* Form Steps */}
+                <div className="min-h-[200px] relative overflow-hidden">
+                  <AnimatePresence mode="wait" custom={direction}>
+                    {currentStep === 1 && (
+                      <motion.div
+                        key="step1"
+                        custom={direction}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{ duration: 0.3 }}
+                        className="space-y-4"
+                      >
+                        <label className={`text-lg font-medium block ${isRTL ? 'text-right' : 'text-left'}`}>
+                          {t.contact.form.step1Question}
+                        </label>
+                        <Input
+                          value={formData.businessType}
+                          onChange={(e) => handleInputChange('businessType', e.target.value)}
+                          placeholder={t.contact.form.step1Placeholder}
+                          className={`text-lg py-6 ${isRTL ? 'text-right' : 'text-left'} ${errors.businessType ? 'border-red-500' : ''}`}
+                          dir={isRTL ? 'rtl' : 'ltr'}
+                        />
+                        {errors.businessType && (
+                          <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
+                            {errors.businessType}
+                          </p>
+                        )}
+                      </motion.div>
+                    )}
+
+                    {currentStep === 2 && (
+                      <motion.div
+                        key="step2"
+                        custom={direction}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{ duration: 0.3 }}
+                        className="space-y-4"
+                      >
+                        <label className={`text-lg font-medium block ${isRTL ? 'text-right' : 'text-left'}`}>
+                          {t.contact.form.step2Question}
+                        </label>
+                        <Input
+                          value={formData.challenge}
+                          onChange={(e) => handleInputChange('challenge', e.target.value)}
+                          placeholder={t.contact.form.step2Placeholder}
+                          className={`text-lg py-6 ${isRTL ? 'text-right' : 'text-left'} ${errors.challenge ? 'border-red-500' : ''}`}
+                          dir={isRTL ? 'rtl' : 'ltr'}
+                        />
+                        {errors.challenge && (
+                          <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
+                            {errors.challenge}
+                          </p>
+                        )}
+                      </motion.div>
+                    )}
+
+                    {currentStep === 3 && (
+                      <motion.div
+                        key="step3"
+                        custom={direction}
+                        variants={slideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{ duration: 0.3 }}
+                        className="space-y-4"
+                      >
+                        <label className={`text-lg font-medium block ${isRTL ? 'text-right' : 'text-left'}`}>
+                          {t.contact.form.step3Question}
+                        </label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {t.contact.form.step3Options.map((option, index) => (
+                            <button
+                              key={index}
+                              type="button"
+                              onClick={() => handleGoalSelect(option)}
+                              className={`p-4 rounded-xl border-2 transition-all text-sm font-medium ${
+                                formData.goals === option
+                                  ? 'border-primary bg-primary/10 text-primary'
+                                  : 'border-border hover:border-primary/50 text-foreground'
+                              } ${isRTL ? 'text-right' : 'text-left'}`}
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                        {errors.goals && (
+                          <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
+                            {errors.goals}
+                          </p>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Navigation Buttons */}
+                <div className={`flex gap-4 mt-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  {currentStep > 1 && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="lg"
+                      onClick={goBack}
+                      className="flex-1"
                     >
-                      <label className={`text-lg font-medium block ${isRTL ? 'text-right' : 'text-left'}`}>
-                        {t.contact.form.step1Question}
-                      </label>
-                      <Input
-                        value={formData.businessType}
-                        onChange={(e) => handleInputChange('businessType', e.target.value)}
-                        placeholder={t.contact.form.step1Placeholder}
-                        className={`text-lg py-6 ${isRTL ? 'text-right' : 'text-left'} ${errors.businessType ? 'border-red-500' : ''}`}
-                        dir={isRTL ? 'rtl' : 'ltr'}
-                      />
-                      {errors.businessType && (
-                        <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
-                          {errors.businessType}
-                        </p>
-                      )}
-                    </motion.div>
+                      {isRTL ? <ArrowRight className="w-4 h-4 ml-2" /> : <ArrowLeft className="w-4 h-4 mr-2" />}
+                      {t.contact.form.back}
+                    </Button>
                   )}
-
-                  {currentStep === 2 && (
-                    <motion.div
-                      key="step2"
-                      custom={direction}
-                      variants={slideVariants}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ duration: 0.3 }}
-                      className="space-y-4"
+                  {currentStep < totalSteps ? (
+                    <Button
+                      type="button"
+                      variant="hero"
+                      size="lg"
+                      onClick={goNext}
+                      className="flex-1"
                     >
-                      <label className={`text-lg font-medium block ${isRTL ? 'text-right' : 'text-left'}`}>
-                        {t.contact.form.step2Question}
-                      </label>
-                      <Input
-                        value={formData.challenge}
-                        onChange={(e) => handleInputChange('challenge', e.target.value)}
-                        placeholder={t.contact.form.step2Placeholder}
-                        className={`text-lg py-6 ${isRTL ? 'text-right' : 'text-left'} ${errors.challenge ? 'border-red-500' : ''}`}
-                        dir={isRTL ? 'rtl' : 'ltr'}
-                      />
-                      {errors.challenge && (
-                        <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
-                          {errors.challenge}
-                        </p>
-                      )}
-                    </motion.div>
-                  )}
-
-                  {currentStep === 3 && (
-                    <motion.div
-                      key="step3"
-                      custom={direction}
-                      variants={slideVariants}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ duration: 0.3 }}
-                      className="space-y-4"
+                      {t.contact.form.next}
+                      {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      variant="hero"
+                      size="lg"
+                      onClick={handleSubmit}
+                      className="flex-1"
                     >
-                      <label className={`text-lg font-medium block ${isRTL ? 'text-right' : 'text-left'}`}>
-                        {t.contact.form.step3Question}
-                      </label>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {t.contact.form.step3Options.map((option, index) => (
-                          <button
-                            key={index}
-                            type="button"
-                            onClick={() => handleGoalSelect(option)}
-                            className={`p-4 rounded-xl border-2 transition-all text-sm font-medium ${
-                              formData.goals === option
-                                ? 'border-primary bg-primary/10 text-primary'
-                                : 'border-border hover:border-primary/50 text-foreground'
-                            } ${isRTL ? 'text-right' : 'text-left'}`}
-                          >
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                      {errors.goals && (
-                        <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
-                          {errors.goals}
-                        </p>
-                      )}
-                    </motion.div>
+                      {t.contact.form.continue}
+                      {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
+                    </Button>
                   )}
-                </AnimatePresence>
+                </div>
               </div>
-
-              {/* Navigation Buttons */}
-              <div className={`flex gap-4 mt-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                {currentStep > 1 && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="lg"
-                    onClick={goBack}
-                    className="flex-1"
-                  >
-                    {isRTL ? <ArrowRight className="w-4 h-4 ml-2" /> : <ArrowLeft className="w-4 h-4 mr-2" />}
-                    {t.contact.form.back}
-                  </Button>
-                )}
-                {currentStep < totalSteps ? (
-                  <Button
-                    type="button"
-                    variant="hero"
-                    size="lg"
-                    onClick={goNext}
-                    className="flex-1"
-                  >
-                    {t.contact.form.next}
-                    {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    variant="hero"
-                    size="lg"
-                    onClick={handleSubmit}
-                    className="flex-1"
-                  >
-                    {t.contact.form.continue}
-                    {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
-                  </Button>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        </div>
+            </motion.div>
+          </div>
+        )}
       </div>
     </section>
   );
