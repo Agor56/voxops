@@ -52,7 +52,7 @@ serve(async (req) => {
       name: formData.name,
       phone: internationalPhone,
       timestamp: new Date().toISOString(),
-      source: 'VidLeads Landing Page',
+      source: 'Demo Call',
     };
     
     if (formData.email && formData.email.trim()) {
