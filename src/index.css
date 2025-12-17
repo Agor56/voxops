@@ -132,6 +132,10 @@
     @apply border-border;
   }
 
+  #lovable-badge {
+    display: none !important;
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Plus Jakarta Sans', sans-serif;
