@@ -264,7 +264,7 @@ const ContactSection = () => {
               </div>
 
               {/* Navigation Buttons */}
-              <div className={`flex gap-4 mt-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className={`flex gap-4 mt-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 {currentStep > 1 && (
                   <Button
                     type="button"
