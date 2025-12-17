@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { toast } from 'sonner';
 import { useLanguage } from '@/i18n/LanguageContext';
+import { supabase } from '@/integrations/supabase/client';
 
 const ContactSection = () => {
   const { t, isRTL } = useLanguage();
@@ -59,17 +60,34 @@ const ContactSection = () => {
 
     setIsSubmitting(true);
 
-    // Simulate form submission - webhook will be added later
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    toast.success(t.contact.form.success);
-    setFormData({
-      name: '',
-      email: '',
-      website: '',
-      phone: '',
-    });
-    setErrors({});
-    setIsSubmitting(false);
+    try {
+      const { data, error } = await supabase.functions.invoke('contact-form', {
+        body: {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          website: formData.website.trim() || undefined,
+          phone: formData.phone.replace(/\D/g, ''),
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      toast.success(t.contact.form.success);
+      setFormData({
+        name: '',
+        email: '',
+        website: '',
+        phone: '',
+      });
+      setErrors({});
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast.error(isRTL ? 'שגיאה בשליחת הטופס. נסו שוב.' : 'Error submitting form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
