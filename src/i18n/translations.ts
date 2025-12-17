@@ -179,7 +179,7 @@ export const translations = {
           'Qualifies leads by treatment interest',
           'Multi-language support',
         ],
-        cta: 'Learn More',
+        cta: 'Try Sofia',
       },
       marcus: {
         name: 'Marcus - Voice Reception Agent',
@@ -190,7 +190,7 @@ export const translations = {
           'Instant booking confirmations',
           'Reschedule & cancellation handling',
         ],
-        cta: 'Learn More',
+        cta: 'Talk to Marcus',
       },
       david: {
         name: 'David - Outbound Qualification Agent',
@@ -201,7 +201,7 @@ export const translations = {
           'No-show recovery sequences',
           'Post-visit follow-ups',
         ],
-        cta: 'Learn More',
+        cta: 'Talk to David',
       },
     },
     // Metrics Section
@@ -383,7 +383,7 @@ export const translations = {
           'סינון לידים לפי תחום טיפול',
           'תמיכה רב-לשונית',
         ],
-        cta: 'למידע נוסף',
+        cta: 'נסו את סופיה',
       },
       marcus: {
         name: 'סוכן קביעת תורים',
@@ -394,7 +394,7 @@ export const translations = {
           'אישורי הזמנה מיידיים',
           'טיפול בדחיות וביטולים',
         ],
-        cta: 'למידע נוסף',
+        cta: 'דברו עם מרקוס',
       },
       david: {
         name: 'סוכן מעקב',
@@ -405,7 +405,7 @@ export const translations = {
           'רצפי שחזור אי-הגעות',
           'מעקבים לאחר ביקור',
         ],
-        cta: 'למידע נוסף',
+        cta: 'דברו עם דוד',
       },
     },
     // Metrics Section
