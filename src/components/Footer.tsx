@@ -1,4 +1,4 @@
-import { Activity, Linkedin, Twitter, Instagram } from 'lucide-react';
+import { Activity, Linkedin, Instagram } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 const Footer = () => {
   const {
@@ -48,13 +48,10 @@ const Footer = () => {
     }]
   };
   const socialLinks = [{
-    icon: Twitter,
-    href: '#',
-    label: 'Twitter'
-  }, {
     icon: Linkedin,
     href: 'https://www.linkedin.com/in/antgors/',
     label: 'LinkedIn'
+  }, {
   }, {
     icon: Instagram,
     href: 'https://www.instagram.com/antongoril/',
