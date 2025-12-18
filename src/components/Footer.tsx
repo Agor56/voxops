@@ -52,7 +52,6 @@ const Footer = () => {
     href: 'https://www.linkedin.com/in/antgors/',
     label: 'LinkedIn'
   }, {
-  }, {
     icon: Instagram,
     href: 'https://www.instagram.com/antongoril/',
     label: 'Instagram'
