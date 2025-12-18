@@ -53,7 +53,7 @@ const Footer = () => {
     label: 'Twitter'
   }, {
     icon: Linkedin,
-    href: '#',
+    href: 'https://www.linkedin.com/in/antgors/',
     label: 'LinkedIn'
   }, {
     icon: Instagram,
