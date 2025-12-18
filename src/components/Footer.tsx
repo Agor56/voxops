@@ -57,7 +57,7 @@ const Footer = () => {
     label: 'LinkedIn'
   }, {
     icon: Instagram,
-    href: '#',
+    href: 'https://www.instagram.com/antongoril/',
     label: 'Instagram'
   }];
   return <footer className="border-t border-border/50 pt-16 pb-8">
