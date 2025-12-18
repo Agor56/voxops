@@ -51,7 +51,7 @@ const Header = () => {
           {/* Logo */}
           <a href="#" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <img src={logo} alt="VidLeads Logo" className="w-10 h-10 object-contain rounded-lg" />
-            <span className="text-xl font-bold">VidLeads</span>
+            <span className="text-xl font-bold opacity-75">VidLeads</span>
           </a>
 
           {/* Desktop Nav */}
