@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Activity, Globe } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
+import logo from '@/assets/logo.png';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
@@ -49,9 +50,7 @@ const Header = () => {
         <div className={`container mx-auto flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
           <a href="#" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <div className="feature-icon">
-              <Activity className="w-5 h-5 text-primary-foreground" />
-            </div>
+            <img src={logo} alt="VidLeads Logo" className="w-10 h-10 object-contain" />
             <span className="text-xl font-bold">VidLeads</span>
           </a>
 
