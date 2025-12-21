@@ -276,24 +276,24 @@ export const translations = {
     // Onboarding
     onboarding: {
       badge: 'Simple Onboarding',
-      title: 'Live in',
-      titleHighlight: 'Days, Not Months',
-      subtitle: 'We handle everything. You just show up for a quick call and watch your clinic transform.',
+      title: 'How We',
+      titleHighlight: 'Do It',
+      subtitle: 'The BIA™ method ensures your agent is tailored exactly to your clinic',
       steps: [
         {
           number: '01',
-          title: 'Quick Discovery Call',
-          description: 'We learn about your clinic, current challenges, and goals in a 15-minute call.',
+          title: 'Phase 1: Build',
+          description: 'We build your agent in an isolated environment - so you can see how it works before it goes live',
         },
         {
           number: '02',
-          title: 'Custom Setup',
-          description: 'Our team configures your AI agents, integrates with your systems, and trains them on your services.',
+          title: 'Phase 2: Integrate',
+          description: 'We connect the agent to your systems, run tests, and guide you through the full implementation',
         },
         {
           number: '03',
-          title: 'Launch & Optimize',
-          description: 'Go live in days, not months. We continuously optimize based on real performance data.',
+          title: 'Phase 3: Adjust',
+          description: 'We improve the agent and support you over time as your needs evolve',
         },
       ],
     },
