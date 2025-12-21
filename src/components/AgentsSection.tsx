@@ -65,7 +65,7 @@ const AgentsSection = () => {
       iconColor: 'text-white',
       checkBg: 'bg-secondary/20',
       checkColor: 'text-secondary',
-      buttonVariant: 'heroBlue' as const,
+      buttonVariant: 'heroGlass' as const,
     },
     orangeOutline: {
       iconBg: 'bg-primary/10 border border-primary',
