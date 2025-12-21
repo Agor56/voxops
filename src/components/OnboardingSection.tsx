@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
-import { Zap, MessageSquare, Rocket, CheckCircle2 } from 'lucide-react';
+import { Hammer, Plug, SlidersHorizontal, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 const OnboardingSection = () => {
   const {
     t,
     isRTL
   } = useLanguage();
-  const icons = [MessageSquare, Zap, Rocket];
+  const icons = [Hammer, Plug, SlidersHorizontal];
   return <section className="py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
