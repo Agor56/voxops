@@ -1,7 +1,69 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Bot, MessageSquare, Calendar } from 'lucide-react';
+import { ArrowRight, Bot, MessageSquare, Calendar, Phone, X, User } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
+
+const FloatingPhoneMockup = ({ isRTL }: { isRTL: boolean }) => {
+  const agentName = isRTL ? 'אורה VidLeads' : 'Ora VidLeads';
+  const callStatus = isRTL ? 'שיחת הדגמה בלייב' : 'Live Demo Call';
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40, rotate: isRTL ? -8 : 8 }}
+      animate={{ opacity: 1, y: 0, rotate: isRTL ? -8 : 8 }}
+      transition={{ duration: 0.8, delay: 1 }}
+      className="relative"
+    >
+      {/* Phone Frame */}
+      <div className="relative w-48 h-96 rounded-[2.5rem] bg-gradient-to-b from-secondary/30 to-secondary/10 backdrop-blur-sm border border-border/30 shadow-2xl overflow-hidden">
+        {/* Phone Notch */}
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-5 bg-secondary/40 rounded-full" />
+        
+        {/* Screen Content */}
+        <div className="absolute inset-3 top-8 rounded-[2rem] bg-gradient-to-b from-primary/20 via-primary/10 to-secondary/20 backdrop-blur-md flex flex-col items-center justify-center p-4">
+          {/* Avatar Ring */}
+          <div className="relative mb-4">
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/40 to-secondary/40 backdrop-blur-sm flex items-center justify-center border-2 border-primary/30">
+              <User className="w-10 h-10 text-primary-foreground/80" />
+            </div>
+            {/* Pulse Ring */}
+            <div className="absolute inset-0 rounded-full border-2 border-primary/40 animate-ping" />
+          </div>
+          
+          {/* Agent Name */}
+          <h4 className="text-sm font-semibold text-foreground/90 mb-1 text-center">
+            {agentName}
+          </h4>
+          
+          {/* Call Status */}
+          <p className="text-xs text-muted-foreground/80 mb-6 text-center">
+            {callStatus}
+          </p>
+          
+          {/* Call Buttons */}
+          <div className="flex gap-4">
+            {/* Accept Button */}
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-11 h-11 rounded-full bg-green-500/80 flex items-center justify-center backdrop-blur-sm shadow-lg hover:scale-105 transition-transform cursor-pointer">
+                <Phone className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-[10px] text-muted-foreground/70">Accept</span>
+            </div>
+            
+            {/* Decline Button */}
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-11 h-11 rounded-full bg-transparent border border-muted-foreground/30 flex items-center justify-center backdrop-blur-sm hover:scale-105 transition-transform cursor-pointer">
+                <X className="w-5 h-5 text-muted-foreground/70" />
+              </div>
+              <span className="text-[10px] text-muted-foreground/70">Decline</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Hero = () => {
   const {
     t,
@@ -110,6 +172,11 @@ const Hero = () => {
         </div>
 
         {/* Floating Cards */}
+        {/* Floating Phone Mockup - Secondary Visual */}
+        <div className={`absolute bottom-16 ${isRTL ? 'left-4 lg:left-16' : 'right-4 lg:right-16'} hidden md:block opacity-70 hover:opacity-90 transition-opacity`}>
+          <FloatingPhoneMockup isRTL={isRTL} />
+        </div>
+
         <div className={`absolute bottom-10 ${isRTL ? 'right-10' : 'left-10'} hidden lg:block`}>
           <motion.div initial={{
           opacity: 0,
