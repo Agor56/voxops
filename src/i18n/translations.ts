@@ -360,7 +360,7 @@ export const translations = {
       titleHighlight: 'מטופלים, תורים או מכירות שאבדו',
       subtitle: 'סוכני AI שמגיבים לפניות בשניות, קובעים תורים אוטומטית, ומפחיתים אי-הגעות עד 40%. בנוי במיוחד למרפאות אסתטיקה וספא רפואי.',
       ctaPrimary: 'קבעו הדגמה',
-      ctaSecondary: 'ראו איך זה עובד',
+      ctaSecondary: 'נסו שיחה בלייב',
       features: {
         leadResponse: 'תגובה לפניות AI',
         autoScheduling: 'קביעת תורים אוטומטית',
