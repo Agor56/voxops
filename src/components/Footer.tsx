@@ -1,4 +1,5 @@
-import { Activity, Linkedin, Instagram } from 'lucide-react';
+import { Linkedin, Instagram } from 'lucide-react';
+import footerLogo from '@/assets/footer-logo.png';
 import { useLanguage } from '@/i18n/LanguageContext';
 const Footer = () => {
   const {
@@ -62,9 +63,8 @@ const Footer = () => {
           {/* Brand */}
           <div className={`lg:col-span-2 ${isRTL ? 'text-right' : 'text-left'}`}>
             <a href="#" className={`flex items-center gap-2 mb-4 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
-              <div className="feature-icon">
-                <Activity className="w-5 h-5 text-primary-foreground" />
-              </div>
+              <img src={footerLogo} alt="VidLeads" className="w-10 h-10 rounded-lg object-cover" />
+              <span className="text-xl font-bold">VidLeads</span>
               <span className="text-xl font-bold">VidLeads</span>
             </a>
             <p className="text-muted-foreground mb-6 max-w-sm">
