@@ -69,11 +69,9 @@ const Hero = () => {
     },
   ];
   return <section ref={heroSectionRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* Background Effects */}
-      <div className={`hero-glow bg-primary top-1/4 ${isRTL ? '-right-48' : '-left-48'} animate-pulse-glow`} />
-      <div className={`hero-glow bg-secondary top-1/3 ${isRTL ? '-left-48' : '-right-48'} animate-pulse-glow`} style={{
-      animationDelay: '1.5s'
-    }} />
+      {/* Background Effects - Siri-like pulsating orbs */}
+      <div className={`hero-glow bg-primary top-1/4 ${isRTL ? '-right-48' : '-left-48'}`} />
+      <div className={`hero-glow hero-glow-secondary bg-secondary top-1/3 ${isRTL ? '-left-48' : '-right-48'}`} />
       
       <div className="container mx-auto py-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
