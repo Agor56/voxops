@@ -1,13 +1,55 @@
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Clock, CalendarCheck, TrendingUp } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const {
     t,
     isRTL
   } = useLanguage();
+  
+  const floatingCard1Ref = useRef<HTMLDivElement>(null);
+  const floatingCard2Ref = useRef<HTMLDivElement>(null);
+  const heroSectionRef = useRef<HTMLElement>(null);
+  
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Parallax effect for floating cards on scroll
+      if (floatingCard1Ref.current) {
+        gsap.to(floatingCard1Ref.current, {
+          y: -100,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroSectionRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        });
+      }
+      
+      if (floatingCard2Ref.current) {
+        gsap.to(floatingCard2Ref.current, {
+          y: -150,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroSectionRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1.5,
+          },
+        });
+      }
+    }, heroSectionRef);
+    
+    return () => ctx.revert();
+  }, []);
   
   const features = [
     {
@@ -26,7 +68,7 @@ const Hero = () => {
       description: t.hero.features.moreRevenue.description,
     },
   ];
-  return <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+  return <section ref={heroSectionRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       {/* Background Effects */}
       <div className={`hero-glow bg-primary top-1/4 ${isRTL ? '-right-48' : '-left-48'} animate-pulse-glow`} />
       <div className={`hero-glow bg-secondary top-1/3 ${isRTL ? '-left-48' : '-right-48'} animate-pulse-glow`} style={{
@@ -118,8 +160,8 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Floating Cards */}
-        <div className={`absolute bottom-10 ${isRTL ? 'right-10' : 'left-10'} hidden lg:block`}>
+        {/* Floating Cards with GSAP Parallax */}
+        <div ref={floatingCard1Ref} className={`absolute bottom-10 ${isRTL ? 'right-10' : 'left-10'} hidden lg:block`}>
           <motion.div initial={{
           opacity: 0,
           x: isRTL ? 30 : -30
@@ -140,7 +182,7 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        <div className={`absolute top-1/3 ${isRTL ? 'left-10' : 'right-10'} hidden lg:block`}>
+        <div ref={floatingCard2Ref} className={`absolute top-1/3 ${isRTL ? 'left-10' : 'right-10'} hidden lg:block`}>
           <motion.div initial={{
           opacity: 0,
           x: isRTL ? -30 : 30
