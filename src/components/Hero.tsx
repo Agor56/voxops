@@ -101,7 +101,7 @@ const Hero = () => {
           </motion.div>
 
           {/* Benefit Badges */}
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto`}>
+          <div className={`flex flex-wrap justify-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
             {features.map((feature, index) => (
               <motion.div 
                 key={index}
@@ -109,13 +109,10 @@ const Hero = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.15 }}
-                className={`glass-card px-6 py-6 rounded-2xl flex flex-col items-center justify-center gap-4 hover:border-primary/30 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 text-center`}
+                className={`px-6 py-3 rounded-full border border-border/40 bg-background/5 backdrop-blur-sm flex items-center gap-3 hover:border-primary/40 transition-all duration-300 group ${isRTL ? 'flex-row-reverse' : ''}`}
               >
-                <div className="relative w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
-                  <div className="absolute inset-0 rounded-xl bg-primary/20 opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300" />
-                  <feature.icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300 relative z-10" />
-                </div>
-                <span className="font-semibold text-foreground text-base md:text-lg">{feature.title}</span>
+                <feature.icon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300" />
+                <span className="font-medium text-foreground text-sm">{feature.title}</span>
               </motion.div>
             ))}
           </div>
