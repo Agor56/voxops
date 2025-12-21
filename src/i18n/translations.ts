@@ -17,9 +17,9 @@ export interface TranslationShape {
     ctaPrimary: string;
     ctaSecondary: string;
     features: {
-      leadResponse: string;
-      autoScheduling: string;
-      whatsapp: string;
+      lessWork: { title: string; description: string };
+      moreAppointments: { title: string; description: string };
+      moreRevenue: { title: string; description: string };
     };
     floatingCards: {
       newLead: string;
@@ -153,9 +153,18 @@ export const translations = {
       ctaPrimary: 'Book a Demo',
       ctaSecondary: 'Try The Agent Live',
       features: {
-        leadResponse: 'AI Lead Response',
-        autoScheduling: 'Auto Scheduling',
-        whatsapp: 'WhatsApp Integration',
+        lessWork: {
+          title: 'Less Manual Work',
+          description: 'Agents answer calls, schedule appointments, and send reminders—you focus on patients, not admin',
+        },
+        moreAppointments: {
+          title: 'More Booked Appointments',
+          description: 'Agents work 24/7 to fill your calendar—no patient left without a response, no slot left empty',
+        },
+        moreRevenue: {
+          title: 'More Revenue Without More Staff',
+          description: 'Agents increase your revenue by an average of 40%+ without adding payroll',
+        },
       },
       floatingCards: {
         newLead: 'New Lead',
@@ -362,9 +371,18 @@ export const translations = {
       ctaPrimary: 'קבעו הדגמה',
       ctaSecondary: 'נסו את הסוכן בלייב',
       features: {
-        leadResponse: 'זיהוי כוונה',
-        autoScheduling: 'קביעת תורים אוטומטית',
-        whatsapp: 'אינטגרציית WhatsApp',
+        lessWork: {
+          title: 'פחות עבודה ידנית',
+          description: 'הסוכנים עונים על שיחות, מתאמים תורים, ושולחים תזכורות—אתם מתמקדים במטופלים, לא בניהול',
+        },
+        moreAppointments: {
+          title: 'יותר תורים מלאים',
+          description: 'הסוכנים עובדים 24/7 כדי למלא את היומן שלכם—אף מטופל לא נשאר בלי מענה, אף תור לא נשאר ריק',
+        },
+        moreRevenue: {
+          title: 'יותר הכנסות בלי יותר עובדים',
+          description: 'הסוכנים מגדילים את ההכנסות שלכם בממוצע 40%+ בלי שתצטרכו לשלם עוד משכורות',
+        },
       },
       floatingCards: {
         newLead: 'ליד חדש',
