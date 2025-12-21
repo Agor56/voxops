@@ -362,7 +362,7 @@ export const translations = {
       ctaPrimary: 'קבעו הדגמה',
       ctaSecondary: 'נסו שיחה בלייב',
       features: {
-        leadResponse: 'תגובה לפניות AI',
+        leadResponse: 'זיהוי כוונה',
         autoScheduling: 'קביעת תורים אוטומטית',
         whatsapp: 'אינטגרציית WhatsApp',
       },
