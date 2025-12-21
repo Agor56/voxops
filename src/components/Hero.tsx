@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Clock, CalendarCheck, TrendingUp } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
-import HeroParticles from './HeroParticles';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -73,9 +72,6 @@ const Hero = () => {
       {/* Background Effects - Siri-like pulsating orbs */}
       <div className={`hero-glow bg-primary top-1/4 ${isRTL ? '-right-48' : '-left-48'}`} />
       <div className={`hero-glow hero-glow-secondary bg-secondary top-1/3 ${isRTL ? '-left-48' : '-right-48'}`} />
-      
-      {/* Floating Particles */}
-      <HeroParticles />
       
       <div className="container mx-auto py-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
