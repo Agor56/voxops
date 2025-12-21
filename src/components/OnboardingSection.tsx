@@ -62,7 +62,7 @@ const OnboardingSection = () => {
                   </div>
                   
                   {/* Icon */}
-                  <div className="feature-icon mx-auto mb-6">
+                  <div className="feature-icon mx-auto mb-6 transition-transform duration-300 hover:scale-110 hover:rotate-3 group-hover:animate-pulse">
                     <Icon className="w-5 h-5 text-primary-foreground" />
                   </div>
 
