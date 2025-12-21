@@ -64,7 +64,7 @@ const Footer = () => {
           <div className={`lg:col-span-2 ${isRTL ? 'text-right' : 'text-left'}`}>
             <a href="#" className={`flex items-center gap-2 mb-4 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
               <img src={footerLogo} alt="VidLeads" className="w-10 h-10 rounded-lg object-cover" />
-              <span className="text-xl font-bold">VidLeads</span>
+              
               <span className="text-xl font-bold">VidLeads</span>
             </a>
             <p className="text-muted-foreground mb-6 max-w-sm">
