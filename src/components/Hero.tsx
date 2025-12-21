@@ -101,19 +101,13 @@ const Hero = () => {
           </motion.div>
 
           {/* Benefit Badges */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 30
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.4
-        }} className={`grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto ${isRTL ? 'text-right' : 'text-left'}`}>
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto ${isRTL ? 'text-right' : 'text-left'}`}>
             {features.map((feature, index) => (
-              <div 
-                key={index} 
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 + index * 0.15 }}
                 className={`glass-card px-5 py-4 rounded-2xl flex flex-col gap-3 hover:border-primary/30 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10`}
               >
                 <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -124,9 +118,9 @@ const Hero = () => {
                   <span className="font-semibold text-foreground">{feature.title}</span>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
-              </div>
+              </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* Floating Cards */}
