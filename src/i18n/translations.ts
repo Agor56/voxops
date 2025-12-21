@@ -151,7 +151,7 @@ export const translations = {
       titleHighlight: 'Never Miss a Patient, Appointment, or Sale Again.',
       subtitle: 'AI agents that respond to leads in seconds, book appointments automatically, and reduce no-shows by up to 40%. Built specifically for Med Spas & Clinics.',
       ctaPrimary: 'Book a Demo',
-      ctaSecondary: 'See How It Works',
+      ctaSecondary: 'Try The Agent Live',
       features: {
         leadResponse: 'AI Lead Response',
         autoScheduling: 'Auto Scheduling',
@@ -360,7 +360,7 @@ export const translations = {
       titleHighlight: 'מטופלים, תורים או מכירות שאבדו',
       subtitle: 'סוכני AI שעונים על שיחות, קובעים תורים, שולחים תזכורות, ומעדכנים את היומן - אוטומטית, בטלפון ו - WhatsApp, 24/7',
       ctaPrimary: 'קבעו הדגמה',
-      ctaSecondary: 'נסו שיחה בלייב',
+      ctaSecondary: 'נסו את הסוכן בלייב',
       features: {
         leadResponse: 'זיהוי כוונה',
         autoScheduling: 'קביעת תורים אוטומטית',
