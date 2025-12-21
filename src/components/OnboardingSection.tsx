@@ -1,26 +1,29 @@
 import { motion } from 'framer-motion';
 import { Zap, MessageSquare, Rocket, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
-
 const OnboardingSection = () => {
-  const { t, isRTL } = useLanguage();
-
+  const {
+    t,
+    isRTL
+  } = useLanguage();
   const icons = [MessageSquare, Zap, Rocket];
-
-  return (
-    <section className="py-24 relative overflow-hidden">
+  return <section className="py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
       
       <div className="container mx-auto relative z-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <motion.div initial={{
+        opacity: 0,
+        y: 30
+      }} whileInView={{
+        opacity: 1,
+        y: 0
+      }} viewport={{
+        once: true
+      }} transition={{
+        duration: 0.6
+      }} className="text-center mb-16">
           <div className={`inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <CheckCircle2 className="w-4 h-4 text-primary" />
             <span className="text-sm text-muted-foreground">{t.onboarding.badge}</span>
@@ -36,20 +39,21 @@ const OnboardingSection = () => {
         {/* Steps */}
         <div className={`grid md:grid-cols-3 gap-8 max-w-5xl mx-auto ${isRTL ? 'direction-rtl' : ''}`}>
           {t.onboarding.steps.map((step, index) => {
-            const Icon = icons[index];
-            return (
-              <motion.div
-                key={step.number}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className="relative"
-              >
+          const Icon = icons[index];
+          return <motion.div key={step.number} initial={{
+            opacity: 0,
+            y: 30
+          }} whileInView={{
+            opacity: 1,
+            y: 0
+          }} viewport={{
+            once: true
+          }} transition={{
+            duration: 0.5,
+            delay: index * 0.15
+          }} className="relative">
                 {/* Connector Line */}
-                {index < t.onboarding.steps.length - 1 && (
-                  <div className={`hidden md:block absolute top-16 ${isRTL ? 'right-[calc(50%+60px)]' : 'left-[calc(50%+60px)]'} w-[calc(100%-60px)] h-[2px] bg-gradient-to-r ${isRTL ? 'from-transparent to-primary/50' : 'from-primary/50 to-transparent'}`} />
-                )}
+                {index < t.onboarding.steps.length - 1 && <div className={`hidden md:block absolute top-16 ${isRTL ? 'right-[calc(50%+60px)]' : 'left-[calc(50%+60px)]'} w-[calc(100%-60px)] h-[2px] bg-gradient-to-r ${isRTL ? 'from-transparent to-primary/50' : 'from-primary/50 to-transparent'}`} />}
                 
                 <div className="glass-card-hover p-8 rounded-2xl text-center h-full">
                   {/* Step Number */}
@@ -63,16 +67,13 @@ const OnboardingSection = () => {
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                  
                   <p className="text-muted-foreground">{step.description}</p>
                 </div>
-              </motion.div>
-            );
-          })}
+              </motion.div>;
+        })}
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default OnboardingSection;
