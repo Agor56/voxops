@@ -1,22 +1,31 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Bot, MessageSquare, Calendar } from 'lucide-react';
+import { ArrowRight, Clock, CalendarCheck, TrendingUp } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
+
 const Hero = () => {
   const {
     t,
     isRTL
   } = useLanguage();
-  const features = [{
-    icon: Bot,
-    label: t.hero.features.leadResponse
-  }, {
-    icon: Calendar,
-    label: t.hero.features.autoScheduling
-  }, {
-    icon: MessageSquare,
-    label: t.hero.features.whatsapp
-  }];
+  
+  const features = [
+    {
+      icon: Clock,
+      title: t.hero.features.lessWork.title,
+      description: t.hero.features.lessWork.description,
+    },
+    {
+      icon: CalendarCheck,
+      title: t.hero.features.moreAppointments.title,
+      description: t.hero.features.moreAppointments.description,
+    },
+    {
+      icon: TrendingUp,
+      title: t.hero.features.moreRevenue.title,
+      description: t.hero.features.moreRevenue.description,
+    },
+  ];
   return <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       {/* Background Effects */}
       <div className={`hero-glow bg-primary top-1/4 ${isRTL ? '-right-48' : '-left-48'} animate-pulse-glow`} />
@@ -91,7 +100,7 @@ const Hero = () => {
             </Button>
           </motion.div>
 
-          {/* Feature Pills */}
+          {/* Benefit Badges */}
           <motion.div initial={{
           opacity: 0,
           y: 30
@@ -101,11 +110,21 @@ const Hero = () => {
         }} transition={{
           duration: 0.6,
           delay: 0.4
-        }} className={`flex flex-wrap justify-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            {features.map((feature, index) => <div key={index} className={`glass-card px-5 py-3 rounded-full flex items-center gap-3 hover:border-primary/30 transition-all ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <feature.icon className="w-5 h-5 text-primary" />
-                <span className="text-sm font-medium">{feature.label}</span>
-              </div>)}
+        }} className={`grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto ${isRTL ? 'text-right' : 'text-left'}`}>
+            {features.map((feature, index) => (
+              <div 
+                key={index} 
+                className={`glass-card px-5 py-4 rounded-2xl flex flex-col gap-3 hover:border-primary/30 transition-all group`}
+              >
+                <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <feature.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="font-semibold text-foreground">{feature.title}</span>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+              </div>
+            ))}
           </motion.div>
         </div>
 
