@@ -148,7 +148,7 @@ export const translations = {
     hero: {
       badge: 'Your clinic is open 24/7, even while you sleep',
       title: "Your Clinic's AI Admin Team.",
-      titleHighlight: 'Never Miss a Lead Again.',
+      titleHighlight: 'Never Miss a Patient, Appointment, or Sale Again.',
       subtitle: 'AI agents that respond to leads in seconds, book appointments automatically, and reduce no-shows by up to 40%. Built specifically for Med Spas & Clinics.',
       ctaPrimary: 'Book a Demo',
       ctaSecondary: 'See How It Works',
@@ -357,7 +357,7 @@ export const translations = {
     hero: {
       badge: 'הקליניקה שלכם פתוחה 24/7, גם כשאתם ישנים',
       title: 'צוות ה-AI של המרפאה שלכם.',
-      titleHighlight: 'לעולם לא תפספסו ליד.',
+      titleHighlight: 'לעולם לא תפספסו מטופל, תור, או מכירה עוד הפעם.',
       subtitle: 'סוכני AI שמגיבים לפניות בשניות, קובעים תורים אוטומטית, ומפחיתים אי-הגעות עד 40%. בנוי במיוחד למרפאות אסתטיקה וספא רפואי.',
       ctaPrimary: 'קבעו הדגמה',
       ctaSecondary: 'ראו איך זה עובד',
