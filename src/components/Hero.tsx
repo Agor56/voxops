@@ -117,8 +117,9 @@ const Hero = () => {
                 className={`glass-card px-5 py-4 rounded-2xl flex flex-col gap-3 hover:border-primary/30 transition-all duration-300 group hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10`}
               >
                 <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/20 transition-all duration-300">
-                    <feature.icon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300" />
+                  <div className="relative w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
+                    <div className="absolute inset-0 rounded-xl bg-primary/20 opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-300" />
+                    <feature.icon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300 relative z-10" />
                   </div>
                   <span className="font-semibold text-foreground">{feature.title}</span>
                 </div>
