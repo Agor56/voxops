@@ -5,19 +5,15 @@ import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
 gsap.registerPlugin(ScrollTrigger);
-
 const Hero = () => {
   const {
     t,
     isRTL
   } = useLanguage();
-  
   const floatingCard1Ref = useRef<HTMLDivElement>(null);
   const floatingCard2Ref = useRef<HTMLDivElement>(null);
   const heroSectionRef = useRef<HTMLElement>(null);
-  
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Parallax effect for floating cards on scroll
@@ -29,11 +25,10 @@ const Hero = () => {
             trigger: heroSectionRef.current,
             start: 'top top',
             end: 'bottom top',
-            scrub: 1,
-          },
+            scrub: 1
+          }
         });
       }
-      
       if (floatingCard2Ref.current) {
         gsap.to(floatingCard2Ref.current, {
           y: -150,
@@ -42,17 +37,14 @@ const Hero = () => {
             trigger: heroSectionRef.current,
             start: 'top top',
             end: 'bottom top',
-            scrub: 1.5,
-          },
+            scrub: 1.5
+          }
         });
       }
     }, heroSectionRef);
-    
     return () => ctx.revert();
   }, []);
-  
-  return (
-    <section ref={heroSectionRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+  return <section ref={heroSectionRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       {/* Background Effects - Siri-like pulsating orbs */}
       <div className={`hero-glow top-1/4 ${isRTL ? '-right-48' : '-left-48'}`} />
       <div className={`hero-glow hero-glow-secondary top-1/3 ${isRTL ? '-left-48' : '-right-48'}`} />
@@ -60,44 +52,59 @@ const Hero = () => {
       <div className="container mx-auto py-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Headline */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.1 }} 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4"
-          >
+          <motion.h1 initial={{
+          opacity: 0,
+          y: 30
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          duration: 0.6,
+          delay: 0.1
+        }} className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
             {t.hero.title}
           </motion.h1>
           
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 gradient-text glow-text"
-          >
+          <motion.h2 initial={{
+          opacity: 0,
+          y: 30
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          duration: 0.6,
+          delay: 0.2
+        }} className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 gradient-text glow-text">
             {t.hero.titleHighlight}
           </motion.h2>
 
           {/* Subtitle */}
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.3 }} 
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
-          >
+          <motion.p initial={{
+          opacity: 0,
+          y: 30
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          duration: 0.6,
+          delay: 0.3
+        }} className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
             {t.hero.subtitle}
           </motion.p>
 
           {/* CTAs */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.4 }} 
-            className={`flex flex-col sm:flex-row gap-4 justify-center mb-12 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
-          >
+          <motion.div initial={{
+          opacity: 0,
+          y: 30
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          duration: 0.6,
+          delay: 0.4
+        }} className={`flex flex-col sm:flex-row gap-4 justify-center mb-12 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
             <Button variant="hero" size="xl" className="group" asChild>
-              <a href="#contact" className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
-                {t.hero.ctaPrimary}
+              <a href="#contact" className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>קבעו הדגמה בלייב{t.hero.ctaPrimary}
                 <ArrowRight className={`w-5 h-5 group-hover:translate-x-1 transition-transform ${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2'}`} />
               </a>
             </Button>
@@ -110,12 +117,16 @@ const Hero = () => {
           </motion.div>
 
           {/* Stats Cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className={`flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}
-          >
+          <motion.div initial={{
+          opacity: 0,
+          y: 30
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          duration: 0.6,
+          delay: 0.5
+        }} className={`flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
             {/* Appointments Saved Card */}
             <div className="glass-card px-8 py-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 min-w-[280px]">
               <div className={`text-center sm:text-${isRTL ? 'right' : 'left'} ${isRTL ? 'sm:border-l sm:pl-6' : 'sm:border-r sm:pr-6'} border-border/30`}>
@@ -134,12 +145,16 @@ const Hero = () => {
 
         {/* Floating Cards with GSAP Parallax */}
         <div ref={floatingCard1Ref} className={`absolute bottom-10 ${isRTL ? 'right-10' : 'left-10'} hidden lg:block`}>
-          <motion.div 
-            initial={{ opacity: 0, x: isRTL ? 30 : -30 }} 
-            animate={{ opacity: 1, x: 0 }} 
-            transition={{ duration: 0.8, delay: 0.6 }} 
-            className="glass-card p-4 rounded-xl max-w-[200px] animate-float"
-          >
+          <motion.div initial={{
+          opacity: 0,
+          x: isRTL ? 30 : -30
+        }} animate={{
+          opacity: 1,
+          x: 0
+        }} transition={{
+          duration: 0.8,
+          delay: 0.6
+        }} className="glass-card p-4 rounded-xl max-w-[200px] animate-float">
             <div className={`flex items-center gap-3 mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
                 <div className="w-3 h-3 rounded-full bg-green-500" />
@@ -151,20 +166,23 @@ const Hero = () => {
         </div>
 
         <div ref={floatingCard2Ref} className={`absolute top-1/3 ${isRTL ? 'left-10' : 'right-10'} hidden lg:block`}>
-          <motion.div 
-            initial={{ opacity: 0, x: isRTL ? -30 : 30 }} 
-            animate={{ opacity: 1, x: 0 }} 
-            transition={{ duration: 0.8, delay: 0.8 }} 
-            className="glass-card p-4 rounded-xl max-w-[200px] animate-float" 
-            style={{ animationDelay: '3s' }}
-          >
+          <motion.div initial={{
+          opacity: 0,
+          x: isRTL ? -30 : 30
+        }} animate={{
+          opacity: 1,
+          x: 0
+        }} transition={{
+          duration: 0.8,
+          delay: 0.8
+        }} className="glass-card p-4 rounded-xl max-w-[200px] animate-float" style={{
+          animationDelay: '3s'
+        }}>
             <div className="text-2xl font-bold gradient-text mb-1">+40%</div>
             <p className="text-xs text-muted-foreground">{t.hero.floatingCards.noShowReduction}</p>
           </motion.div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
