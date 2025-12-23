@@ -18,7 +18,7 @@ const buttonVariants = cva(
         hero: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_30px_hsl(265_85%_65%/0.4)] hover:shadow-[0_0_50px_hsl(265_85%_65%/0.6)]",
         heroSecondary: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-[0_0_30px_hsl(265_85%_55%/0.3)] hover:shadow-[0_0_50px_hsl(265_85%_55%/0.5)]",
         heroGlass: "relative bg-white/10 backdrop-blur-xl border border-white/20 text-foreground hover:bg-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.12)] before:absolute before:inset-0 before:rounded-lg before:p-[1px] before:bg-gradient-to-r before:from-transparent before:via-primary/50 before:to-transparent before:animate-[shimmer_3s_ease-in-out_infinite] before:-z-10 hover:border-primary/50 hover:shadow-[0_8px_32px_hsl(265_85%_65%/0.3)]",
-        glass: "relative bg-card/60 backdrop-blur-xl border border-border/50 text-foreground hover:bg-card/80 overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-primary/20 before:to-transparent before:animate-[shimmer_3s_ease-in-out_infinite] after:absolute after:inset-0 after:rounded-lg after:p-[1px] after:bg-gradient-to-r after:from-transparent after:via-primary/40 after:to-transparent after:animate-[shimmer_3s_ease-in-out_infinite] after:opacity-60 after:-z-10",
+        glass: "relative bg-card/60 backdrop-blur-xl border border-border/50 text-foreground hover:bg-card/80 overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-primary/20 before:to-transparent before:animate-[shimmer_3s_ease-in-out_infinite]",
       },
       size: {
         default: "h-10 px-4 py-2",
