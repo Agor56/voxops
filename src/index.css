@@ -18,68 +18,68 @@
 
 @layer base {
   :root {
-    --background: 260 45% 7%;
-    --foreground: 0 0% 98%;
+    --background: 260 30% 98%;
+    --foreground: 260 45% 10%;
 
-    --card: 260 40% 12%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 260 45% 10%;
 
-    --popover: 260 40% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 260 30% 96%;
+    --popover-foreground: 260 45% 10%;
 
-    --primary: 265 85% 65%;
+    --primary: 265 85% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 260 30% 20%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 260 20% 92%;
+    --secondary-foreground: 260 45% 15%;
 
-    --muted: 260 20% 25%;
-    --muted-foreground: 260 10% 70%;
+    --muted: 260 15% 90%;
+    --muted-foreground: 260 20% 40%;
 
-    --accent: 265 85% 65%;
+    --accent: 265 85% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 50%;
     --destructive-foreground: 0 85% 97%;
 
-    --border: 260 30% 20%;
-    --input: 260 30% 20%;
-    --ring: 265 85% 65%;
+    --border: 260 20% 88%;
+    --input: 260 20% 88%;
+    --ring: 265 85% 55%;
 
     --radius: 0.75rem;
 
     /* Custom tokens */
-    --glow-purple: 0 0 60px hsl(265 85% 65% / 0.45);
-    --glow-cyan: 0 0 60px hsl(180 100% 50% / 0.3);
-    --gradient-hero: linear-gradient(135deg, hsl(265 85% 60%) 0%, hsl(280 85% 70%) 100%);
-    --gradient-purple: linear-gradient(135deg, hsl(265 85% 55%) 0%, hsl(285 80% 65%) 100%);
-    --gradient-dark: linear-gradient(180deg, hsl(260 45% 7%) 0%, hsl(260 50% 4%) 100%);
-    --glass-bg: hsl(260 40% 12% / 0.8);
-    --glass-border: hsl(265 85% 65% / 0.15);
-    --chart-1: 265 85% 65%;
-    --chart-2: 280 85% 60%;
-    --chart-3: 150 80% 50%;
-    --chart-4: 265 85% 55%;
-    --chart-5: 260 20% 45%;
-    --sidebar: 260 40% 12%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 265 85% 65%;
+    --glow-purple: 0 0 60px hsl(265 85% 55% / 0.25);
+    --glow-cyan: 0 0 60px hsl(180 100% 50% / 0.2);
+    --gradient-hero: linear-gradient(135deg, hsl(265 85% 55%) 0%, hsl(280 85% 65%) 100%);
+    --gradient-purple: linear-gradient(135deg, hsl(265 85% 50%) 0%, hsl(285 80% 60%) 100%);
+    --gradient-dark: linear-gradient(180deg, hsl(260 30% 98%) 0%, hsl(260 25% 95%) 100%);
+    --glass-bg: hsl(0 0% 100% / 0.8);
+    --glass-border: hsl(265 85% 55% / 0.15);
+    --chart-1: 265 85% 55%;
+    --chart-2: 280 85% 50%;
+    --chart-3: 150 80% 45%;
+    --chart-4: 265 85% 45%;
+    --chart-5: 260 20% 55%;
+    --sidebar: 0 0% 100%;
+    --sidebar-foreground: 260 45% 10%;
+    --sidebar-primary: 265 85% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 260 30% 20%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 260 30% 20%;
-    --sidebar-ring: 265 85% 65%;
+    --sidebar-accent: 260 20% 92%;
+    --sidebar-accent-foreground: 260 45% 15%;
+    --sidebar-border: 260 20% 88%;
+    --sidebar-ring: 265 85% 55%;
     --font-sans: 'Roboto', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
     --font-serif: 'Libre Caslon Text', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
     --font-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.1);
-    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.1);
-    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.2), 0 1px 2px -1px hsl(0 0% 0% / 0.2);
-    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.2), 0 1px 2px -1px hsl(0 0% 0% / 0.2);
-    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.2), 0 2px 4px -1px hsl(0 0% 0% / 0.2);
-    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.2), 0 4px 6px -1px hsl(0 0% 0% / 0.2);
-    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.2), 0 8px 10px -1px hsl(0 0% 0% / 0.2);
-    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.35);
+    --shadow-2xs: 0 1px 3px 0px hsl(260 30% 50% / 0.05);
+    --shadow-xs: 0 1px 3px 0px hsl(260 30% 50% / 0.05);
+    --shadow-sm: 0 1px 3px 0px hsl(260 30% 50% / 0.08), 0 1px 2px -1px hsl(260 30% 50% / 0.08);
+    --shadow: 0 1px 3px 0px hsl(260 30% 50% / 0.08), 0 1px 2px -1px hsl(260 30% 50% / 0.08);
+    --shadow-md: 0 1px 3px 0px hsl(260 30% 50% / 0.1), 0 2px 4px -1px hsl(260 30% 50% / 0.1);
+    --shadow-lg: 0 1px 3px 0px hsl(260 30% 50% / 0.1), 0 4px 6px -1px hsl(260 30% 50% / 0.1);
+    --shadow-xl: 0 1px 3px 0px hsl(260 30% 50% / 0.1), 0 8px 10px -1px hsl(260 30% 50% / 0.1);
+    --shadow-2xl: 0 1px 3px 0px hsl(260 30% 50% / 0.15);
     --tracking-normal: 0em;
     --spacing: 0.25rem;
   }
