@@ -11,6 +11,18 @@ const Hero = () => {
     t,
     isRTL
   } = useLanguage();
+  
+  // Get current date formatted in Hebrew
+  const currentDate = new Date().toLocaleDateString('he-IL', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+  
+  const currentMonthYear = new Date().toLocaleDateString('he-IL', {
+    month: 'long',
+    year: 'numeric'
+  });
   const floatingCard1Ref = useRef<HTMLDivElement>(null);
   const floatingCard2Ref = useRef<HTMLDivElement>(null);
   const heroSectionRef = useRef<HTMLElement>(null);
@@ -132,12 +144,12 @@ const Hero = () => {
               <div className={`text-center sm:text-${isRTL ? 'right' : 'left'} ${isRTL ? 'sm:border-l sm:pl-6' : 'sm:border-r sm:pr-6'} border-border/30`}>
                 <p className="text-sm text-muted-foreground mb-1">{t.hero.stats.appointments.label}</p>
                 <p className="text-4xl font-bold text-foreground">{t.hero.stats.appointments.value}</p>
-                <p className="text-xs text-muted-foreground mt-1">{t.hero.stats.appointments.date}</p>
+                <p className="text-xs text-muted-foreground mt-1">{currentDate}</p>
               </div>
               <div className={`text-center sm:text-${isRTL ? 'right' : 'left'}`}>
                 <p className="text-sm text-muted-foreground mb-1">{t.hero.stats.betaSpots.label}</p>
                 <p className="text-4xl font-bold text-foreground">{t.hero.stats.betaSpots.value}</p>
-                <p className="text-xs text-muted-foreground mt-1">{t.hero.stats.betaSpots.date}</p>
+                <p className="text-xs text-muted-foreground mt-1">{currentMonthYear}</p>
               </div>
             </div>
           </motion.div>
