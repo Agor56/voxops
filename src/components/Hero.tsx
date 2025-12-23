@@ -184,7 +184,10 @@ const Hero = () => {
           delay: 0.5
         }} className={`flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
             {/* Appointments Saved Card */}
-            <div className="glass-card px-8 py-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 min-w-[280px]">
+            <div className="glass-card px-8 py-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 min-w-[280px] relative overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:border-purple-500/30">
+              {/* Purple glow overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/10 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute inset-0 bg-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               <div className={`text-center sm:text-${isRTL ? 'right' : 'left'} ${isRTL ? 'sm:border-l sm:pl-6' : 'sm:border-r sm:pr-6'} border-border/30`}>
                 <p className="text-sm text-muted-foreground mb-1">{t.hero.stats.appointments.label}</p>
                 <p className="text-4xl font-bold text-foreground">
