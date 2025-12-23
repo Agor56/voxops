@@ -1,11 +1,54 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 gsap.registerPlugin(ScrollTrigger);
+
+// Count-up animation component
+const CountUp = ({ end, duration = 2000, suffix = '' }: { end: number; duration?: number; suffix?: string }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          
+          let startTime: number;
+          const animate = (currentTime: number) => {
+            if (!startTime) startTime = currentTime;
+            const progress = Math.min((currentTime - startTime) / duration, 1);
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            setCount(Math.floor(end * easeOutQuart));
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              setCount(end);
+            }
+          };
+          
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [end, duration]);
+
+  return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
+};
 const Hero = () => {
   const {
     t,
@@ -143,12 +186,16 @@ const Hero = () => {
             <div className="glass-card px-8 py-6 rounded-2xl flex flex-col sm:flex-row items-center gap-6 min-w-[280px]">
               <div className={`text-center sm:text-${isRTL ? 'right' : 'left'} ${isRTL ? 'sm:border-l sm:pl-6' : 'sm:border-r sm:pr-6'} border-border/30`}>
                 <p className="text-sm text-muted-foreground mb-1">{t.hero.stats.appointments.label}</p>
-                <p className="text-4xl font-bold text-foreground">{t.hero.stats.appointments.value}</p>
+                <p className="text-4xl font-bold text-foreground">
+                  <CountUp end={1247} duration={2000} />
+                </p>
                 <p className="text-xs text-muted-foreground mt-1">{currentDate}</p>
               </div>
               <div className={`text-center sm:text-${isRTL ? 'right' : 'left'}`}>
                 <p className="text-sm text-muted-foreground mb-1">{t.hero.stats.betaSpots.label}</p>
-                <p className="text-4xl font-bold text-foreground">{t.hero.stats.betaSpots.value}</p>
+                <p className="text-4xl font-bold text-foreground">
+                  <CountUp end={3} duration={1500} suffix={isRTL ? ' נותרו' : ' left'} />
+                </p>
                 <p className="text-xs text-muted-foreground mt-1">{currentMonthYear}</p>
               </div>
             </div>
