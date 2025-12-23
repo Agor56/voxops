@@ -159,7 +159,8 @@ const Hero = () => {
           delay: 0.4
         }} className={`flex flex-col sm:flex-row gap-4 justify-center mb-12 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
             <Button variant="hero" size="xl" className="group" asChild>
-              <a href="#contact" className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>קבעו הדגמה בלייב{t.hero.ctaPrimary}
+              <a href="#contact" className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                {t.hero.ctaPrimary}
                 <ArrowRight className={`w-5 h-5 group-hover:translate-x-1 transition-transform ${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2'}`} />
               </a>
             </Button>
