@@ -164,7 +164,7 @@ const Hero = () => {
                 <ArrowRight className={`w-5 h-5 group-hover:translate-x-1 transition-transform ${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2'}`} />
               </a>
             </Button>
-            <Button variant="glass" size="xl" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`} asChild>
+            <Button variant="heroGlass" size="xl" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`} asChild>
               <a href="#agents">
                 <Phone className="w-5 h-5" />
                 {t.hero.ctaSecondary}
