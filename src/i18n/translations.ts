@@ -10,16 +10,14 @@ export interface TranslationShape {
     bookDemo: string;
   };
   hero: {
-    badge: string;
     title: string;
     titleHighlight: string;
     subtitle: string;
     ctaPrimary: string;
     ctaSecondary: string;
-    features: {
-      lessWork: { title: string; description: string };
-      moreAppointments: { title: string; description: string };
-      moreRevenue: { title: string; description: string };
+    stats: {
+      appointments: { label: string; value: string; date: string };
+      betaSpots: { label: string; value: string; date: string };
     };
     floatingCards: {
       newLead: string;
@@ -146,25 +144,14 @@ export const translations = {
     },
     // Hero
     hero: {
-      badge: 'Your clinic is open 24/7, even while you sleep',
-      title: "Your Clinic's AI Admin Team.",
-      titleHighlight: 'Never Miss a Patient, Appointment, or Sale Again.',
-      subtitle: 'AI agents that respond to leads in seconds, book appointments automatically, and reduce no-shows by up to 40%. Built specifically for Med Spas & Clinics.',
-      ctaPrimary: 'Book a Demo',
-      ctaSecondary: 'Try The Agent Live',
-      features: {
-        lessWork: {
-          title: 'Less Manual Work',
-          description: 'Agents answer calls, schedule appointments, and send reminders—you focus on patients, not admin',
-        },
-        moreAppointments: {
-          title: 'More Booked Appointments',
-          description: 'Agents work 24/7 to fill your calendar—no patient left without a response, no slot left empty',
-        },
-        moreRevenue: {
-          title: 'More Revenue Without More Staff',
-          description: 'Agents increase your revenue by an average of 40%+ without adding payroll',
-        },
+      title: "No Technicians. No Extra Hours.",
+      titleHighlight: "Just a Phone Line That Works for You.",
+      subtitle: "AI voice agents that answer every call, book appointments, and update your system – automatically, 24/7, even when the clinic is closed.",
+      ctaPrimary: 'Book a Live Demo',
+      ctaSecondary: 'Talk to the Agent Now',
+      stats: {
+        appointments: { label: 'Appointments Saved This Week', value: '1,247', date: 'Dec 23, 2025' },
+        betaSpots: { label: 'Beta Spots Available', value: '3 left', date: 'December 2025' },
       },
       floatingCards: {
         newLead: 'New Lead',
@@ -364,25 +351,14 @@ export const translations = {
     },
     // Hero
     hero: {
-      badge: 'הקליניקה שלכם פתוחה 24/7, גם כשאתם ישנים',
-      title: 'לא עוד',
-      titleHighlight: 'מטופלים, תורים או מכירות שאבדו',
-      subtitle: 'סוכני AI שעונים על שיחות, קובעים תורים, שולחים תזכורות, ומעדכנים את היומן - אוטומטית, בטלפון ו - WhatsApp, 24/7',
-      ctaPrimary: 'קבעו הדגמה',
-      ctaSecondary: 'נסו את הסוכן בלייב',
-      features: {
-        lessWork: {
-          title: 'פחות עבודה ידנית',
-          description: 'הסוכנים עונים על שיחות, מתאמים תורים, ושולחים תזכורות—אתם מתמקדים במטופלים, לא בניהול',
-        },
-        moreAppointments: {
-          title: 'יותר תורים מלאים',
-          description: 'הסוכנים עובדים 24/7 כדי למלא את היומן שלכם—אף מטופל לא נשאר בלי מענה, אף תור לא נשאר ריק',
-        },
-        moreRevenue: {
-          title: 'יותר הכנסות בלי יותר עובדים',
-          description: 'הסוכנים מגדילים את ההכנסות שלכם בממוצע 40%+ בלי שתצטרכו לשלם עוד משכורות',
-        },
+      title: 'אין צורך בטכנולוגים. אין צורך בשעות נוספות.',
+      titleHighlight: 'רק קו טלפון שעובד בשבילך.',
+      subtitle: 'סוכני AI קוליים שעונים על כל שיחה, קובעים תורים, ומעדכנים את המערכת – אוטומטית, 24/7, גם כשהקליניקה סגורה.',
+      ctaPrimary: 'קבעו הדגמה חיה',
+      ctaSecondary: 'דברו עם הסוכן עכשיו',
+      stats: {
+        appointments: { label: 'תורים שלא אבדו השבוע', value: '1,247', date: '23 דצמבר 2025' },
+        betaSpots: { label: 'מקומות פנויים בבטא', value: '3 נותרו', date: 'דצמבר 2025' },
       },
       floatingCards: {
         newLead: 'ליד חדש',
