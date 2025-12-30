@@ -107,27 +107,27 @@ const Hero = () => {
         {/* Central glowing orb */}
         <div 
           className="absolute w-[200px] h-[200px] rounded-full blur-3xl animate-hero-glow max-sm:w-[120px] max-sm:h-[120px]"
-          style={{ background: 'hsl(var(--primary) / 0.15)' }}
+          style={{ background: 'hsl(var(--primary) / 0.1)' }}
         />
         
         {/* Pulsing rings */}
         <div 
           className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
           style={{ 
-            border: '1px solid hsl(var(--primary) / 0.3)',
+            border: '1px solid hsl(var(--primary) / 0.2)',
           }}
         />
         <div 
           className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
           style={{ 
-            border: '1px solid hsl(var(--primary) / 0.3)',
+            border: '1px solid hsl(var(--primary) / 0.2)',
             animationDelay: '1.33s',
           }}
         />
         <div 
           className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
           style={{ 
-            border: '1px solid hsl(var(--primary) / 0.3)',
+            border: '1px solid hsl(var(--primary) / 0.2)',
             animationDelay: '2.66s',
           }}
         />
