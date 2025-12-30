@@ -102,6 +102,37 @@ const Hero = () => {
 
   return (
     <section ref={heroSectionRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+      {/* Animated Pulsing Rings Background */}
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
+        {/* Central glowing orb */}
+        <div 
+          className="absolute w-[200px] h-[200px] rounded-full blur-3xl animate-hero-glow max-sm:w-[120px] max-sm:h-[120px]"
+          style={{ background: 'hsl(var(--primary) / 0.1)' }}
+        />
+        
+        {/* Pulsing rings */}
+        <div 
+          className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
+          style={{ 
+            border: '1px solid hsl(var(--primary) / 0.2)',
+          }}
+        />
+        <div 
+          className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
+          style={{ 
+            border: '1px solid hsl(var(--primary) / 0.2)',
+            animationDelay: '1.33s',
+          }}
+        />
+        <div 
+          className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
+          style={{ 
+            border: '1px solid hsl(var(--primary) / 0.2)',
+            animationDelay: '2.66s',
+          }}
+        />
+      </div>
+
       {/* Background Effects - Siri-like pulsating orbs */}
       <div className={`hero-glow top-1/4 ${isRTL ? '-right-48' : '-left-48'}`} />
       <div className={`hero-glow hero-glow-secondary top-1/3 ${isRTL ? '-left-48' : '-right-48'}`} />
