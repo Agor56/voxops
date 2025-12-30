@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import DemoBookingDialog from './DemoBookingDialog';
 import ThemeToggle from './ThemeToggle';
+import VDashLogo from './VDashLogo';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -50,8 +51,9 @@ const Header = () => {
       >
         <div className={`container mx-auto flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
-          <a href="#" className="flex items-center">
-            <span className="text-xl font-bold opacity-75 font-display">v-dash</span>
+          <a href="#" className="flex items-center gap-2 group">
+            <VDashLogo className="w-9 h-9 transition-transform duration-300 group-hover:scale-110" />
+            <span className="text-xl font-bold opacity-90 font-display">v-dash</span>
           </a>
 
           {/* Desktop Nav */}
