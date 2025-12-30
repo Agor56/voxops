@@ -44,14 +44,16 @@ const Header = () => {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'glass-card py-3' : 'py-5 bg-transparent'
+          isScrolled 
+            ? 'backdrop-blur-xl bg-background/80 py-3 border-b border-primary/10 shadow-lg shadow-primary/5' 
+            : 'py-5 bg-transparent'
         }`}
       >
         <div className={`container mx-auto flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
           <a href="#" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <img src={logo} alt="VidLeads Logo" className="w-10 h-10 object-contain rounded-lg" />
-            <span className="text-xl font-bold opacity-75">VidLeads</span>
+            <span className="text-xl font-bold opacity-75 font-display">VidLeads</span>
           </a>
 
           {/* Desktop Nav */}
@@ -61,9 +63,10 @@ const Header = () => {
                 key={item.label}
                 href={item.href}
                 onClick={(e) => handleNavClick(item, e)}
-                className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium cursor-pointer"
+                className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium cursor-pointer relative group"
               >
                 {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </nav>
@@ -73,7 +76,7 @@ const Header = () => {
             <ThemeToggle />
             <button
               onClick={toggleLanguage}
-              className="glass-card p-2 rounded-lg hover:border-primary/30 transition-colors flex items-center gap-2"
+              className="glass-card p-2 rounded-lg hover:border-primary/30 transition-all duration-300 flex items-center gap-2"
               aria-label="Toggle language"
             >
               <Globe className="w-4 h-4" />
