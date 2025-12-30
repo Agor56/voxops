@@ -1,6 +1,49 @@
 import { motion } from 'framer-motion';
 import { TrendingUp } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
+import { useEffect, useRef, useState } from 'react';
+
+// Count-up animation for stats
+const CountUp = ({ end, duration = 2000, prefix = '', suffix = '' }: { end: number; duration?: number; prefix?: string; suffix?: string }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          
+          let startTime: number;
+          const animate = (currentTime: number) => {
+            if (!startTime) startTime = currentTime;
+            const progress = Math.min((currentTime - startTime) / duration, 1);
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            setCount(Math.floor(end * easeOutQuart));
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              setCount(end);
+            }
+          };
+          
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [end, duration]);
+
+  return <span ref={ref}>{prefix}{count.toLocaleString()}{suffix}</span>;
+};
 
 const MetricsSection = () => {
   const { t, isRTL } = useLanguage();
@@ -23,17 +66,17 @@ const MetricsSection = () => {
         >
           <div className={`inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <TrendingUp className="w-4 h-4 text-primary" />
-            <span className="text-sm text-muted-foreground">{t.metrics.badge}</span>
+            <span className="label-micro">{t.metrics.badge}</span>
           </div>
-          <h2 className="section-title mb-4">
+          <h2 className="section-title mb-4 font-display">
             {t.metrics.title} <span className="gradient-text">{t.metrics.titleHighlight}</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light">
             {t.metrics.subtitle}
           </p>
         </motion.div>
 
-        {/* Stats Grid */}
+        {/* Stats Grid with glassmorphism cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {t.metrics.stats.map((stat, index) => (
             <motion.div
@@ -42,16 +85,27 @@ const MetricsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="glass-card-hover p-8 text-center"
+              className="stat-card p-8 text-center group cursor-pointer relative overflow-hidden"
             >
-              <div className="stat-number mb-2">
-                {stat.prefix}
-                {stat.number}
-                {stat.suffix}
+              {/* Radial gradient spotlight on hover */}
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  background: 'radial-gradient(400px circle at 50% 50%, hsl(262 83% 58% / 0.12), transparent 40%)'
+                }}
+              />
+              
+              <div className="relative z-10">
+                <div className="stat-number mb-2 font-mono">
+                  <CountUp 
+                    end={parseInt(stat.number.replace(/[^0-9]/g, ''))} 
+                    prefix={stat.prefix} 
+                    suffix={stat.suffix} 
+                  />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 font-display">{stat.label}</h3>
+                <p className="text-sm text-muted-foreground font-light">{stat.description}</p>
               </div>
-              <h3 className="text-lg font-semibold mb-2">{stat.label}</h3>
-              <p className="text-sm text-muted-foreground">{stat.description}</p>
             </motion.div>
           ))}
         </div>
