@@ -1,5 +1,4 @@
 import { Linkedin, Instagram } from 'lucide-react';
-import footerLogo from '@/assets/footer-logo.png';
 import { useLanguage } from '@/i18n/LanguageContext';
 const Footer = () => {
   const {
@@ -62,9 +61,7 @@ const Footer = () => {
         <div className={`grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12 ${isRTL ? 'direction-rtl' : ''}`}>
           {/* Brand */}
           <div className={`lg:col-span-2 ${isRTL ? 'text-right' : 'text-left'}`}>
-            <a href="#" className={`flex items-center gap-2 mb-4 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
-              <img src={footerLogo} alt="VidLeads" className="w-10 h-10 rounded-lg object-cover" />
-              
+            <a href="#" className={`flex items-center mb-4 ${isRTL ? 'justify-end' : ''}`}>
               <span className="text-xl font-bold">VidLeads</span>
             </a>
             <p className="text-muted-foreground mb-6 max-w-sm">
