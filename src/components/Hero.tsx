@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone } from 'lucide-react';
 import { Button } from './ui/button';
@@ -7,107 +7,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
-
-// Characters for scramble effect - mix of symbols and letters
-const SCRAMBLE_CHARS = 'אבגדהוזחטיכלמנסעפצקרשתABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
-
-// Text scramble component with purple glitch effect
-const TextScramble = ({ 
-  text, 
-  delay = 0, 
-  duration = 1500,
-  className = '' 
-}: { 
-  text: string; 
-  delay?: number; 
-  duration?: number;
-  className?: string;
-}) => {
-  const [displayText, setDisplayText] = useState('');
-  const [isScrambling, setIsScrambling] = useState(true);
-  const hasStarted = useRef(false);
-
-  const scramble = useCallback(() => {
-    if (hasStarted.current) return;
-    hasStarted.current = true;
-    
-    const chars = text.split('');
-    const totalChars = chars.length;
-    const iterationsPerChar = 3;
-    const totalIterations = totalChars * iterationsPerChar;
-    const intervalTime = duration / totalIterations;
-    
-    let iteration = 0;
-    
-    const interval = setInterval(() => {
-      const revealedCount = Math.floor(iteration / iterationsPerChar);
-      
-      const newText = chars.map((char, index) => {
-        if (char === ' ') return ' ';
-        if (index < revealedCount) return char;
-        // Return random character for unrevealed positions
-        return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-      }).join('');
-      
-      setDisplayText(newText);
-      iteration++;
-      
-      if (iteration >= totalIterations) {
-        clearInterval(interval);
-        setDisplayText(text);
-        setIsScrambling(false);
-      }
-    }, intervalTime);
-    
-    return () => clearInterval(interval);
-  }, [text, duration]);
-
-  useEffect(() => {
-    const timer = setTimeout(scramble, delay);
-    return () => clearTimeout(timer);
-  }, [scramble, delay]);
-
-  // Split text into characters for individual styling
-  const renderText = () => {
-    if (!displayText) {
-      // Initial state - show scrambled placeholder
-      return text.split('').map((char, i) => (
-        <span 
-          key={i} 
-          className="text-primary inline-block"
-          style={{ opacity: 0.3 }}
-        >
-          {char === ' ' ? '\u00A0' : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]}
-        </span>
-      ));
-    }
-
-    return displayText.split('').map((char, i) => {
-      const isRevealed = !isScrambling || char === text[i];
-      const isSpace = char === ' ';
-      
-      return (
-        <span 
-          key={i} 
-          className={`inline-block transition-colors duration-100 ${
-            isSpace ? '' : isRevealed ? 'text-foreground' : 'text-primary'
-          }`}
-          style={{
-            textShadow: !isRevealed && !isSpace ? '0 0 8px hsl(262 83% 58% / 0.8)' : 'none',
-          }}
-        >
-          {isSpace ? '\u00A0' : char}
-        </span>
-      );
-    });
-  };
-
-  return (
-    <span className={className}>
-      {renderText()}
-    </span>
-  );
-};
 
 // Count-up animation component with GSAP
 const CountUp = ({ end, duration = 2000, suffix = '' }: { end: number; duration?: number; suffix?: string }) => {
@@ -209,25 +108,23 @@ const Hero = () => {
       
       <div className="container mx-auto py-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Main Headline with Text Scramble Effect */}
+          {/* Main Headline with Space Grotesk */}
           <motion.h1 
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.6, delay: 0.1 }} 
             className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 font-display"
           >
-            <TextScramble text={t.hero.title} delay={300} duration={1200} />
+            {t.hero.title}
           </motion.h1>
           
           <motion.h2 
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.6, delay: 0.2 }} 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 font-display"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 gradient-text glow-text font-display"
           >
-            <span className="gradient-text glow-text">
-              <TextScramble text={t.hero.titleHighlight} delay={600} duration={1000} />
-            </span>
+            {t.hero.titleHighlight}
           </motion.h2>
 
           {/* Subtitle with lighter weight */}
