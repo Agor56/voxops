@@ -6,28 +6,64 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "./i18n/LanguageContext";
-import Lenis from "lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const queryClient = new QueryClient();
 
-const LenisProvider = ({ children }: { children: React.ReactNode }) => {
+const GSAPParallaxProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
-    const lenis = new Lenis({
-      lerp: 0.1,
-      smoothWheel: true,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+    // Parallax hero background
+    const heroParallax = document.querySelector('.hero-parallax');
+    if (heroParallax) {
+      gsap.to('.hero-parallax', {
+        y: 300,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-parallax',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
     }
 
-    requestAnimationFrame(raf);
+    // Parallax 3D background
+    const auraBackground = document.querySelector('.aura-background-component');
+    if (auraBackground) {
+      gsap.to('.aura-background-component', {
+        y: 200,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    }
+
+    // Parallax on glass panels
+    gsap.utils.toArray<HTMLElement>('.glass-panel').forEach((panel, i) => {
+      const speed = (i % 2 === 0) ? 50 : -50;
+      gsap.to(panel, {
+        y: speed,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: panel,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    });
 
     return () => {
-      lenis.destroy();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
@@ -38,7 +74,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       <LanguageProvider>
-        <LenisProvider>
+        <GSAPParallaxProvider>
           <TooltipProvider>
             <Toaster />
             <Sonner />
@@ -50,7 +86,7 @@ const App = () => (
               </Routes>
             </BrowserRouter>
           </TooltipProvider>
-        </LenisProvider>
+        </GSAPParallaxProvider>
       </LanguageProvider>
     </ThemeProvider>
   </QueryClientProvider>
