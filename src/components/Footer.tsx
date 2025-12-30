@@ -62,7 +62,7 @@ const Footer = () => {
           {/* Brand */}
           <div className={`lg:col-span-2 ${isRTL ? 'text-right' : 'text-left'}`}>
             <a href="#" className={`flex items-center mb-4 ${isRTL ? 'justify-end' : ''}`}>
-              <span className="text-xl font-bold">VidLeads</span>
+              <span className="text-xl font-bold">v-dash</span>
             </a>
             <p className="text-muted-foreground mb-6 max-w-sm">
               {t.footer.description}
@@ -94,7 +94,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className={`border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
           <p className="text-sm text-muted-foreground">
-            © {currentYear} VidLeads. {t.footer.copyright}
+            © {currentYear} v-dash. {t.footer.copyright}
           </p>
           <div className={`flex gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
