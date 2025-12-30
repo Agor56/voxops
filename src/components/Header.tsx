@@ -51,7 +51,7 @@ const Header = () => {
         <div className={`container mx-auto flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
           <a href="#" className="flex items-center">
-            <span className="text-xl font-bold opacity-75 font-display">VidLeads</span>
+            <span className="text-xl font-bold opacity-75 font-display">v-dash</span>
           </a>
 
           {/* Desktop Nav */}
