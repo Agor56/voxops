@@ -1,6 +1,5 @@
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
-import VoxOpsLogo from './VoxOpsLogo';
 
 const Footer = () => {
   const { t, isRTL } = useLanguage();
@@ -43,8 +42,7 @@ const Footer = () => {
         <div className={`grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12 ${isRTL ? 'direction-rtl' : ''}`}>
           {/* Brand */}
           <div className={`lg:col-span-2 ${isRTL ? 'text-right' : 'text-left'}`}>
-            <a href="#" className={`flex items-center gap-2 mb-4 ${isRTL ? 'justify-end' : ''}`}>
-              <VoxOpsLogo className="w-8 h-8" />
+            <a href="#" className={`mb-4 inline-block ${isRTL ? 'text-right' : ''}`}>
               <span className="text-xl font-bold">VoxOps</span>
             </a>
             <p className="text-muted-foreground mb-6 max-w-sm">
