@@ -249,7 +249,7 @@ export const translations = {
           name: 'Dr. Sarah Cohen',
           role: 'Medical Director',
           clinic: 'Glow Aesthetics',
-          quote: "v-dash transformed how we handle patient inquiries. We went from losing leads overnight to converting them while we sleep. Our booking rate increased by 45% in the first month.",
+          quote: "VoxOps transformed how we handle patient inquiries. We went from losing leads overnight to converting them while we sleep. Our booking rate increased by 45% in the first month.",
           stat: '+45% bookings',
         },
         {
@@ -453,7 +453,7 @@ export const translations = {
           name: 'ד"ר נועה נוסבוים',
           role: 'מנהלת רפואית',
           clinic: 'Glow Aesthetics',
-          quote: 'v-dash שינתה לחלוטין את הדרך שבה אנחנו מטפלים בפניות מטופלים. עברנו מאיבוד לידים בלילה להמרה שלהם בזמן שאנחנו ישנים. שיעור ההזמנות שלנו עלה ב-45% בחודש הראשון.',
+          quote: 'VoxOps שינתה לחלוטין את הדרך שבה אנחנו מטפלים בפניות מטופלים. עברנו מאיבוד לידים בלילה להמרה שלהם בזמן שאנחנו ישנים. שיעור ההזמנות שלנו עלה ב-45% בחודש הראשון.',
           stat: '+45% הזמנות',
         },
         {
