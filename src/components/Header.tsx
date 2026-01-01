@@ -5,7 +5,6 @@ import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import DemoBookingDialog from './DemoBookingDialog';
 import ThemeToggle from './ThemeToggle';
-import VoxOpsLogo from './VoxOpsLogo';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,9 +51,8 @@ const Header = () => {
       >
         <div className={`container mx-auto flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
-            <VoxOpsLogo className="w-9 h-9 transition-transform duration-300 group-hover:scale-110" />
-            <span className="text-xl font-bold opacity-90 font-display">VoxOps</span>
+          <a href="#" className="group">
+            <span className="text-xl font-bold opacity-90 font-display transition-colors duration-300 group-hover:text-primary">VoxOps</span>
           </a>
 
           {/* Desktop Nav */}
