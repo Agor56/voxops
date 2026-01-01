@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Globe } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import DemoBookingDialog from './DemoBookingDialog';
 import ThemeToggle from './ThemeToggle';
-import VDashLogo from './VDashLogo';
+import VoxOpsLogo from './VoxOpsLogo';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDemoDialogOpen, setIsDemoDialogOpen] = useState(false);
-  const { language, setLanguage, t, isRTL } = useLanguage();
+  const { t, language, setLanguage, isRTL } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,17 +22,17 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { label: t.nav.solutions, href: '#agents' },
-    { label: t.nav.demo, href: '#demo', isDialog: true },
-    { label: t.nav.results, href: '#metrics' },
+    { label: t.nav.solutions, href: '#features' },
+    { label: t.nav.demo, href: '#agents' },
     { label: t.nav.testimonials, href: '#testimonials' },
+    { label: t.nav.results, href: '#contact', isDialog: true },
   ];
 
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'he' : 'en');
   };
 
-  const handleNavClick = (item: typeof navItems[0], e: React.MouseEvent) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, item: typeof navItems[0]) => {
     if (item.isDialog) {
       e.preventDefault();
       setIsDemoDialogOpen(true);
@@ -44,16 +44,17 @@ const Header = () => {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? 'backdrop-blur-xl bg-background/80 py-3 border-b border-primary/10 shadow-lg shadow-primary/5' 
-            : 'py-5 bg-transparent'
+          isScrolled
+            ? 'bg-background/80 backdrop-blur-xl border-b border-border/50 py-3'
+            : 'bg-transparent py-5'
         }`}
+        dir={isRTL ? 'rtl' : 'ltr'}
       >
         <div className={`container mx-auto flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
           <a href="#" className="flex items-center gap-2 group">
-            <VDashLogo className="w-9 h-9 transition-transform duration-300 group-hover:scale-110" />
-            <span className="text-xl font-bold opacity-90 font-display">v-dash</span>
+            <VoxOpsLogo className="w-9 h-9 transition-transform duration-300 group-hover:scale-110" />
+            <span className="text-xl font-bold opacity-90 font-display">VoxOps</span>
           </a>
 
           {/* Desktop Nav */}
@@ -62,39 +63,44 @@ const Header = () => {
               <a
                 key={item.label}
                 href={item.href}
-                onClick={(e) => handleNavClick(item, e)}
-                className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium cursor-pointer relative group"
+                onClick={(e) => handleNavClick(e, item)}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </nav>
 
-          {/* CTA + Language Toggle + Theme Toggle */}
+          {/* Desktop Actions */}
           <div className={`hidden md:flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <ThemeToggle />
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={toggleLanguage}
-              className="glass-card p-2 rounded-lg hover:border-primary/30 transition-all duration-300 flex items-center gap-2"
-              aria-label="Toggle language"
+              className="text-muted-foreground hover:text-foreground"
             >
-              <Globe className="w-4 h-4" />
-              <span className="text-sm font-medium">{language === 'en' ? 'עב' : 'EN'}</span>
-            </button>
-            <Button variant="hero" size="lg" asChild>
-              <a href="#contact">{t.nav.bookDemo}</a>
+              <Globe className="w-5 h-5" />
+            </Button>
+            <ThemeToggle />
+            <Button 
+              variant="default" 
+              size="sm"
+              onClick={() => setIsDemoDialogOpen(true)}
+            >
+              {t.nav.bookDemo}
             </Button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2"
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-foreground"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -104,39 +110,51 @@ const Header = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden glass-card mt-3 mx-4 rounded-xl overflow-hidden"
+              className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border/50"
             >
-              <nav className="flex flex-col p-4 gap-4">
+              <div className="container mx-auto py-4 flex flex-col gap-4">
                 {navItems.map((item) => (
                   <a
                     key={item.label}
                     href={item.href}
-                    onClick={(e) => handleNavClick(item, e)}
-                    className="text-muted-foreground hover:text-foreground transition-colors py-2 cursor-pointer"
+                    onClick={(e) => handleNavClick(e, item)}
+                    className="text-foreground py-2"
                   >
                     {item.label}
                   </a>
                 ))}
-                <div className="flex items-center gap-2">
-                  <ThemeToggle />
-                  <button
+                <div className={`flex items-center gap-3 pt-4 border-t border-border/50 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={toggleLanguage}
-                    className="glass-card p-3 rounded-lg hover:border-primary/30 transition-colors flex items-center justify-center gap-2 flex-1"
+                    className="text-muted-foreground hover:text-foreground"
                   >
-                    <Globe className="w-4 h-4" />
-                    <span className="text-sm font-medium">{language === 'en' ? 'עברית' : 'English'}</span>
-                  </button>
+                    <Globe className="w-4 h-4 mr-2" />
+                    {language === 'en' ? 'עברית' : 'English'}
+                  </Button>
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => {
+                      setIsDemoDialogOpen(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    {t.nav.bookDemo}
+                  </Button>
                 </div>
-                <Button variant="hero" className="w-full mt-2" asChild>
-                  <a href="#contact">{t.nav.bookDemo}</a>
-                </Button>
-              </nav>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
       </header>
-
-      <DemoBookingDialog open={isDemoDialogOpen} onOpenChange={setIsDemoDialogOpen} />
+      
+      <DemoBookingDialog 
+        open={isDemoDialogOpen} 
+        onOpenChange={setIsDemoDialogOpen}
+      />
     </>
   );
 };
