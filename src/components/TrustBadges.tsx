@@ -39,12 +39,12 @@ const TrustBadges = () => {
         {t.hero.trustBadges}
       </motion.p>
 
-      {/* Logo Scroll Container */}
+      {/* Logo Scroll Container - Full viewport width */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.7 }}
-        className="logo-scroll-container"
+        className="relative w-screen left-1/2 right-1/2 -ml-[50vw] overflow-hidden"
       >
         {/* Logo Track - contains two sets for seamless loop */}
         <div className="logo-track">
