@@ -10,9 +10,11 @@ import obsidianLogo from '@/assets/logos/obsidian.webp';
 import perplexityLogo from '@/assets/logos/perplexity.webp';
 import figmaLogo from '@/assets/logos/figma.webp';
 import outlookLogo from '@/assets/logos/outlook.webp';
+import whatsappLogo from '@/assets/logos/whatsapp.jpeg';
 
 const platforms = [
   { name: 'iMessage', logo: imessageLogo },
+  { name: 'WhatsApp', logo: whatsappLogo },
   { name: 'OneNote', logo: onenoteLogo },
   { name: 'Notion', logo: notionLogo },
   { name: 'Gmail', logo: gmailLogo },
@@ -48,17 +50,17 @@ const TrustBadges = () => {
         <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 lg:w-48 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 lg:w-48 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        {/* Scrolling Track - Logos with grayscale effect */}
-        <div className="flex animate-marquee whitespace-nowrap">
-          {[...platforms, ...platforms, ...platforms].map((platform, index) => (
+        {/* Scrolling Track - Seamless infinite loop */}
+        <div className="flex animate-marquee">
+          {[...platforms, ...platforms, ...platforms, ...platforms].map((platform, index) => (
             <div
               key={`${platform.name}-${index}`}
-              className="flex-shrink-0 px-4 md:px-6 lg:px-8 flex items-center justify-center"
+              className="flex-shrink-0 px-5 md:px-8 lg:px-10 flex items-center justify-center"
             >
               <img
                 src={platform.logo}
                 alt={platform.name}
-                className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-lg grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                className="w-8 h-8 md:w-10 md:h-10 object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
             </div>
           ))}
