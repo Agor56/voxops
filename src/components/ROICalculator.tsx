@@ -169,19 +169,6 @@ const ROICalculator = () => {
                   transition={{ duration: 0.4, ease: 'easeInOut' }}
                   className="max-w-4xl mx-auto"
                 >
-                  {/* Header */}
-                  <div className="text-center mb-12">
-                    <h2 className="section-title text-foreground mb-4">
-                      {isRTL ? 'כמה כסף אתם מאבדים ' : 'How Much Money Are You '}
-                      <span className="gradient-text-purple">{isRTL ? 'כל חודש?' : 'Losing Each Month?'}</span>
-                    </h2>
-                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                      {isRTL 
-                        ? 'גררו את הסליידרים כדי לראות את הפוטנציאל האבוד שלכם'
-                        : 'Drag the sliders to see your lost potential'}
-                    </p>
-                  </div>
-                  
                   {/* Calculator Card */}
                   <div className="glass-card p-8 rounded-2xl">
             {/* Sliders Grid */}
