@@ -430,6 +430,24 @@
     animation: hero-glow-pulse 3s ease-in-out infinite;
   }
 
+  /* Marquee animation for trust badges */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+
   /* Font utilities */
   .font-display {
     font-family: 'Space Grotesk', sans-serif;
