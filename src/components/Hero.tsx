@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Phone } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
+import TrustBadges from './TrustBadges';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -223,6 +224,9 @@ const Hero = () => {
               </div>
             </div>
           </motion.div>
+
+          {/* Trust Badges */}
+          <TrustBadges />
         </div>
 
         {/* Floating Cards with GSAP Parallax */}

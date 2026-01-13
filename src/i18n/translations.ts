@@ -16,6 +16,7 @@ export interface TranslationShape {
     ctaPrimary: string;
     ctaSecondary: string;
     valueProps: readonly string[];
+    trustBadges: string;
     stats: {
       appointments: { label: string; value: string; date: string };
       betaSpots: { label: string; value: string; date: string };
@@ -200,6 +201,7 @@ export const translations = {
         '38% reduction in no-shows - automatic WhatsApp reminders',
         '65% more conversions - instant response = more appointments',
       ],
+      trustBadges: 'Integrates with your favorite tools',
       stats: {
         appointments: { label: 'Appointments Saved This Week', value: '1,247', date: 'Dec 23, 2025' },
         betaSpots: { label: 'Beta Spots Available', value: '3 left', date: 'December 2025' },
@@ -485,6 +487,7 @@ export const translations = {
         '38% הפחתה באי-הגעות - תזכורות אוטומטיות ב-WhatsApp',
         '65% יותר המרות - מענה מיידי = יותר תורים',
       ],
+      trustBadges: 'משתלב עם הכלים שלכם',
       stats: {
         appointments: { label: 'תורים שלא אבדו השבוע', value: '1,247', date: '23 דצמבר 2025' },
         betaSpots: { label: 'מקומות פנויים בבטא', value: '3 נותרו', date: 'דצמבר 2025' },
