@@ -176,7 +176,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.35 }}
             className="flex justify-center mb-10"
           >
-            <div className={`glass-card px-5 py-2.5 rounded-full flex items-center gap-2 text-sm text-foreground/80 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`glass-card px-5 py-2.5 rounded-full flex items-center gap-2 text-sm text-foreground/80 bg-card/15 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <span>🎓</span>
               <span>{isRTL ? 'מאומן על מאות שיחות אמיתיות מקליניקות אסתטיקה בישראל' : 'Trained on hundreds of real calls from aesthetic clinics in Israel'}</span>
             </div>
