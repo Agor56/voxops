@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Calculator, TrendingUp, ChevronDown, Sparkles } from 'lucide-react';
+import { Calculator, TrendingUp, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface SliderProps {
@@ -139,7 +139,7 @@ const ROICalculator = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-          {/* Toggle Button */}
+          {/* Toggle Badge - styled like other section badges */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -149,21 +149,13 @@ const ROICalculator = () => {
           >
             <CollapsibleTrigger asChild>
               <button 
-                className={`group relative inline-flex items-center gap-3 bg-gradient-to-r from-primary/20 via-primary/10 to-accent/20 hover:from-primary/30 hover:via-primary/20 hover:to-accent/30 border border-primary/30 hover:border-primary/50 px-8 py-5 rounded-2xl transition-all duration-300 cursor-pointer ${isRTL ? 'flex-row-reverse' : ''} ${!isOpen ? 'animate-pulse-glow' : ''}`}
+                className={`group inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full cursor-pointer transition-all duration-300 hover:border-primary/40 ${isRTL ? 'flex-row-reverse' : ''} ${!isOpen ? 'animate-pulse-glow' : ''}`}
               >
-                <div className="p-3 rounded-xl bg-primary/20 group-hover:bg-primary/30 transition-colors">
-                  <Calculator className="w-6 h-6 text-primary" />
-                </div>
-                <div className={`${isRTL ? 'text-right' : 'text-left'}`}>
-                  <h3 className="text-xl font-bold text-foreground">
-                    {isRTL ? 'חשבו כמה כסף אתם מאבדים' : 'Calculate How Much Money You\'re Losing'}
-                  </h3>
-                  <p className="text-sm text-muted-foreground flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 text-primary" />
-                    {isRTL ? 'מחשבון חינמי - ללא התחייבות' : 'Free calculator - No commitment'}
-                  </p>
-                </div>
-                <ChevronDown className={`w-6 h-6 text-primary transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                <Calculator className="w-4 h-4 text-primary" />
+                <span className="label-micro">
+                  {isRTL ? 'מחשבון ROI' : 'ROI Calculator'}
+                </span>
+                <ChevronDown className={`w-4 h-4 text-primary transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
               </button>
             </CollapsibleTrigger>
           </motion.div>
