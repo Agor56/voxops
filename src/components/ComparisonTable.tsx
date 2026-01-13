@@ -93,21 +93,6 @@ const ComparisonTable = () => {
                     <td className="p-4 text-center border-b border-border">₪5,000*</td>
                     <td className="p-4 text-center border-b border-border bg-amber-500/10">₪22,000</td>
                   </tr>
-                  <tr>
-                    <td className="p-4 text-right border-b border-border">{isRTL ? 'התחייבות מינימלית' : 'Minimum Commitment'}</td>
-                    <td colSpan={4} className="p-4 text-center border-b border-border">
-                      <div className="text-foreground font-medium">
-                        {isRTL ? 'אין התחייבות. בטלו בכל עת.' : 'No commitment. Cancel anytime.'}
-                      </div>
-                      <div className="text-sm text-green-600 dark:text-green-400 mt-1 flex items-center justify-center gap-1">
-                        <span>✅</span>
-                        {isRTL 
-                          ? 'הישארו 6 חודשים → קבלו ₪3,500 זיכוי בחודש 7 (ההתקנה חינם למעשה)'
-                          : 'Stay 6 months → Get ₪3,500 credit in month 7 (Setup fee essentially free)'}
-                      </div>
-                    </td>
-                  </tr>
-
                   {/* Agent Ora Section */}
                   <tr className="bg-muted/30">
                     <td colSpan={5} className="p-3 font-bold text-right">🎤 AGENT ORA ({isRTL ? 'קולי' : 'Voice'})</td>
@@ -303,6 +288,22 @@ const ComparisonTable = () => {
                       <Button className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3">
                         {isRTL ? 'ייעוץ →' : 'Consult →'}
                       </Button>
+                    </td>
+                  </tr>
+                  
+                  {/* Commitment Row - Last */}
+                  <tr className="bg-muted/20">
+                    <td className="p-4 text-right font-bold">{isRTL ? 'התחייבות מינימלית' : 'Minimum Commitment'}</td>
+                    <td colSpan={4} className="p-4 text-center">
+                      <div className="text-foreground font-medium">
+                        {isRTL ? 'אין התחייבות. בטלו בכל עת.' : 'No commitment. Cancel anytime.'}
+                      </div>
+                      <div className="text-sm text-green-600 dark:text-green-400 mt-1 flex items-center justify-center gap-1">
+                        <span>✅</span>
+                        {isRTL 
+                          ? 'הישארו 6 חודשים → קבלו ₪3,500 זיכוי בחודש 7 (ההתקנה חינם למעשה)'
+                          : 'Stay 6 months → Get ₪3,500 credit in month 7 (Setup fee essentially free)'}
+                      </div>
                     </td>
                   </tr>
                 </tbody>
