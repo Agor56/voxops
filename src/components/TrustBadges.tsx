@@ -25,7 +25,7 @@ const platforms = [
 ];
 
 const LogoTrack = () => (
-  <div className="flex w-max shrink-0 items-center">
+  <>
     {platforms.map((platform, index) => (
       <div
         key={`${platform.name}-${index}`}
@@ -38,7 +38,7 @@ const LogoTrack = () => (
         />
       </div>
     ))}
-  </div>
+  </>
 );
 
 const TrustBadges = () => {
@@ -64,7 +64,13 @@ const TrustBadges = () => {
         className="relative -mx-[50vw] left-1/2 right-1/2 w-screen overflow-hidden z-10"
       >
         {/* Seamless infinite scroll - two identical tracks side by side */}
-        <div className="flex w-max animate-marquee-infinite items-center">
+        <div 
+          className="flex items-center"
+          style={{
+            width: 'max-content',
+            animation: 'marquee-infinite 60s linear infinite',
+          }}
+        >
           <LogoTrack />
           <LogoTrack />
         </div>
