@@ -441,12 +441,8 @@
   }
 
   .animate-marquee-infinite {
-    animation: marquee-infinite 25s linear infinite;
+    animation: marquee-infinite 70s linear infinite;
     will-change: transform;
-  }
-
-  .animate-marquee-infinite:hover {
-    animation-play-state: paused;
   }
 
   /* Font utilities */
