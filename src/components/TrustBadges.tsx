@@ -10,11 +10,11 @@ import obsidianLogo from '@/assets/logos/obsidian.webp';
 import perplexityLogo from '@/assets/logos/perplexity.webp';
 import figmaLogo from '@/assets/logos/figma.webp';
 import outlookLogo from '@/assets/logos/outlook.webp';
-import whatsappLogo from '@/assets/logos/whatsapp.avif';
+import messengerLogo from '@/assets/logos/messenger.webp';
 
 const platforms = [
   { name: 'iMessage', logo: imessageLogo },
-  { name: 'WhatsApp', logo: whatsappLogo },
+  { name: 'Messenger', logo: messengerLogo },
   { name: 'OneNote', logo: onenoteLogo },
   { name: 'Notion', logo: notionLogo },
   { name: 'Gmail', logo: gmailLogo },
@@ -46,7 +46,7 @@ const TrustBadges = () => {
         transition={{ duration: 0.6, delay: 0.7 }}
         className="relative -mx-[50vw] left-1/2 right-1/2 w-screen overflow-hidden"
       >
-        {/* Gradient Masks - Edge fade */}
+        {/* Gradient Masks - Edge fade - no color tint */}
         <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
