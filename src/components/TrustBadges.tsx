@@ -44,7 +44,7 @@ const TrustBadges = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.7 }}
-        className="relative w-screen left-1/2 right-1/2 -ml-[50vw] overflow-hidden"
+        className="logo-scroll-container"
       >
         {/* Logo Track - contains two sets for seamless loop */}
         <div className="logo-track">
