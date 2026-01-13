@@ -436,41 +436,27 @@
     width: 100vw;
     position: relative;
     margin-left: calc(-50vw + 50%);
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 10%,
-      black 90%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 10%,
-      black 90%,
-      transparent 100%
-    );
-  }
-
-  .logo-track {
-    display: flex;
-    gap: 80px;
-    width: fit-content;
-    animation: logo-scroll 60s linear infinite;
-    will-change: transform;
   }
 
   .logo-scroll-container:hover .logo-track {
     animation-play-state: paused;
   }
 
+  .logo-track {
+    display: flex;
+    gap: 80px;
+    animation: logo-scroll 60s linear infinite;
+    width: max-content;
+  }
+
   .logo-item {
     flex-shrink: 0;
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
   }
 
   .logo-item img {
@@ -485,14 +471,14 @@
   .logo-item:hover img {
     opacity: 1;
     filter: grayscale(0%);
-    transform: scale(1.15);
+    transform: scale(1.1);
   }
 
   @keyframes logo-scroll {
-    from {
+    0% {
       transform: translateX(0);
     }
-    to {
+    100% {
       transform: translateX(-50%);
     }
   }
