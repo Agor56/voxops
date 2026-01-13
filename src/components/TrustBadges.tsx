@@ -10,7 +10,7 @@ import obsidianLogo from '@/assets/logos/obsidian.webp';
 import perplexityLogo from '@/assets/logos/perplexity.webp';
 import figmaLogo from '@/assets/logos/figma.webp';
 import outlookLogo from '@/assets/logos/outlook.webp';
-import whatsappLogo from '@/assets/logos/whatsapp.jpeg';
+import whatsappLogo from '@/assets/logos/whatsapp.avif';
 
 const platforms = [
   { name: 'iMessage', logo: imessageLogo },
