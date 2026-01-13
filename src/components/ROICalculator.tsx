@@ -131,12 +131,6 @@ const ROICalculator = () => {
   
   return (
     <section id="roi-calculator" dir={isRTL ? 'rtl' : 'ltr'} className="relative py-24 overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="hero-glow top-1/4 left-1/4 opacity-10" />
-        <div className="hero-glow hero-glow-secondary bottom-1/4 right-1/4 opacity-10" />
-      </div>
-      
       <div className="container mx-auto px-4 relative z-10">
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
           {/* Toggle Badge - styled like other section badges */}
