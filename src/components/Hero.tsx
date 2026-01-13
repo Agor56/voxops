@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Phone } from 'lucide-react';
+import { ArrowRight, Phone, Check } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import gsap from 'gsap';
@@ -163,10 +163,28 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.6, delay: 0.3 }} 
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 font-light"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-light"
           >
             {t.hero.subtitle}
           </motion.p>
+
+          {/* Value Props */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className={`flex flex-col gap-3 max-w-xl mx-auto mb-10 ${isRTL ? 'items-end' : 'items-start'}`}
+          >
+            {t.hero.valueProps.map((prop, index) => (
+              <div
+                key={index}
+                className={`flex items-center gap-3 text-sm md:text-base text-foreground/90 ${isRTL ? 'flex-row-reverse' : ''}`}
+              >
+                <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                <span>{prop}</span>
+              </div>
+            ))}
+          </motion.div>
 
           {/* CTAs with new button variants */}
           <motion.div 
