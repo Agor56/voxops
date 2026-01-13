@@ -15,6 +15,7 @@ export interface TranslationShape {
     subtitle: string;
     ctaPrimary: string;
     ctaSecondary: string;
+    valueProps: readonly string[];
     stats: {
       appointments: { label: string; value: string; date: string };
       betaSpots: { label: string; value: string; date: string };
@@ -189,11 +190,16 @@ export const translations = {
     },
     // Hero
     hero: {
-      title: "No Technicians. No Extra Hours.",
-      titleHighlight: "Just a Phone Line That Works for You.",
-      subtitle: "AI voice agents that answer every call, book appointments, and update your system – automatically, 24/7, even when the clinic is closed.",
+      title: "Your Clinic is Fully Booked 24/7",
+      titleHighlight: "Even While You Sleep",
+      subtitle: "AI reception team that answers every inquiry, books appointments, and updates your system – automatically, in Hebrew and 3 other languages, without lifting a finger.",
       ctaPrimary: 'Book a Live Demo',
       ctaSecondary: 'Talk to the Agent Now',
+      valueProps: [
+        'Zero missed calls - 100% answered, zero voicemail',
+        '38% reduction in no-shows - automatic WhatsApp reminders',
+        '65% more conversions - instant response = more appointments',
+      ],
       stats: {
         appointments: { label: 'Appointments Saved This Week', value: '1,247', date: 'Dec 23, 2025' },
         betaSpots: { label: 'Beta Spots Available', value: '3 left', date: 'December 2025' },
@@ -469,11 +475,16 @@ export const translations = {
     },
     // Hero
     hero: {
-      title: 'אין צורך במזכירה נוספת. או בשעות נוספות.',
-      titleHighlight: 'רק קו טלפון שעובד בשבילך.',
-      subtitle: 'סוכני AI קוליים שעונים על כל שיחה, קובעים תורים, ומעדכנים את המערכת – אוטומטית, 24/7, גם כשהקליניקה סגורה.',
+      title: 'הקליניקה שלכם מלאה בשעות 24/7',
+      titleHighlight: 'גם כשאתם ישנים',
+      subtitle: 'צוות קבלה AI שעונה לכל פנייה, קובע תורים, ומעדכן את המערכת - אוטומטית, בעברית ו-3 שפות נוספות, בלי שאתם צריכים להרים אצבע.',
       ctaPrimary: 'קבעו הדגמה בלייב',
       ctaSecondary: 'דברו עם הסוכן עכשיו',
+      valueProps: [
+        'אפס שיחות שלא נענו - 100% מענה, אפס תא קולי',
+        '38% הפחתה באי-הגעות - תזכורות אוטומטיות ב-WhatsApp',
+        '65% יותר המרות - מענה מיידי = יותר תורים',
+      ],
       stats: {
         appointments: { label: 'תורים שלא אבדו השבוע', value: '1,247', date: '23 דצמבר 2025' },
         betaSpots: { label: 'מקומות פנויים בבטא', value: '3 נותרו', date: 'דצמבר 2025' },
