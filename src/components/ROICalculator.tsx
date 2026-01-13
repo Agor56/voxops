@@ -141,6 +141,10 @@ const ROICalculator = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-8"
           >
+            <h2 className="section-title text-foreground mb-6">
+              {isRTL ? 'כמה כסף אתם מאבדים ' : 'How Much Money Are You '}
+              <span className="gradient-text-purple">{isRTL ? 'כל חודש?' : 'Losing Each Month?'}</span>
+            </h2>
             <CollapsibleTrigger asChild>
               <button 
                 className={`group inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full cursor-pointer transition-all duration-300 hover:border-primary/40 ${isRTL ? 'flex-row-reverse' : ''} ${!isOpen ? 'animate-pulse-glow' : ''}`}
