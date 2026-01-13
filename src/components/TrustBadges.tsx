@@ -34,7 +34,7 @@ const LogoTrack = () => (
         <img
           src={platform.logo}
           alt={platform.name}
-          className="w-10 h-10 md:w-12 md:h-12 object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+          className="w-10 h-10 md:w-12 md:h-12 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
         />
       </div>
     ))}
