@@ -164,10 +164,31 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.6, delay: 0.3 }} 
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 font-light"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 font-light"
           >
             {t.hero.subtitle}
           </motion.p>
+
+          {/* Trust Badges - Critical for trust */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className={`flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-6 mb-10 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+          >
+            <div className={`flex items-center gap-2 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <span className="text-green-500">✅</span>
+              <span>{isRTL ? 'מאומן על מאות שיחות אמיתיות מקליניקות אסתטיקה' : 'Trained on hundreds of real calls from aesthetic clinics'}</span>
+            </div>
+            <div className={`flex items-center gap-2 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <span className="text-green-500">✅</span>
+              <span>{isRTL ? 'מותאם לתחום הרפואי והאסטטי' : 'Tailored for medical & aesthetic fields'}</span>
+            </div>
+            <div className={`flex items-center gap-2 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <span className="text-green-500">✅</span>
+              <span>{isRTL ? 'תואם תקנות משרד הבריאות' : 'Compliant with Ministry of Health regulations'}</span>
+            </div>
+          </motion.div>
 
           {/* CTAs with new button variants */}
           <motion.div 
