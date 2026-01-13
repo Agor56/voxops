@@ -70,39 +70,43 @@ const TrustBadges = () => {
   const { t } = useLanguage();
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.6 }}
-      className="mt-16 relative w-screen left-1/2 -translate-x-1/2"
-    >
+    <div className="mt-16 w-screen relative left-1/2 -translate-x-1/2 overflow-hidden">
       {/* Section Label */}
-      <p className="text-xs text-muted-foreground/60 uppercase tracking-[0.2em] text-center mb-8 font-medium">
+      <motion.p 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.6 }}
+        className="text-xs text-muted-foreground/60 uppercase tracking-[0.2em] text-center mb-8 font-medium"
+      >
         {t.hero.trustBadges}
-      </p>
+      </motion.p>
 
-      {/* Marquee Container - Full width */}
-      <div className="relative overflow-hidden w-full">
-        {/* Gradient Masks - Wider for full screen */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      {/* Marquee Container - Full viewport width */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.7 }}
+        className="relative"
+      >
+        {/* Gradient Masks - Edge fade */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 lg:w-48 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 lg:w-48 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        {/* Scrolling Track */}
-        <div className="flex animate-marquee">
-          {/* Triple the items for seamless loop on wider screens */}
+        {/* Scrolling Track - Icons only, no boxes */}
+        <div className="flex animate-marquee whitespace-nowrap">
           {[...platforms, ...platforms, ...platforms].map((platform, index) => (
             <div
               key={`${platform.name}-${index}`}
-              className="flex-shrink-0 mx-8 md:mx-12 flex items-center justify-center"
+              className="flex-shrink-0 px-6 md:px-10 lg:px-14 flex items-center justify-center"
             >
-              <div className="w-16 h-16 md:w-18 md:h-18 rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/10 flex items-center justify-center text-primary/40 hover:text-primary/70 hover:border-primary/30 hover:bg-primary/10 transition-all duration-300">
+              <div className="text-muted-foreground/30 hover:text-muted-foreground/60 transition-all duration-300 [&_svg]:w-10 [&_svg]:h-10 md:[&_svg]:w-12 md:[&_svg]:h-12">
                 <platform.icon />
               </div>
             </div>
           ))}
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
