@@ -86,6 +86,51 @@ export interface TranslationShape {
       description: string;
     }[];
   };
+  pricing: {
+    badge: string;
+    title: string;
+    titleHighlight: string;
+    subtitle: string;
+    perMonth: string;
+    mostPopular: string;
+    optionalAddons: string;
+    comparisonLink: string;
+    starter: {
+      name: string;
+      tagline: string;
+      setup: string;
+      badge: string;
+      features: readonly string[];
+      addons: readonly string[];
+      cta: string;
+    };
+    growth: {
+      name: string;
+      tagline: string;
+      setup: string;
+      badge: string;
+      features: readonly string[];
+      addons: readonly string[];
+      cta: string;
+    };
+    scale: {
+      name: string;
+      tagline: string;
+      setup: string;
+      badge: string;
+      features: readonly string[];
+      addons: readonly string[];
+      cta: string;
+    };
+    buildOwn: {
+      name: string;
+      tagline: string;
+      priceNote: string;
+      badge: string;
+      features: readonly string[];
+      cta: string;
+    };
+  };
   contact: {
     badge: string;
     title: string;
@@ -314,6 +359,79 @@ export const translations = {
         stepOf: 'of',
       },
     },
+    // Pricing
+    pricing: {
+      badge: 'Pricing Plans',
+      title: 'The Perfect Plan for',
+      titleHighlight: 'Your Clinic',
+      subtitle: 'Every package includes everything you need - AI voice agent, WhatsApp/SMS confirmations, and full CRM integration. Choose the capacity that fits you.',
+      perMonth: 'month',
+      mostPopular: 'Most Popular',
+      optionalAddons: 'Optional add-ons',
+      comparisonLink: 'Full comparison below ↓',
+      starter: {
+        name: 'STARTER',
+        tagline: 'Smart Start',
+        setup: '+ ₪3,500 setup',
+        badge: '✨ Perfect for: 1-2 practitioners',
+        features: [
+          '500 voice minutes/month',
+          'Ora - AI voice agent 24/7',
+          'WhatsApp/SMS confirmations',
+          'Full CRM integration',
+          'Support in 4 languages',
+        ],
+        addons: ['Voice Clone +₪497/month'],
+        cta: 'Start with STARTER',
+      },
+      growth: {
+        name: 'GROWTH',
+        tagline: 'Accelerated Growth',
+        setup: '+ ₪3,500 setup',
+        badge: '✨ Perfect for: 3-5 practitioners',
+        features: [
+          '1,200 voice minutes/month',
+          'Everything in STARTER, plus:',
+          'Or - Full WhatsApp agent',
+          'Advanced CRM workflows',
+          'Priority support (12 hours)',
+          'Bi-weekly optimization calls',
+        ],
+        addons: ['Voice Clone +₪497/month', 'SMS Confirmations +₪297/month'],
+        cta: 'Start with GROWTH',
+      },
+      scale: {
+        name: 'SCALE',
+        tagline: 'Enterprise Scale',
+        setup: '+ ₪3,500 setup',
+        badge: '✨ Perfect for: 6-10 practitioners',
+        features: [
+          '2,500 voice minutes/month',
+          'Everything in GROWTH, plus:',
+          'Adam - Outbound sales agent',
+          'Custom integrations',
+          'Dedicated account manager',
+          'Weekly strategy calls',
+        ],
+        addons: ['Voice Clone +₪497/month', 'SMS Confirmations +₪297/month', 'Custom API +₪997/month'],
+        cta: 'Start with SCALE',
+      },
+      buildOwn: {
+        name: 'BUILD + OWN',
+        tagline: 'Your Clinic, Your System',
+        priceNote: '+ ₪2,400/month',
+        badge: '💎 Full ownership',
+        features: [
+          'One-time build - you own it',
+          'Custom AI agent built for you',
+          'Full source code ownership',
+          'White-label ready',
+          'Training & documentation',
+          'Ongoing support available',
+        ],
+        cta: 'Get Started',
+      },
+    },
     // Footer
     footer: {
       description: 'AI-powered patient admin solutions for med spas and clinics. Never miss a lead, reduce no-shows, and grow your practice.',
@@ -496,6 +614,79 @@ export const translations = {
           description: 'משפרים את הסוכן ותומכים בכם לאורך זמן ככל שהצרכים מתפתחים',
         },
       ],
+    },
+    // Pricing
+    pricing: {
+      badge: 'תמחור',
+      title: 'התוכנית המושלמת',
+      titleHighlight: 'לקליניקה שלך',
+      subtitle: 'כל חבילה כוללת את כל מה שצריך - סוכן קולי AI, אישורי WhatsApp/SMS, ואינטגרציה מלאה ל-CRM. בחר את הקיבולת שמתאימה לך.',
+      perMonth: 'חודש',
+      mostPopular: 'הכי פופולרי',
+      optionalAddons: 'תוספים אופציונליים',
+      comparisonLink: 'השוואה מלאה למטה ↓',
+      starter: {
+        name: 'STARTER',
+        tagline: 'התחלה חכמה',
+        setup: '+ ₪3,500 התקנה',
+        badge: '✨ מושלם ל: 1-2 מטפלים',
+        features: [
+          '500 דקות קוליות/חודש',
+          'אורה - סוכנת AI קולית 24/7',
+          'אישורי WhatsApp/SMS',
+          'אינטגרציה CRM מלאה',
+          'תמיכה ב-4 שפות',
+        ],
+        addons: ['Voice Clone +₪497/חודש'],
+        cta: 'התחל עם STARTER',
+      },
+      growth: {
+        name: 'GROWTH',
+        tagline: 'צמיחה מואצת',
+        setup: '+ ₪3,500 התקנה',
+        badge: '✨ מושלם ל: 3-5 מטפלים',
+        features: [
+          '1,200 דקות קוליות/חודש',
+          'כל מה שב-STARTER, בתוספת:',
+          'אור - סוכן WhatsApp מלא',
+          'זרימות CRM מתקדמות',
+          'תמיכה עדיפות (12 שעות)',
+          'שיחות אופטימיזציה דו-שבועיות',
+        ],
+        addons: ['Voice Clone +₪497/חודש', 'SMS Confirmations +₪297/חודש'],
+        cta: 'התחל עם GROWTH',
+      },
+      scale: {
+        name: 'SCALE',
+        tagline: 'קנה מידה ארגוני',
+        setup: '+ ₪3,500 התקנה',
+        badge: '✨ מושלם ל: 6-10 מטפלים',
+        features: [
+          '2,500 דקות קוליות/חודש',
+          'כל מה שב-GROWTH, בתוספת:',
+          'אדם - סוכן מכירות יוצא',
+          'אינטגרציות מותאמות',
+          'מנהל חשבון ייעודי',
+          'שיחות אסטרטגיה שבועיות',
+        ],
+        addons: ['Voice Clone +₪497/חודש', 'SMS Confirmations +₪297/חודש', 'Custom API +₪997/חודש'],
+        cta: 'התחל עם SCALE',
+      },
+      buildOwn: {
+        name: 'BUILD + OWN',
+        tagline: 'הקליניקה שלך, המערכת שלך',
+        priceNote: '+ ₪2,400/חודש',
+        badge: '💎 בעלות מלאה',
+        features: [
+          'בנייה חד פעמית - אתה הבעלים',
+          'סוכן AI מותאם אישית',
+          'בעלות מלאה על קוד המקור',
+          'מוכן ל-White-label',
+          'הדרכה ותיעוד',
+          'תמיכה שוטפת זמינה',
+        ],
+        cta: 'התחל עכשיו',
+      },
     },
     // Contact
     contact: {
