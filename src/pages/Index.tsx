@@ -4,6 +4,7 @@ import AgentsSection from '@/components/AgentsSection';
 import MetricsSection from '@/components/MetricsSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import PricingSection from '@/components/PricingSection';
+import ComparisonTable from '@/components/ComparisonTable';
 import OnboardingSection from '@/components/OnboardingSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
@@ -22,6 +23,9 @@ const Index = () => {
           <MetricsSection />
           <TestimonialsSection />
           <PricingSection />
+          <section className="container mx-auto px-4">
+            <ComparisonTable />
+          </section>
           <OnboardingSection />
           <ContactSection />
         </main>
