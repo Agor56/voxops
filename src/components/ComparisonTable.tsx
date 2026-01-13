@@ -62,22 +62,22 @@ const ComparisonTable = () => {
                     <th className="p-4 text-right font-bold border-b border-border">{isRTL ? 'תכונה' : 'Feature'}</th>
                     <th className="p-4 text-center border-b border-border bg-card">
                       <div className="font-bold text-lg">STARTER</div>
-                      <div className="text-sm text-muted-foreground">₪2,997/{isRTL ? 'חודש' : 'mo'}</div>
+                      <div className="text-sm text-muted-foreground">₪1,997/{isRTL ? 'חודש' : 'mo'}</div>
                     </th>
                     <th className="p-4 text-center border-b border-border bg-primary/10 relative">
                       <div className="absolute -top-3 right-1/2 transform translate-x-1/2 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold">
                         ⭐ {isRTL ? 'הכי פופולרי' : 'Most Popular'}
                       </div>
                       <div className="font-bold text-lg text-primary mt-2">GROWTH</div>
-                      <div className="text-sm text-primary/80">₪4,997/{isRTL ? 'חודש' : 'mo'}</div>
+                      <div className="text-sm text-primary/80">₪3,997/{isRTL ? 'חודש' : 'mo'}</div>
                     </th>
                     <th className="p-4 text-center border-b border-border bg-card">
                       <div className="font-bold text-lg">SCALE</div>
-                      <div className="text-sm text-muted-foreground">₪7,997/{isRTL ? 'חודש' : 'mo'}</div>
+                      <div className="text-sm text-muted-foreground">₪6,997/{isRTL ? 'חודש' : 'mo'}</div>
                     </th>
                     <th className="p-4 text-center border-b border-border bg-amber-500/10">
                       <div className="font-bold text-lg">BUILD + OWN</div>
-                      <div className="text-sm text-muted-foreground">₪22,000 + ₪2,400/{isRTL ? "חו׳" : 'mo'}</div>
+                      <div className="text-sm text-muted-foreground">₪21,000 + ₪1,400/{isRTL ? "חו׳" : 'mo'}</div>
                     </th>
                   </tr>
                 </thead>
