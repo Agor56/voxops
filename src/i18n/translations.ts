@@ -381,7 +381,7 @@ export const translations = {
           'Full CRM integration',
           'Support in 4 languages',
         ],
-        addons: ['Voice Clone +₪497/month'],
+        addons: ['Voice Clone +₪497'],
         cta: 'Start with STARTER',
       },
       growth: {
@@ -397,7 +397,7 @@ export const translations = {
           'Priority support (12 hours)',
           'Bi-weekly optimization calls',
         ],
-        addons: ['Voice Clone +₪497/month', 'SMS Confirmations +₪297/month'],
+        addons: ['Voice Clone +₪497', 'SMS Confirmations +₪297/month'],
         cta: 'Start with GROWTH',
       },
       scale: {
@@ -413,7 +413,7 @@ export const translations = {
           'Dedicated account manager',
           'Weekly strategy calls',
         ],
-        addons: ['Voice Clone +₪497/month', 'SMS Confirmations +₪297/month', 'Custom API +₪997/month'],
+        addons: ['Voice Clone +₪497', 'SMS Confirmations +₪297/month', 'Custom API +₪997/month'],
         cta: 'Start with SCALE',
       },
       buildOwn: {
@@ -637,7 +637,7 @@ export const translations = {
           'אינטגרציה CRM מלאה',
           'תמיכה ב-4 שפות',
         ],
-        addons: ['Voice Clone +₪497/חודש'],
+        addons: ['Voice Clone +₪497'],
         cta: 'התחל עם STARTER',
       },
       growth: {
@@ -653,7 +653,7 @@ export const translations = {
           'תמיכה עדיפות (12 שעות)',
           'שיחות אופטימיזציה דו-שבועיות',
         ],
-        addons: ['Voice Clone +₪497/חודש', 'SMS Confirmations +₪297/חודש'],
+        addons: ['Voice Clone +₪497', 'SMS Confirmations +₪297/חודש'],
         cta: 'התחל עם GROWTH',
       },
       scale: {
@@ -669,7 +669,7 @@ export const translations = {
           'מנהל חשבון ייעודי',
           'שיחות אסטרטגיה שבועיות',
         ],
-        addons: ['Voice Clone +₪497/חודש', 'SMS Confirmations +₪297/חודש', 'Custom API +₪997/חודש'],
+        addons: ['Voice Clone +₪497', 'SMS Confirmations +₪297/חודש', 'Custom API +₪997/חודש'],
         cta: 'התחל עם SCALE',
       },
       buildOwn: {
