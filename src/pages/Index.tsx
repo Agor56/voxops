@@ -5,9 +5,11 @@ import MetricsSection from '@/components/MetricsSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import PricingSection from '@/components/PricingSection';
 import ComparisonTable from '@/components/ComparisonTable';
+import ROICalculator from '@/components/ROICalculator';
 import OnboardingSection from '@/components/OnboardingSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+
 
 const Index = () => {
   return (
@@ -26,6 +28,7 @@ const Index = () => {
           <section className="container mx-auto px-4">
             <ComparisonTable />
           </section>
+          <ROICalculator />
           <OnboardingSection />
           <ContactSection />
         </main>
