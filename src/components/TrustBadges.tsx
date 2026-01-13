@@ -24,6 +24,23 @@ const platforms = [
   { name: 'Outlook', logo: outlookLogo },
 ];
 
+const LogoTrack = () => (
+  <div className="flex shrink-0">
+    {platforms.map((platform, index) => (
+      <div
+        key={`${platform.name}-${index}`}
+        className="flex-shrink-0 px-6 md:px-8 lg:px-10 flex items-center justify-center"
+      >
+        <img
+          src={platform.logo}
+          alt={platform.name}
+          className="w-10 h-10 md:w-12 md:h-12 object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+        />
+      </div>
+    ))}
+  </div>
+);
+
 const TrustBadges = () => {
   const { t } = useLanguage();
 
@@ -46,25 +63,10 @@ const TrustBadges = () => {
         transition={{ duration: 0.6, delay: 0.7 }}
         className="relative -mx-[50vw] left-1/2 right-1/2 w-screen overflow-hidden"
       >
-        {/* No gradient masks - clean edges */}
-
-        {/* First scrolling track */}
-        <div className="flex animate-marquee">
-          {/* Repeat logos many times for seamless loop */}
-          {[...Array(6)].map((_, setIndex) => (
-            platforms.map((platform, index) => (
-              <div
-                key={`set${setIndex}-${platform.name}-${index}`}
-                className="flex-shrink-0 px-6 md:px-8 lg:px-10 flex items-center justify-center"
-              >
-                <img
-                  src={platform.logo}
-                  alt={platform.name}
-                  className="w-10 h-10 md:w-12 md:h-12 object-contain grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                />
-              </div>
-            ))
-          ))}
+        {/* Seamless infinite scroll - two identical tracks side by side */}
+        <div className="flex animate-marquee-infinite">
+          <LogoTrack />
+          <LogoTrack />
         </div>
       </motion.div>
     </div>

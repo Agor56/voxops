@@ -430,22 +430,22 @@
     animation: hero-glow-pulse 3s ease-in-out infinite;
   }
 
-  /* Marquee animation for trust badges */
-  @keyframes marquee {
+  /* Seamless infinite marquee animation */
+  @keyframes marquee-infinite {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-33.333%);
+      transform: translateX(-50%);
     }
   }
 
-  .animate-marquee {
-    animation: marquee 30s linear infinite;
+  .animate-marquee-infinite {
+    animation: marquee-infinite 25s linear infinite;
     will-change: transform;
   }
 
-  .animate-marquee:hover {
+  .animate-marquee-infinite:hover {
     animation-play-state: paused;
   }
 
