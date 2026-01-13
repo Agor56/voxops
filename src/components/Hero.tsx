@@ -169,24 +169,16 @@ const Hero = () => {
             {t.hero.subtitle}
           </motion.p>
 
-          {/* Trust Badges - Critical for trust */}
+          {/* Trust Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.35 }}
-            className={`flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-6 mb-10 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+            className="flex justify-center mb-10"
           >
             <div className={`flex items-center gap-2 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <span className="text-green-500">✅</span>
-              <span>{isRTL ? 'מאומן על מאות שיחות אמיתיות מקליניקות אסתטיקה' : 'Trained on hundreds of real calls from aesthetic clinics'}</span>
-            </div>
-            <div className={`flex items-center gap-2 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <span className="text-green-500">✅</span>
-              <span>{isRTL ? 'מותאם לתחום הרפואי והאסטטי' : 'Tailored for medical & aesthetic fields'}</span>
-            </div>
-            <div className={`flex items-center gap-2 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <span className="text-green-500">✅</span>
-              <span>{isRTL ? 'תואם תקנות משרד הבריאות' : 'Compliant with Ministry of Health regulations'}</span>
+              <span>🎓</span>
+              <span>{isRTL ? 'מאומן על מאות שיחות אמיתיות מקליניקות אסתטיקה בישראל' : 'Trained on hundreds of real calls from aesthetic clinics in Israel'}</span>
             </div>
           </motion.div>
 
