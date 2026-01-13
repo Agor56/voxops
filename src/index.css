@@ -433,8 +433,9 @@
   /* Logo scroll animation styles */
   .logo-scroll-container {
     overflow: hidden;
-    width: 100%;
+    width: 100vw;
     position: relative;
+    margin-left: calc(-50vw + 50%);
   }
 
   .logo-scroll-container:hover .logo-track {
