@@ -74,28 +74,28 @@ const TrustBadges = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.6 }}
-      className="mt-16 relative"
+      className="mt-16 relative w-screen left-1/2 -translate-x-1/2"
     >
       {/* Section Label */}
       <p className="text-xs text-muted-foreground/60 uppercase tracking-[0.2em] text-center mb-8 font-medium">
         {t.hero.trustBadges}
       </p>
 
-      {/* Marquee Container */}
-      <div className="relative overflow-hidden">
-        {/* Gradient Masks */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      {/* Marquee Container - Full width */}
+      <div className="relative overflow-hidden w-full">
+        {/* Gradient Masks - Wider for full screen */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
         {/* Scrolling Track */}
         <div className="flex animate-marquee">
-          {/* Double the items for seamless loop */}
-          {[...platforms, ...platforms].map((platform, index) => (
+          {/* Triple the items for seamless loop on wider screens */}
+          {[...platforms, ...platforms, ...platforms].map((platform, index) => (
             <div
               key={`${platform.name}-${index}`}
-              className="flex-shrink-0 mx-6 flex items-center justify-center"
+              className="flex-shrink-0 mx-8 md:mx-12 flex items-center justify-center"
             >
-              <div className="w-14 h-14 rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/10 flex items-center justify-center text-primary/40 hover:text-primary/70 hover:border-primary/30 hover:bg-primary/10 transition-all duration-300">
+              <div className="w-16 h-16 md:w-18 md:h-18 rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/10 flex items-center justify-center text-primary/40 hover:text-primary/70 hover:border-primary/30 hover:bg-primary/10 transition-all duration-300">
                 <platform.icon />
               </div>
             </div>
