@@ -95,7 +95,7 @@ const TrustBadges = () => {
               key={`${platform.name}-${index}`}
               className="flex-shrink-0 mx-6 flex items-center justify-center"
             >
-              <div className="w-14 h-14 rounded-xl bg-muted/30 backdrop-blur-sm border border-border/30 flex items-center justify-center text-muted-foreground/50 hover:text-muted-foreground/80 hover:border-border/50 transition-all duration-300">
+              <div className="w-14 h-14 rounded-xl bg-primary/5 backdrop-blur-sm border border-primary/10 flex items-center justify-center text-primary/40 hover:text-primary/70 hover:border-primary/30 hover:bg-primary/10 transition-all duration-300">
                 <platform.icon />
               </div>
             </div>
