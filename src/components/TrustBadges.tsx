@@ -24,23 +24,6 @@ const platforms = [
   { name: 'Outlook', logo: outlookLogo },
 ];
 
-const LogoTrack = () => (
-  <>
-    {platforms.map((platform, index) => (
-      <div
-        key={`${platform.name}-${index}`}
-        className="flex-shrink-0 px-6 md:px-8 lg:px-10 flex items-center justify-center"
-      >
-        <img
-          src={platform.logo}
-          alt={platform.name}
-          className="w-10 h-10 md:w-12 md:h-12 object-contain grayscale opacity-40 brightness-125 contrast-125 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-        />
-      </div>
-    ))}
-  </>
-);
-
 const TrustBadges = () => {
   const { t } = useLanguage();
 
@@ -56,23 +39,33 @@ const TrustBadges = () => {
         {t.hero.trustBadges}
       </motion.p>
 
-      {/* Marquee Container - Break out of container to full viewport */}
+      {/* Logo Scroll Container */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.7 }}
-        className="relative -mx-[50vw] left-1/2 right-1/2 w-screen overflow-hidden z-10"
+        className="logo-scroll-container"
       >
-        {/* Seamless infinite scroll - two identical tracks side by side */}
-        <div 
-          className="flex items-center"
-          style={{
-            width: 'max-content',
-            animation: 'marquee-infinite 60s linear infinite',
-          }}
-        >
-          <LogoTrack />
-          <LogoTrack />
+        {/* Logo Track - contains two sets for seamless loop */}
+        <div className="logo-track">
+          {/* First set of logos */}
+          {platforms.map((platform, index) => (
+            <div key={`first-${platform.name}-${index}`} className="logo-item">
+              <img
+                src={platform.logo}
+                alt={platform.name}
+              />
+            </div>
+          ))}
+          {/* Second set of logos (duplicate for seamless loop) */}
+          {platforms.map((platform, index) => (
+            <div key={`second-${platform.name}-${index}`} className="logo-item">
+              <img
+                src={platform.logo}
+                alt={platform.name}
+              />
+            </div>
+          ))}
         </div>
       </motion.div>
     </div>

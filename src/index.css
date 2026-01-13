@@ -430,19 +430,56 @@
     animation: hero-glow-pulse 3s ease-in-out infinite;
   }
 
-  /* Seamless infinite marquee animation */
-  @keyframes marquee-infinite {
+  /* Logo scroll animation styles */
+  .logo-scroll-container {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  .logo-scroll-container:hover .logo-track {
+    animation-play-state: paused;
+  }
+
+  .logo-track {
+    display: flex;
+    gap: 80px;
+    animation: logo-scroll 60s linear infinite;
+    width: max-content;
+  }
+
+  .logo-item {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .logo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.4;
+    filter: grayscale(100%);
+    transition: all 0.3s ease;
+  }
+
+  .logo-item:hover img {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.1);
+  }
+
+  @keyframes logo-scroll {
     0% {
       transform: translateX(0);
     }
     100% {
       transform: translateX(-50%);
     }
-  }
-
-  .animate-marquee-infinite {
-    animation: marquee-infinite 70s linear infinite;
-    will-change: transform;
   }
 
   /* Font utilities */
