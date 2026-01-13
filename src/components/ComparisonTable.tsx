@@ -95,10 +95,17 @@ const ComparisonTable = () => {
                   </tr>
                   <tr>
                     <td className="p-4 text-right border-b border-border">{isRTL ? 'התחייבות מינימלית' : 'Minimum Commitment'}</td>
-                    <td className="p-4 text-center border-b border-border">{isRTL ? '6 חודשים' : '6 months'}</td>
-                    <td className="p-4 text-center border-b border-border bg-primary/10">{isRTL ? '6 חודשים' : '6 months'}</td>
-                    <td className="p-4 text-center border-b border-border">{isRTL ? '12 חודשים' : '12 months'}</td>
-                    <td className="p-4 text-center border-b border-border bg-amber-500/10">{isRTL ? '12 חודשים' : '12 months'}</td>
+                    <td colSpan={4} className="p-4 text-center border-b border-border">
+                      <div className="text-foreground font-medium">
+                        {isRTL ? 'אין התחייבות. בטלו בכל עת.' : 'No commitment. Cancel anytime.'}
+                      </div>
+                      <div className="text-sm text-green-600 dark:text-green-400 mt-1 flex items-center justify-center gap-1">
+                        <span>✅</span>
+                        {isRTL 
+                          ? 'הישארו 6 חודשים → קבלו ₪3,500 זיכוי בחודש 7 (ההתקנה חינם למעשה)'
+                          : 'Stay 6 months → Get ₪3,500 credit in month 7 (Setup fee essentially free)'}
+                      </div>
+                    </td>
                   </tr>
 
                   {/* Agent Ora Section */}
