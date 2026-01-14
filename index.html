@@ -23,21 +23,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Chat Widget -->
-    <div id="cd-widget"></div>
-    <script>
-      (function() {
-          if (window.chatWidgetScriptLoaded) return;
-          window.ChatWidgetConfig = {
-            agentId: "696642e71c7dcc391a509c0f", 
-          };
-          var chatWidgetScript = document.createElement("script");
-          chatWidgetScript.type = 'text/javascript';
-          chatWidgetScript.src = "https://storage.googleapis.com/cdwidget/dist/assets/js/main.js";
-          document.body.appendChild(chatWidgetScript);
-          window.chatWidgetScriptLoaded = true;
-      })();
-    </script>
   </body>
 </html>
