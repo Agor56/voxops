@@ -212,10 +212,12 @@ const PricingSection = () => {
               </div>
 
               {/* Monthly Price */}
-              <div className={`text-4xl font-bold mb-1 ${plan.popular ? "text-primary-foreground" : "text-primary"}`}>
-                {plan.monthlyPrice}
-                <span className="text-lg font-normal opacity-75">/חודש</span>
-              </div>
+              {!plan.premium && (
+                <div className={`text-4xl font-bold mb-1 ${plan.popular ? "text-primary-foreground" : "text-primary"}`}>
+                  {plan.monthlyPrice}
+                  <span className="text-lg font-normal opacity-75">/חודש</span>
+                </div>
+              )}
 
               {/* Per Minute */}
               {plan.perMinute && (
