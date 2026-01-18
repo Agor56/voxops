@@ -24,10 +24,10 @@ const Index = () => {
           <AgentsSection />
           <MetricsSection />
           <TestimonialsSection />
-          <PricingSection />
-          <section className="container mx-auto px-4">
+          {/* <PricingSection /> */}
+          {/* <section className="container mx-auto px-4">
             <ComparisonTable />
-          </section>
+          </section> */}
           <ROICalculator />
           <OnboardingSection />
           <ContactSection />
