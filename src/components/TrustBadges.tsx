@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -29,6 +29,7 @@ const TrustBadges = () => {
   const { t } = useLanguage();
   const firstSetRef = useRef<HTMLDivElement>(null);
   const [marqueeDistance, setMarqueeDistance] = useState(0);
+  const isReady = marqueeDistance > 0;
 
   useEffect(() => {
     const update = () => {
@@ -47,6 +48,12 @@ const TrustBadges = () => {
       window.removeEventListener('resize', update);
     };
   }, []);
+
+  const marqueeStyle = useMemo(() => {
+    const style: Record<string, string> = {};
+    if (isReady) style['--marquee-distance'] = `${marqueeDistance}px`;
+    return style;
+  }, [isReady, marqueeDistance]);
 
   return (
     <div className="mt-16 w-full">
@@ -69,8 +76,11 @@ const TrustBadges = () => {
       >
         {/* Logo Track - contains two sets for seamless loop */}
         <div
+          // Key forces a clean restart whenever the measured distance changes (initial load / resize)
+          key={isReady ? marqueeDistance : 'pending'}
           className="logo-track"
-          style={{ ['--marquee-distance' as never]: `${marqueeDistance}px` } as React.CSSProperties}
+          style={marqueeStyle as CSSProperties}
+          data-ready={isReady ? 'true' : 'false'}
         >
           {/* First set of logos */}
           <div ref={firstSetRef} className="logo-set">
