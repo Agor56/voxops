@@ -466,7 +466,11 @@
     display: flex;
     width: fit-content;
     will-change: transform;
-    animation: logo-scroll 60s linear infinite;
+    animation: logo-scroll var(--marquee-duration, 60s) linear infinite;
+  }
+
+  .logo-track[data-ready="false"] {
+    animation: none;
   }
 
   .logo-set {
@@ -503,10 +507,10 @@
 
   @keyframes logo-scroll {
     from {
-      transform: translateX(0);
+      transform: translate3d(0, 0, 0);
     }
     to {
-      transform: translateX(calc(var(--marquee-distance) * -1));
+      transform: translate3d(calc(var(--marquee-distance) * -1), 0, 0);
     }
   }
 
