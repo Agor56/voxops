@@ -461,10 +461,19 @@
   }
 
   .logo-track {
+    --marquee-gap: 80px;
+    --marquee-distance: 0px;
     display: flex;
-    gap: 80px;
     width: fit-content;
-    animation: logo-scroll 40s linear infinite;
+    will-change: transform;
+    animation: logo-scroll 60s linear infinite;
+  }
+
+  .logo-set {
+    display: flex;
+    gap: var(--marquee-gap);
+    padding-right: var(--marquee-gap);
+    width: fit-content;
   }
 
   .logo-item {
@@ -497,7 +506,7 @@
       transform: translateX(0);
     }
     to {
-      transform: translateX(calc(-50% - 40px));
+      transform: translateX(calc(var(--marquee-distance) * -1));
     }
   }
 

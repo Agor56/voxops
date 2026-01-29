@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -26,6 +27,26 @@ const platforms = [
 
 const TrustBadges = () => {
   const { t } = useLanguage();
+  const firstSetRef = useRef<HTMLDivElement>(null);
+  const [marqueeDistance, setMarqueeDistance] = useState(0);
+
+  useEffect(() => {
+    const update = () => {
+      const w = firstSetRef.current?.getBoundingClientRect().width ?? 0;
+      setMarqueeDistance(Math.max(0, Math.round(w)));
+    };
+
+    update();
+
+    const ro = new ResizeObserver(update);
+    if (firstSetRef.current) ro.observe(firstSetRef.current);
+    window.addEventListener('resize', update);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', update);
+    };
+  }, []);
 
   return (
     <div className="mt-16 w-full">
@@ -47,25 +68,27 @@ const TrustBadges = () => {
         className="logo-scroll-container"
       >
         {/* Logo Track - contains two sets for seamless loop */}
-        <div className="logo-track">
+        <div
+          className="logo-track"
+          style={{ ['--marquee-distance' as never]: `${marqueeDistance}px` } as React.CSSProperties}
+        >
           {/* First set of logos */}
-          {platforms.map((platform, index) => (
-            <div key={`first-${platform.name}-${index}`} className="logo-item">
-              <img
-                src={platform.logo}
-                alt={platform.name}
-              />
-            </div>
-          ))}
+          <div ref={firstSetRef} className="logo-set">
+            {platforms.map((platform, index) => (
+              <div key={`first-${platform.name}-${index}`} className="logo-item">
+                <img src={platform.logo} alt={platform.name} />
+              </div>
+            ))}
+          </div>
+
           {/* Second set of logos (duplicate for seamless loop) */}
-          {platforms.map((platform, index) => (
-            <div key={`second-${platform.name}-${index}`} className="logo-item">
-              <img
-                src={platform.logo}
-                alt={platform.name}
-              />
-            </div>
-          ))}
+          <div className="logo-set" aria-hidden="true">
+            {platforms.map((platform, index) => (
+              <div key={`second-${platform.name}-${index}`} className="logo-item">
+                <img src={platform.logo} alt="" />
+              </div>
+            ))}
+          </div>
         </div>
       </motion.div>
     </div>
