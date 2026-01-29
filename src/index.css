@@ -446,12 +446,14 @@
     animation: hero-glow-pulse 3s ease-in-out infinite;
   }
 
-  /* Logo scroll animation styles */
+  /* Logo scroll animation styles - Infinite marquee */
   .logo-scroll-container {
     overflow: hidden;
     width: 100vw;
     position: relative;
     margin-left: calc(-50vw + 50%);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   }
 
   .logo-scroll-container:hover .logo-track {
@@ -461,8 +463,8 @@
   .logo-track {
     display: flex;
     gap: 80px;
-    animation: logo-scroll 60s linear infinite;
-    width: max-content;
+    width: fit-content;
+    animation: logo-scroll 40s linear infinite;
   }
 
   .logo-item {
@@ -491,11 +493,11 @@
   }
 
   @keyframes logo-scroll {
-    0% {
+    from {
       transform: translateX(0);
     }
-    100% {
-      transform: translateX(-50%);
+    to {
+      transform: translateX(calc(-50% - 40px));
     }
   }
 
