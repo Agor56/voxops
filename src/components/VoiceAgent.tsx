@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GoogleGenAI, Modality } from '@google/genai';
-import { EVE_CONFIG, GEMINI_API_KEY } from '../constants';
+import { EVE_CONFIG } from '../constants';
 import { createPcmBlob, decodeAudioData } from '../utils/audioUtils';
 import { Waveform } from './Waveform';
 import { AudioStatus } from '../types';
 import { X, Mic, MicOff, PhoneOff } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface VoiceAgentProps {
   isOpen: boolean;
@@ -40,15 +41,21 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
     if (initializedRef.current) return;
     initializedRef.current = true;
 
-    if (!GEMINI_API_KEY) {
-      setErrorMessage("API Key missing");
-      setStatus(AudioStatus.ERROR);
-      return;
-    }
-
     const startSession = async () => {
       try {
-        const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+        // Fetch API key from edge function
+        console.log('Fetching Gemini credentials...');
+        const { data, error } = await supabase.functions.invoke('gemini-session');
+        
+        if (error || !data?.apiKey) {
+          console.error('Failed to get API key:', error);
+          setErrorMessage("Could not get API credentials");
+          setStatus(AudioStatus.ERROR);
+          return;
+        }
+
+        console.log('Got API key, connecting to Gemini Live...');
+        const ai = new GoogleGenAI({ apiKey: data.apiKey });
         audioContextRef.current = new AudioContext({ sampleRate: 24000 });
         inputContextRef.current = new AudioContext({ sampleRate: 16000 });
 
