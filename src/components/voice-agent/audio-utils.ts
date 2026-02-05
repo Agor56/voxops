@@ -12,17 +12,19 @@ export class AudioRecorder {
 
   constructor(private onAudioData: (audioData: string) => void) {}
 
-  async start(): Promise<void> {
+  async start(existingStream?: MediaStream): Promise<void> {
     try {
-      this.stream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          sampleRate: 16000,
-          channelCount: 1,
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true
-        }
-      });
+      this.stream =
+        existingStream ??
+        (await navigator.mediaDevices.getUserMedia({
+          audio: {
+            sampleRate: 16000,
+            channelCount: 1,
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true,
+          },
+        }));
 
       this.audioContext = new AudioContext({ sampleRate: 16000 });
       if (this.audioContext.state === 'suspended') {
