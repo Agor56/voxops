@@ -1,4 +1,7 @@
-export function createPcmBlob(float32Array: Float32Array): { mimeType: string; data: string } {
+export function createPcmBlob(
+  float32Array: Float32Array,
+  sampleRate = 24000
+): { mimeType: string; data: string } {
   const int16Array = new Int16Array(float32Array.length);
   for (let i = 0; i < float32Array.length; i++) {
     const s = Math.max(-1, Math.min(1, float32Array[i]));
@@ -9,7 +12,7 @@ export function createPcmBlob(float32Array: Float32Array): { mimeType: string; d
   for (let i = 0; i < uint8Array.length; i++) {
     binary += String.fromCharCode(uint8Array[i]);
   }
-  return { mimeType: 'audio/pcm;rate=16000', data: btoa(binary) };
+  return { mimeType: `audio/pcm;rate=${sampleRate}`, data: btoa(binary) };
 }
 
 export async function decodeAudioData(base64: string, context: AudioContext): Promise<AudioBuffer> {

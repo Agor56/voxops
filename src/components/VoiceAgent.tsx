@@ -28,6 +28,7 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
   const nextStartTimeRef = useRef<number>(0);
   const audioSourcesRef = useRef<Set<AudioBufferSourceNode>>(new Set());
   const isMutedRef = useRef(false);
+  const micFrameCountRef = useRef(0);
 
   // Keep isMutedRef in sync
   useEffect(() => {
@@ -40,6 +41,7 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
       setStatus(AudioStatus.DISCONNECTED);
       setErrorMessage(null);
       setIsReady(false);
+      micFrameCountRef.current = 0;
     }
   }, [isOpen]);
 
@@ -52,7 +54,7 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
 
       // Step 1: Create AudioContexts SYNCHRONOUSLY during user gesture
       audioContextRef.current = new AudioContext({ sampleRate: 24000 });
-      inputContextRef.current = new AudioContext({ sampleRate: 16000 });
+      inputContextRef.current = new AudioContext({ sampleRate: 24000 });
       
       // Resume immediately (required for iOS Safari)
       await audioContextRef.current.resume();
@@ -63,7 +65,7 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
       // Step 2: Request microphone permission during user gesture
       const stream = await navigator.mediaDevices.getUserMedia({ 
         audio: {
-          sampleRate: 16000,
+          sampleRate: 24000,
           channelCount: 1,
           echoCancellation: true,
           noiseSuppression: true,
@@ -163,11 +165,21 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
     
     const source = inputContextRef.current.createMediaStreamSource(streamRef.current);
     const processor = inputContextRef.current.createScriptProcessor(4096, 1, 1);
+
+    micFrameCountRef.current = 0;
     
     processor.onaudioprocess = (e) => {
       if (isMutedRef.current || !session) return;
+
+      micFrameCountRef.current += 1;
+      if (micFrameCountRef.current === 1) {
+        console.log('🎤 Mic audio frames flowing (sending to model)...');
+      } else if (micFrameCountRef.current % 50 === 0) {
+        console.log('🎤 Mic frames sent:', micFrameCountRef.current);
+      }
+
       const inputData = e.inputBuffer.getChannelData(0);
-      const pcmData = createPcmBlob(new Float32Array(inputData));
+      const pcmData = createPcmBlob(new Float32Array(inputData), 24000);
       
       try {
         session.sendRealtimeInput({ 
