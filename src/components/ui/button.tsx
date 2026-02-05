@@ -15,8 +15,8 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent/10 hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        // Primary CTA with magnetic hover + glow
-        hero: "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-[0_0_30px_hsl(168_100%_40%/0.4)] hover:shadow-[0_0_60px_hsl(168_100%_40%/0.6)] hover:scale-[1.02]",
+        // Primary CTA with magnetic hover + glow + shimmer
+        hero: "relative bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-[0_0_30px_hsl(168_100%_40%/0.4)] hover:shadow-[0_0_60px_hsl(168_100%_40%/0.6)] hover:scale-[1.02] overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:animate-[shimmer_3s_ease-in-out_infinite] animate-[pulse-glow_2s_ease-in-out_infinite]",
         heroSecondary: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-[0_0_30px_hsl(160_97%_45%/0.3)] hover:shadow-[0_0_50px_hsl(160_97%_45%/0.5)]",
         // Glassmorphism with animated shimmer border
         heroGlass: "relative bg-primary/10 backdrop-blur-xl border border-primary/20 text-foreground hover:bg-primary/15 shadow-[0_8px_32px_hsl(168_100%_40%/0.12)] overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-primary/30 before:to-transparent before:animate-[shimmer_3s_ease-in-out_infinite] transition-all duration-300 hover:border-primary/40 hover:shadow-[0_8px_40px_hsl(168_100%_40%/0.25)]",
