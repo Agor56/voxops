@@ -20,14 +20,29 @@ export function arrayBufferToBase64(buffer: ArrayBuffer): string {
   return btoa(binary);
 }
 
-export async function decodeAudioData(
+/**
+ * Decode raw PCM16 audio data into an AudioBuffer.
+ * IMPORTANT: Creates a properly-aligned Int16Array copy to avoid byte offset issues.
+ */
+export function decodeAudioData(
   data: Uint8Array,
   ctx: AudioContext,
   sampleRate: number = 24000,
   numChannels: number = 1
-): Promise<AudioBuffer> {
-  const dataInt16 = new Int16Array(data.buffer);
+): AudioBuffer {
+  // Create a new ArrayBuffer and copy data to ensure proper alignment
+  const alignedBuffer = new ArrayBuffer(data.length);
+  new Uint8Array(alignedBuffer).set(data);
+  
+  const dataInt16 = new Int16Array(alignedBuffer);
   const frameCount = dataInt16.length / numChannels;
+  
+  // Guard against empty or invalid data
+  if (frameCount <= 0 || !Number.isFinite(frameCount)) {
+    console.warn('⚠️ Invalid audio frame count:', frameCount, 'data length:', data.length);
+    return ctx.createBuffer(numChannels, 1, sampleRate);
+  }
+  
   const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
 
   for (let channel = 0; channel < numChannels; channel++) {
