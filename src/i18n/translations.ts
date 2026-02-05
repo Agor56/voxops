@@ -232,7 +232,7 @@ export const translations = {
         cta: 'Try Ora',
       },
       marcus: {
-        name: 'Or - Voice Reception Agent',
+        name: 'Eve - Voice Reception Agent',
         description: 'Answers every incoming call 24/7, provides treatment information, books appointments during the call, and syncs everything with your calendar and CRM – without involving your staff.',
         features: [
           'Answers every incoming call 24/7 (no more voicemail)',
@@ -242,7 +242,7 @@ export const translations = {
           'Updates CRM with detailed notes after every call',
           'Speaks Hebrew, English, Russian, Arabic, and more',
         ],
-        cta: 'Talk to Or',
+        cta: 'Talk to Eve',
       },
       david: {
         name: 'Adam - Outbound Sales Agent',
@@ -517,16 +517,16 @@ export const translations = {
         cta: 'נסו את אורה',
       },
       marcus: {
-        name: 'אור - סוכן קבלה קולי',
-        description: 'עונה לכל שיחה 24/7, מספק מידע, מזמין תורים בזמן השיחה - בלי לטרוד לצוות.',
+        name: 'איב - סוכנת קבלה קולית',
+        description: 'עונה לכל שיחה 24/7, מספקת מידע, מזמינה תורים בזמן השיחה - בלי לטרוד לצוות.',
         features: [
           'אפס תא קולי - כל שיחה נענית',
-          'מזמין תורים ומסנכרן עם היומן (Google Calendar / Calendly / Acuity)',
-          'מעביר שיחות דחופות מיד לצוות',
-          'מעדכן CRM אחרי כל שיחה',
-          'דובר עברית, אנגלית, רוסית, ערבית, ועוד',
+          'מזמינה תורים ומסנכרנת עם היומן (Google Calendar / Calendly / Acuity)',
+          'מעבירה שיחות דחופות מיד לצוות',
+          'מעדכנת CRM אחרי כל שיחה',
+          'דוברת עברית, אנגלית, רוסית, ערבית, ועוד',
         ],
-        cta: 'דברו עם אור',
+        cta: 'דברו עם איב',
       },
       david: {
         name: 'אדם - סוכן מכירות יוצא',
