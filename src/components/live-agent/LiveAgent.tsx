@@ -79,11 +79,26 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
 
   // Audio playback queue
   const playNextInQueue = useCallback(async () => {
-    if (isPlayingRef.current || audioQueueRef.current.length === 0) return;
-    if (!audioContextRef.current) return;
+    console.log('🎵 playNextInQueue called, isPlaying:', isPlayingRef.current, 'queueLength:', audioQueueRef.current.length);
+    
+    if (isPlayingRef.current || audioQueueRef.current.length === 0) {
+      console.log('🎵 Skipping - already playing or empty queue');
+      return;
+    }
+    if (!audioContextRef.current) {
+      console.log('⚠️ No audio context in playNextInQueue');
+      return;
+    }
+
+    // Resume context if suspended
+    if (audioContextRef.current.state === 'suspended') {
+      console.log('🎵 Resuming suspended AudioContext');
+      await audioContextRef.current.resume();
+    }
 
     isPlayingRef.current = true;
     const buffer = audioQueueRef.current.shift()!;
+    console.log('🎵 Playing buffer, duration:', buffer.duration.toFixed(2), 's, context state:', audioContextRef.current.state);
 
     try {
       const source = audioContextRef.current.createBufferSource();
@@ -98,28 +113,38 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
       }
 
       source.onended = () => {
+        console.log('🎵 Buffer playback ended');
         isPlayingRef.current = false;
         playNextInQueue();
       };
 
       source.start();
+      console.log('🎵 source.start() called');
     } catch (err) {
-      console.error('Playback error:', err);
+      console.error('❌ Playback error:', err);
       isPlayingRef.current = false;
       playNextInQueue();
     }
   }, []);
 
   const queueAudio = useCallback(async (base64: string) => {
-    if (!audioContextRef.current) return;
+    if (!audioContextRef.current) {
+      console.log('⚠️ No audio context for queueAudio');
+      return;
+    }
+    
+    console.log('🔊 Queueing audio chunk, length:', base64.length);
     
     try {
       const data = base64ToUint8Array(base64);
+      console.log('🔊 Decoded to Uint8Array, length:', data.length);
       const buffer = await decodeAudioData(data, audioContextRef.current);
+      console.log('🔊 Created AudioBuffer, duration:', buffer.duration.toFixed(2), 's');
       audioQueueRef.current.push(buffer);
+      console.log('🔊 Queue size:', audioQueueRef.current.length, 'isPlaying:', isPlayingRef.current);
       playNextInQueue();
     } catch (err) {
-      console.error('Audio decode error:', err);
+      console.error('❌ Audio decode error:', err);
     }
   }, [playNextInQueue]);
 
