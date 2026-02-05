@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mic } from 'lucide-react';
-import { VoiceAgent } from '@/components/VoiceAgent';
+import { VoiceAgentModal } from '@/components/voice-agent';
 
 const VoiceAgentButton = () => {
   const [isVoiceAgentOpen, setIsVoiceAgentOpen] = useState(false);
@@ -24,9 +24,9 @@ const VoiceAgentButton = () => {
       </motion.button>
 
       {/* Voice Agent Modal */}
-      <VoiceAgent 
-        isOpen={isVoiceAgentOpen} 
-        onClose={() => setIsVoiceAgentOpen(false)} 
+      <VoiceAgentModal
+        isOpen={isVoiceAgentOpen}
+        onClose={() => setIsVoiceAgentOpen(false)}
       />
     </>
   );
