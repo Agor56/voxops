@@ -4,12 +4,13 @@ import { Bot, MessageSquare, Phone, PhoneOutgoing, Check, ArrowRight } from 'luc
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import VoiceAgentDialog from './VoiceAgentDialog';
-import { LiveAgent } from './live-agent';
+import LiveAgentDialog from './LiveAgentDialog';
 const WHATSAPP_NUMBER = '972555197834';
 
 const AgentsSection = () => {
   const { t, isRTL } = useLanguage();
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [liveAgentOpen, setLiveAgentOpen] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<'marcus' | 'david'>('marcus');
 
   const handleSofiaClick = () => {
@@ -40,7 +41,7 @@ const AgentsSection = () => {
       variant: 'blue' as const,
       data: t.agents.marcus,
       delay: 0.15,
-      onClick: () => handleVoiceAgentClick('marcus'),
+      onClick: () => setLiveAgentOpen(true),
     },
     {
       key: 'david',
@@ -166,23 +167,6 @@ const AgentsSection = () => {
               );
             })}
           </div>
-
-          {/* Live Agent Demo */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-16"
-          >
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">🎙️ נסו את נועה עכשיו</h3>
-              <p className="text-muted-foreground">מזכירה רפואית וירטואלית - לחצו "התחל שיחה" ודברו</p>
-            </div>
-            <div className="max-w-md mx-auto">
-              <LiveAgent className="h-[500px]" />
-            </div>
-          </motion.div>
         </div>
       </section>
 
@@ -191,6 +175,12 @@ const AgentsSection = () => {
         open={dialogOpen} 
         onOpenChange={setDialogOpen} 
         agentName={selectedAgent}
+      />
+
+      {/* Live Agent Dialog */}
+      <LiveAgentDialog
+        open={liveAgentOpen}
+        onOpenChange={setLiveAgentOpen}
       />
     </>
   );
