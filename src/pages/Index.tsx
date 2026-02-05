@@ -9,8 +9,6 @@ import ROICalculator from '@/components/ROICalculator';
 import OnboardingSection from '@/components/OnboardingSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
-import { VoiceAgentButton } from '@/components/voice-agent';
-
 
 const Index = () => {
   return (
@@ -35,9 +33,6 @@ const Index = () => {
         </main>
         <Footer />
       </div>
-      
-      {/* Voice Agent FAB */}
-      <VoiceAgentButton />
     </div>
   );
 };

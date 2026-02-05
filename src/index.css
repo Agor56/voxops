@@ -580,33 +580,4 @@
     box-shadow: 0 4px 12px hsl(var(--primary) / 0.6);
   }
 
-  /* Voice Agent Styles */
-  .voice-agent-fab {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.8));
-    color: hsl(var(--primary-foreground));
-    border: 1px solid hsl(var(--primary) / 0.3);
-    transition: all 0.3s ease;
-  }
-
-  .voice-agent-fab:hover {
-    box-shadow: 0 8px 32px hsl(var(--primary) / 0.4);
-  }
-
-  .voice-agent-modal {
-    background: hsl(var(--background) / 0.95);
-    border: 1px solid hsl(var(--border) / 0.5);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  }
-
-  .voice-agent-suggestion {
-    border: 1px solid hsl(var(--primary) / 0.2);
-  }
-
-  .waveform-bar {
-    width: 4px;
-    height: 32px;
-    border-radius: 2px;
-    transform-origin: center;
-  }
 }
