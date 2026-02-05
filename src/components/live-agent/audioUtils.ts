@@ -39,6 +39,35 @@ export async function decodeAudioData(
   return buffer;
 }
 
+/**
+ * Browsers often capture microphone audio at 48kHz even if you request 16kHz.
+ * Gemini Live expects raw PCM16 @ 16kHz for input. We must resample.
+ */
+export function resampleFloat32(
+  input: Float32Array,
+  fromSampleRate: number,
+  toSampleRate: number
+): Float32Array {
+  if (!Number.isFinite(fromSampleRate) || !Number.isFinite(toSampleRate) || fromSampleRate <= 0 || toSampleRate <= 0) {
+    return input;
+  }
+  if (fromSampleRate === toSampleRate) return input;
+
+  const ratio = toSampleRate / fromSampleRate;
+  const outputLength = Math.max(1, Math.round(input.length * ratio));
+  const output = new Float32Array(outputLength);
+
+  for (let i = 0; i < outputLength; i++) {
+    const srcIndex = i / ratio;
+    const i0 = Math.floor(srcIndex);
+    const i1 = Math.min(i0 + 1, input.length - 1);
+    const frac = srcIndex - i0;
+    output[i] = input[i0] * (1 - frac) + input[i1] * frac;
+  }
+
+  return output;
+}
+
 export function createPcmBlob(data: Float32Array): Blob {
   const l = data.length;
   const int16 = new Int16Array(l);
