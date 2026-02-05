@@ -94,12 +94,12 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
             updateStatus('listening');
           },
           onmessage: (message: any) => {
-            console.log('Received message:', message.type || 'serverContent');
-            
+            console.log('Received message:', message?.type || 'serverContent');
+
             // Handle audio data
-            if (message.serverContent?.modelTurn?.parts) {
+            if (message?.serverContent?.modelTurn?.parts) {
               for (const part of message.serverContent.modelTurn.parts) {
-                if (part.inlineData?.data) {
+                if (part?.inlineData?.data) {
                   playerRef.current?.addToQueue(part.inlineData.data);
                 }
               }
@@ -111,13 +111,29 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
             setState(prev => ({ ...prev, status: 'error', errorMessage: errorMsg }));
             onError?.(errorMsg);
           },
-          onclose: () => {
-            console.log('Disconnected from Gemini Live API');
-            if (sessionRef.current) {
-              sessionRef.current = null;
-              updateStatus('idle');
+          onclose: (event: any) => {
+            // Some disconnects come through onclose (without onerror) so we log as much as possible
+            console.log('Disconnected from Gemini Live API', event);
+
+            const code = event?.code ?? event?.event?.code;
+            const reason = event?.reason ?? event?.event?.reason;
+            const closeMsg = code
+              ? `Disconnected (${code}${reason ? `: ${reason}` : ''})`
+              : 'Disconnected';
+
+            // Cleanup refs so user can reconnect
+            if (recorderRef.current) {
+              recorderRef.current.stop();
+              recorderRef.current = null;
             }
-          }
+            playerRef.current?.stop();
+            sessionRef.current = null;
+            aiRef.current = null;
+            isConnectingRef.current = false;
+
+            setState(prev => ({ ...prev, status: 'error', errorMessage: closeMsg }));
+            onError?.(closeMsg);
+          },
         }
       });
 
