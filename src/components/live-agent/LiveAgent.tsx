@@ -11,7 +11,8 @@ import AudioVisualizer from './AudioVisualizer';
 import ChatLog from './ChatLog';
 import ToolsDisplay from './ToolsDisplay';
 
-const MODEL_ID = 'gemini-2.0-flash-live-001';
+const MODEL_ID = 'gemini-2.5-flash-native-audio-preview-12-2025';
+const VOICE_NAME = 'Zephyr';
 
 interface LiveAgentProps {
   className?: string;
@@ -302,6 +303,13 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
         },
         config: {
           responseModalities: [Modality.AUDIO],
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: {
+                voiceName: VOICE_NAME
+              }
+            }
+          },
           systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
           tools: [{ functionDeclarations: TOOLS }],
           inputAudioTranscription: {},
