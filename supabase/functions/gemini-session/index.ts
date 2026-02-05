@@ -13,6 +13,8 @@ serve(async (req) => {
 
   try {
     const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
+    const GEMINI_MODEL = Deno.env.get('GEMINI_MODEL') ?? 'gemini-2.0-flash-live-001';
+    const GEMINI_VOICE_NAME = Deno.env.get('GEMINI_VOICE_NAME') ?? 'Sulafat';
     
     if (!GEMINI_API_KEY) {
       console.error('GEMINI_API_KEY is not configured');
@@ -24,17 +26,17 @@ serve(async (req) => {
 
     console.log('Providing Gemini API key for voice agent session');
 
-    // Return the API key securely for the client to establish WebSocket connection
-    // Note: In production, consider implementing ephemeral tokens when Gemini supports them
+    // Return the API key for the client to establish the Live connection
+    // Note: Prefer ephemeral tokens when available
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         apiKey: GEMINI_API_KEY,
-        model: 'gemini-live-2.5-flash-preview',
-        voiceName: 'Kore'
+        model: GEMINI_MODEL,
+        voiceName: GEMINI_VOICE_NAME,
       }),
-      { 
-        status: 200, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
 

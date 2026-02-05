@@ -139,7 +139,7 @@ const VoiceAgentModal = ({ isOpen, onClose }: VoiceAgentModalProps) => {
               </div>
 
               {/* Controls */}
-              <div className="flex justify-center gap-4 mb-8">
+              <div className="flex justify-center gap-4 mb-4">
                 {/* Mute button */}
                 <Button
                   variant="outline"
@@ -161,6 +161,14 @@ const VoiceAgentModal = ({ isOpen, onClose }: VoiceAgentModalProps) => {
                   <PhoneOff className="w-6 h-6" />
                 </Button>
               </div>
+
+              {(status === 'idle' || status === 'error') && (
+                <div className="flex justify-center mb-6">
+                  <Button variant="secondary" onClick={connect}>
+                    התחברי מחדש
+                  </Button>
+                </div>
+              )}
 
               {/* Suggestions */}
               <div className="space-y-2">
