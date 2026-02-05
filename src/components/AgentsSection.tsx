@@ -4,6 +4,7 @@ import { Bot, MessageSquare, Phone, PhoneOutgoing, Check, ArrowRight } from 'luc
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import VoiceAgentDialog from './VoiceAgentDialog';
+import InlineVoiceAgentCard from './InlineVoiceAgentCard';
 
 const WHATSAPP_NUMBER = '972555197834';
 
@@ -165,6 +166,24 @@ const AgentsSection = () => {
                 </motion.div>
               );
             })}
+          </div>
+
+          {/* Inline Voice Agent Card */}
+          <div className="mt-12">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-8"
+            >
+              <h3 className="text-2xl md:text-3xl font-bold">
+                נסו את הסוכן <span className="gradient-text">עכשיו</span>
+              </h3>
+            </motion.div>
+            <div className="max-w-md mx-auto">
+              <InlineVoiceAgentCard />
+            </div>
           </div>
         </div>
       </section>
