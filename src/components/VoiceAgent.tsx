@@ -92,16 +92,26 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
       // Step 4: Connect to Gemini Live API
       const ai = new GoogleGenAI({ apiKey });
 
+      console.log('Connecting to Gemini Live API...');
+
+      // IMPORTANT: Avoid referencing `session` inside callbacks before it is initialized.
+      // Some runtimes can fire `onopen` before the awaited connect() resolves, which would
+      // throw "Cannot access 'session' before initialization" and prevent recording.
+      let resolveOpened: (() => void) | null = null;
+      const openedPromise = new Promise<void>((resolve) => {
+        resolveOpened = resolve;
+      });
+
       const session = await ai.live.connect({
         model: model || 'gemini-2.0-flash-live-001',
         config: {
           responseModalities: [Modality.AUDIO],
           systemInstruction: EVE_CONFIG.systemInstruction,
           speechConfig: {
-            voiceConfig: { 
-              prebuiltVoiceConfig: { 
-                voiceName: voiceName || 'Aoede' 
-              } 
+            voiceConfig: {
+              prebuiltVoiceConfig: {
+                voiceName: voiceName || 'Aoede'
+              }
             }
           }
         },
@@ -109,11 +119,15 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
           onopen: () => {
             console.log('✅ Gemini Live connected');
             setStatus(AudioStatus.CONNECTED);
-            startRecording(session);
+            try {
+              resolveOpened?.();
+            } catch (e) {
+              console.warn('open resolver failed', e);
+            }
           },
           onmessage: async (msg: any) => {
             console.log('📨 Message received:', JSON.stringify(msg).substring(0, 200));
-            
+
             // Handle audio data from modelTurn
             if (msg?.serverContent?.modelTurn?.parts) {
               for (const part of msg.serverContent.modelTurn.parts) {
@@ -124,7 +138,7 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
                 }
               }
             }
-            
+
             if (msg?.serverContent?.interrupted) {
               console.log('⚠️ Interrupted');
               stopPlayback();
@@ -132,7 +146,10 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
             }
             if (msg?.serverContent?.turnComplete) {
               console.log('✔️ Turn complete');
-              setTimeout(() => setStatus(prev => prev === AudioStatus.SPEAKING ? AudioStatus.LISTENING : prev), 500);
+              setTimeout(
+                () => setStatus((prev) => (prev === AudioStatus.SPEAKING ? AudioStatus.LISTENING : prev)),
+                500
+              );
             }
           },
           onclose: (event: any) => {
@@ -141,15 +158,32 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
           },
           onerror: (error: any) => {
             console.error('🚨 Gemini Live error', error);
-            setErrorMessage("Connection error");
+            setErrorMessage('Connection error');
             setStatus(AudioStatus.ERROR);
           }
         }
       });
-      
+
       sessionRef.current = session;
       setIsReady(true);
-      
+
+      // Wait for the socket to actually open before starting mic streaming.
+      // (Prevents race conditions where recording starts before the transport is ready.)
+      await Promise.race([
+        openedPromise,
+        new Promise<void>((_, reject) =>
+          setTimeout(() => reject(new Error('Timed out waiting for Gemini Live to open')), 8000)
+        )
+      ]);
+
+      try {
+        startRecording(session);
+      } catch (e) {
+        console.error('Failed to startRecording:', e);
+        setErrorMessage(e instanceof Error ? e.message : 'Failed to start microphone stream');
+        setStatus(AudioStatus.ERROR);
+      }
+
     } catch (e) {
       console.error('Failed to start call:', e);
       setErrorMessage(e instanceof Error ? e.message : "Could not connect");
