@@ -136,10 +136,6 @@ export default {
           '0%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
           '100%': { backgroundPosition: '0% 50%' }
-        },
-        'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 30px hsl(168 100% 40% / 0.4)' },
-          '50%': { boxShadow: '0 0 50px hsl(168 100% 40% / 0.6)' }
         }
       },
       animation: {

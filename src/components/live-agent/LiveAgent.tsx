@@ -56,10 +56,10 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
     let result: string;
     
     if (name === 'checkAvailability') {
-      const treatment = args.treatment?.toLowerCase() || '';
+      const specialty = args.specialty?.toLowerCase() || '';
       const slots = MOCK_SLOTS.filter(s => 
-        s.treatment.toLowerCase().includes(treatment) ||
-        treatment.includes(s.treatment.toLowerCase())
+        s.specialty.toLowerCase().includes(specialty) ||
+        specialty.includes(s.specialty.toLowerCase())
       );
       
       if (slots.length > 0) {
