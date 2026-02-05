@@ -65,10 +65,10 @@ const OrAgentCard = ({ className = '' }: OrAgentCardProps) => {
     let result: string;
     
     if (name === 'checkAvailability') {
-      const specialty = args.specialty?.toLowerCase() || '';
+      const treatment = args.treatment?.toLowerCase() || '';
       const slots = MOCK_SLOTS.filter(s => 
-        s.specialty.toLowerCase().includes(specialty) ||
-        specialty.includes(s.specialty.toLowerCase())
+        s.treatment.toLowerCase().includes(treatment) ||
+        treatment.includes(s.treatment.toLowerCase())
       );
       
       if (slots.length > 0) {
