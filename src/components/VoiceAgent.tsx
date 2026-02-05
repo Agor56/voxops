@@ -76,16 +76,26 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
               setStatus(AudioStatus.LISTENING);
             },
             onmessage: async (msg: any) => {
-              const base64Audio = msg?.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
-              if (base64Audio && audioContextRef.current) {
-                setStatus(AudioStatus.SPEAKING);
-                await playAudioChunk(base64Audio);
+              console.log('Received message:', msg?.type || 'serverContent');
+              
+              // Handle audio data from modelTurn
+              if (msg?.serverContent?.modelTurn?.parts) {
+                for (const part of msg.serverContent.modelTurn.parts) {
+                  if (part?.inlineData?.data) {
+                    console.log('Got audio chunk, playing...');
+                    setStatus(AudioStatus.SPEAKING);
+                    await playAudioChunk(part.inlineData.data);
+                  }
+                }
               }
+              
               if (msg?.serverContent?.interrupted) {
+                console.log('Interrupted');
                 stopPlayback();
                 setStatus(AudioStatus.LISTENING);
               }
               if (msg?.serverContent?.turnComplete) {
+                console.log('Turn complete');
                 setTimeout(() => setStatus(prev => prev === AudioStatus.SPEAKING ? AudioStatus.LISTENING : prev), 500);
               }
             },
@@ -137,7 +147,14 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
       processor.onaudioprocess = (e) => {
         if (isMutedRef.current) return;
         const inputData = e.inputBuffer.getChannelData(0);
-        session.sendRealtimeInput({ media: createPcmBlob(new Float32Array(inputData)) });
+        const pcmData = createPcmBlob(new Float32Array(inputData));
+        // Send audio using the correct Gemini Live API format
+        session.sendRealtimeInput({ 
+          audio: {
+            data: pcmData.data,
+            mimeType: pcmData.mimeType
+          }
+        });
       };
       source.connect(processor);
       processor.connect(inputContextRef.current.destination);
