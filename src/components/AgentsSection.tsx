@@ -4,13 +4,12 @@ import { Bot, MessageSquare, Phone, PhoneOutgoing, Check, ArrowRight } from 'luc
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import VoiceAgentDialog from './VoiceAgentDialog';
-import LiveAgentDialog from './LiveAgentDialog';
+
 const WHATSAPP_NUMBER = '972555197834';
 
 const AgentsSection = () => {
   const { t, isRTL } = useLanguage();
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [liveAgentOpen, setLiveAgentOpen] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<'marcus' | 'david'>('marcus');
 
   const handleSofiaClick = () => {
@@ -41,7 +40,7 @@ const AgentsSection = () => {
       variant: 'blue' as const,
       data: t.agents.marcus,
       delay: 0.15,
-      onClick: () => setLiveAgentOpen(true),
+      onClick: () => handleVoiceAgentClick('marcus'),
     },
     {
       key: 'david',
@@ -175,12 +174,6 @@ const AgentsSection = () => {
         open={dialogOpen} 
         onOpenChange={setDialogOpen} 
         agentName={selectedAgent}
-      />
-
-      {/* Live Agent Dialog */}
-      <LiveAgentDialog
-        open={liveAgentOpen}
-        onOpenChange={setLiveAgentOpen}
       />
     </>
   );
