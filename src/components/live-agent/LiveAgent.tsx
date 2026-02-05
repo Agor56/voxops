@@ -11,7 +11,7 @@ import AudioVisualizer from './AudioVisualizer';
 import ChatLog from './ChatLog';
 import ToolsDisplay from './ToolsDisplay';
 
-const MODEL_ID = 'gemini-2.5-flash-preview-native-audio-dialog';
+const MODEL_ID = 'gemini-2.0-flash-live-001';
 
 interface LiveAgentProps {
   className?: string;
