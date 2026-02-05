@@ -41,6 +41,15 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
     if (initializedRef.current) return;
     initializedRef.current = true;
 
+    // CRITICAL: Create AudioContexts SYNCHRONOUSLY before any async operations
+    // This preserves the user gesture context for browser autoplay policies
+    audioContextRef.current = new AudioContext({ sampleRate: 24000 });
+    inputContextRef.current = new AudioContext({ sampleRate: 16000 });
+    
+    // Resume immediately to unlock audio (user just clicked)
+    audioContextRef.current.resume();
+    inputContextRef.current.resume();
+
     const startSession = async () => {
       try {
         // Fetch API key from edge function
@@ -56,8 +65,6 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
 
         console.log('Got API key, connecting to Gemini Live...');
         const ai = new GoogleGenAI({ apiKey: data.apiKey });
-        audioContextRef.current = new AudioContext({ sampleRate: 24000 });
-        inputContextRef.current = new AudioContext({ sampleRate: 16000 });
 
         const session = await ai.live.connect({
           model: 'gemini-2.5-flash-native-audio-preview-12-2025',
