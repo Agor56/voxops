@@ -74,7 +74,7 @@ const AgentsSection = () => {
                 </li>
               ))}
             </ul>
-            <Button variant="hero" className="w-full lg:w-auto group" onClick={handleSofiaClick}>
+            <Button variant="heroGlass" className="w-full lg:w-auto group" onClick={handleSofiaClick}>
               <span className={`flex items-center justify-center ${isRTL ? 'flex-row-reverse' : ''}`}>
                 {t.agents.sofia.cta}
                 <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2'}`} />
