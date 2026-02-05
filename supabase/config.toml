@@ -1,1 +1,7 @@
 project_id = "zcsptmtftrmldovvrdsy"
+
+[functions.contact-form]
+verify_jwt = false
+
+[functions.gemini-session]
+verify_jwt = false

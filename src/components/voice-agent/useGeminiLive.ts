@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { GoogleGenAI, Modality } from '@google/genai';
+import { supabase } from '@/integrations/supabase/client';
 import { AudioRecorder, AudioPlayer } from './audio-utils';
 import type { VoiceAgentState } from './types';
 
@@ -7,10 +8,6 @@ interface UseGeminiLiveProps {
   systemInstruction: string;
   onError?: (error: string) => void;
 }
-
-// Use Kore voice for young, natural-sounding female Hebrew speech
-const VOICE_NAME = 'Kore';
-const MODEL = 'gemini-live-2.5-flash-preview';
 
 export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps) {
   const [state, setState] = useState<VoiceAgentState>({
@@ -22,27 +19,47 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
   const recorderRef = useRef<AudioRecorder | null>(null);
   const playerRef = useRef<AudioPlayer | null>(null);
   const aiRef = useRef<GoogleGenAI | null>(null);
+  const isMutedRef = useRef(false);
+  const isConnectingRef = useRef(false);
+
+  // Keep isMutedRef in sync with state
+  useEffect(() => {
+    isMutedRef.current = state.isMuted;
+  }, [state.isMuted]);
 
   const updateStatus = useCallback((status: VoiceAgentState['status']) => {
     setState(prev => ({ ...prev, status }));
   }, []);
 
   const connect = useCallback(async () => {
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    
-    if (!apiKey) {
-      const errorMsg = 'VITE_GEMINI_API_KEY is not configured';
-      setState(prev => ({ ...prev, status: 'error', errorMessage: errorMsg }));
-      onError?.(errorMsg);
+    // Prevent multiple simultaneous connection attempts
+    if (isConnectingRef.current || sessionRef.current) {
+      console.log('Already connecting or connected, skipping...');
       return;
     }
-
+    
+    isConnectingRef.current = true;
+    
     try {
       updateStatus('connecting');
-      console.log('Initializing Gemini Live API...');
+      console.log('Fetching Gemini session credentials...');
+
+      // Fetch API key from edge function
+      const { data, error } = await supabase.functions.invoke('gemini-session');
+      
+      if (error || !data?.apiKey) {
+        const errorMsg = error?.message || 'Failed to get session credentials';
+        console.error('Session error:', errorMsg);
+        setState(prev => ({ ...prev, status: 'error', errorMessage: errorMsg }));
+        onError?.(errorMsg);
+        isConnectingRef.current = false;
+        return;
+      }
+
+      console.log('Initializing Gemini Live API with model:', data.model);
 
       // Initialize the AI client
-      aiRef.current = new GoogleGenAI({ apiKey });
+      aiRef.current = new GoogleGenAI({ apiKey: data.apiKey });
 
       // Initialize audio player with callbacks
       playerRef.current = new AudioPlayer({
@@ -57,14 +74,14 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
 
       // Connect to the Gemini Live API
       const session = await aiRef.current.live.connect({
-        model: MODEL,
+        model: data.model,
         config: {
           responseModalities: [Modality.AUDIO],
           systemInstruction: systemInstruction,
           speechConfig: {
             voiceConfig: {
               prebuiltVoiceConfig: {
-                voiceName: VOICE_NAME
+                voiceName: data.voiceName
               }
             }
           }
@@ -75,7 +92,7 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
             updateStatus('listening');
           },
           onmessage: (message: any) => {
-            console.log('Received message:', message.type || 'unknown');
+            console.log('Received message:', message.type || 'serverContent');
             
             // Handle audio data
             if (message.serverContent?.modelTurn?.parts) {
@@ -94,38 +111,51 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
           },
           onclose: () => {
             console.log('Disconnected from Gemini Live API');
-            updateStatus('idle');
+            if (sessionRef.current) {
+              sessionRef.current = null;
+              updateStatus('idle');
+            }
           }
         }
       });
 
       sessionRef.current = session;
 
-      // Initialize audio recorder
-      recorderRef.current = new AudioRecorder((audioData) => {
-        if (sessionRef.current && !state.isMuted) {
-          sessionRef.current.sendRealtimeInput({
-            audio: {
-              data: audioData,
-              mimeType: 'audio/pcm;rate=16000'
-            }
-          });
-        }
-      });
+      // Initialize audio recorder - wrapped in try/catch for environments without microphone
+      try {
+        recorderRef.current = new AudioRecorder((audioData) => {
+          if (sessionRef.current && !isMutedRef.current) {
+            sessionRef.current.sendRealtimeInput({
+              audio: {
+                data: audioData,
+                mimeType: 'audio/pcm;rate=16000'
+              }
+            });
+          }
+        });
 
-      await recorderRef.current.start();
-      console.log('Audio recorder started');
+        await recorderRef.current.start();
+        console.log('Audio recorder started');
+      } catch (micError) {
+        console.warn('Microphone not available:', micError);
+        // Continue without microphone - user can still use suggestion buttons
+      }
+
+      isConnectingRef.current = false;
 
     } catch (error) {
       console.error('Failed to connect:', error);
       const errorMsg = error instanceof Error ? error.message : 'Failed to connect';
       setState(prev => ({ ...prev, status: 'error', errorMessage: errorMsg }));
       onError?.(errorMsg);
+      isConnectingRef.current = false;
     }
-  }, [systemInstruction, onError, updateStatus, state.isMuted]);
+  }, [systemInstruction, onError, updateStatus]);
 
   const disconnect = useCallback(() => {
     console.log('Disconnecting...');
+    
+    isConnectingRef.current = false;
     
     if (recorderRef.current) {
       recorderRef.current.stop();
