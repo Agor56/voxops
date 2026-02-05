@@ -12,23 +12,35 @@ export class AudioRecorder {
 
   constructor(private onAudioData: (audioData: string) => void) {}
 
-  async start(): Promise<void> {
+  async start(existingStream?: MediaStream): Promise<void> {
     try {
-      this.stream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          sampleRate: 16000,
-          channelCount: 1,
-          echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true
-        }
-      });
+      this.stream =
+        existingStream ??
+        (await navigator.mediaDevices.getUserMedia({
+          audio: {
+            sampleRate: 16000,
+            channelCount: 1,
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true,
+          },
+        }));
 
       this.audioContext = new AudioContext({ sampleRate: 16000 });
-      this.source = this.audioContext.createMediaStreamSource(this.stream);
-      this.processor = this.audioContext.createScriptProcessor(4096, 1, 1);
+      if (this.audioContext.state === 'suspended') {
+        await this.audioContext.resume();
+      }
 
+      this.source = this.audioContext.createMediaStreamSource(this.stream);
+      // iOS Safari tends to behave better with smaller buffers
+      this.processor = this.audioContext.createScriptProcessor(2048, 1, 1);
+
+      let frameCount = 0;
       this.processor.onaudioprocess = (e) => {
+        frameCount += 1;
+        if (frameCount === 1) console.log('🎤 Recorder frames flowing...');
+        if (frameCount % 50 === 0) console.log('🎤 Recorder frames:', frameCount);
+
         const inputData = e.inputBuffer.getChannelData(0);
         const base64Audio = this.encodeAudioForAPI(new Float32Array(inputData));
         this.onAudioData(base64Audio);

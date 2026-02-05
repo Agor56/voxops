@@ -1,6 +1,5 @@
-import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mic, MicOff, PhoneOff, Loader2 } from 'lucide-react';
+import { X, Mic, MicOff, PhoneOff, Loader2, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import WaveformBars from './WaveformBars';
 import { useGeminiLive } from './useGeminiLive';
@@ -13,8 +12,6 @@ interface VoiceAgentModalProps {
 }
 
 const VoiceAgentModal = ({ isOpen, onClose }: VoiceAgentModalProps) => {
-  const hasConnectedRef = useRef(false);
-  
   const { state, connect, disconnect, toggleMute, sendSuggestion } = useGeminiLive({
     systemInstruction: EVE_AGENT_CONFIG.systemInstruction,
     onError: (error) => {
@@ -23,19 +20,6 @@ const VoiceAgentModal = ({ isOpen, onClose }: VoiceAgentModalProps) => {
   });
 
   const { status, isMuted, errorMessage } = state;
-
-  // Auto-connect when modal opens (only once)
-  useEffect(() => {
-    if (isOpen && !hasConnectedRef.current && status === 'idle') {
-      hasConnectedRef.current = true;
-      connect();
-    }
-    
-    // Reset on close
-    if (!isOpen) {
-      hasConnectedRef.current = false;
-    }
-  }, [isOpen, status, connect]);
 
   // Disconnect when modal closes
   const handleClose = () => {
@@ -165,7 +149,13 @@ const VoiceAgentModal = ({ isOpen, onClose }: VoiceAgentModalProps) => {
               {(status === 'idle' || status === 'error') && (
                 <div className="flex justify-center mb-6">
                   <Button variant="secondary" onClick={connect}>
-                    התחברי מחדש
+                    {status === 'idle' ? (
+                      <span className="inline-flex items-center gap-2">
+                        <Phone className="w-4 h-4" /> התחילי שיחה
+                      </span>
+                    ) : (
+                      'התחברי מחדש'
+                    )}
                   </Button>
                 </div>
               )}

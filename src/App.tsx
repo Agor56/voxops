@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { toast } from "sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +15,31 @@ import NotFound from "./pages/NotFound";
 gsap.registerPlugin(ScrollTrigger);
 
 const queryClient = new QueryClient();
+
+const GlobalErrorGuards = () => {
+  useEffect(() => {
+    const handleRejection = (event: PromiseRejectionEvent) => {
+      console.error("Unhandled rejection:", event.reason);
+      // Prevent dev overlay / hard crash behavior in some environments
+      event.preventDefault();
+      toast.error("Something went wrong. Please try again.");
+    };
+
+    const handleError = (event: ErrorEvent) => {
+      console.error("Global error:", event.error || event.message);
+    };
+
+    window.addEventListener("unhandledrejection", handleRejection);
+    window.addEventListener("error", handleError);
+
+    return () => {
+      window.removeEventListener("unhandledrejection", handleRejection);
+      window.removeEventListener("error", handleError);
+    };
+  }, []);
+
+  return null;
+};
 
 const GSAPParallaxProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
@@ -76,6 +102,7 @@ const App = () => (
       <LanguageProvider>
         <GSAPParallaxProvider>
           <TooltipProvider>
+            <GlobalErrorGuards />
             <Toaster />
             <Sonner />
             <BrowserRouter>
