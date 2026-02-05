@@ -81,7 +81,7 @@ export class AudioRecorder {
 }
 
 export class AudioPlayer {
-  private audioContext: AudioContext | null = null;
+  private audioContext: AudioContext;
   private queue: Uint8Array[] = [];
   private isPlaying = false;
   private onPlaybackStart?: () => void;
@@ -89,12 +89,17 @@ export class AudioPlayer {
   private currentSource: AudioBufferSourceNode | null = null;
 
   constructor(callbacks?: { onPlaybackStart?: () => void; onPlaybackEnd?: () => void }) {
+    // Create AudioContext immediately during user gesture
+    this.audioContext = new AudioContext({ sampleRate: 24000 });
     this.onPlaybackStart = callbacks?.onPlaybackStart;
     this.onPlaybackEnd = callbacks?.onPlaybackEnd;
   }
 
   async init(): Promise<void> {
-    this.audioContext = new AudioContext({ sampleRate: 24000 });
+    // Resume context if suspended (browsers may suspend until user gesture)
+    if (this.audioContext.state === 'suspended') {
+      await this.audioContext.resume();
+    }
   }
 
   async addToQueue(base64Audio: string): Promise<void> {
@@ -112,10 +117,15 @@ export class AudioPlayer {
   }
 
   private async playNext(): Promise<void> {
-    if (this.queue.length === 0 || !this.audioContext) {
+    if (this.queue.length === 0) {
       this.isPlaying = false;
       this.onPlaybackEnd?.();
       return;
+    }
+
+    // Ensure context is running
+    if (this.audioContext.state === 'suspended') {
+      await this.audioContext.resume();
     }
 
     this.isPlaying = true;
