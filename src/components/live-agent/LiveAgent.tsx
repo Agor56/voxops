@@ -6,12 +6,12 @@ import { toast } from 'sonner';
 
 import { Message, ToolCallLog, ConnectionState } from './types';
 import { SYSTEM_INSTRUCTION, TOOLS, MOCK_SLOTS } from './constants';
-import { base64ToUint8Array, decodeAudioData, createPcmBlob } from './audioUtils';
+import { base64ToUint8Array, decodeAudioData, createPcmBlob, resampleFloat32 } from './audioUtils';
 import AudioVisualizer from './AudioVisualizer';
 import ChatLog from './ChatLog';
 import ToolsDisplay from './ToolsDisplay';
 
-const MODEL_ID = 'gemini-2.5-flash-native-audio-preview-12-2025';
+const MODEL_ID = 'gemini-2.5-flash-native-audio-preview-09-2025';
 const VOICE_NAME = 'Zephyr';
 
 interface LiveAgentProps {
@@ -259,10 +259,20 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
       
       frameCount++;
       const inputData = e.inputBuffer.getChannelData(0);
-      const pcm = createPcmBlob(new Float32Array(inputData));
+
+      // IMPORTANT: make sure we actually send 16kHz PCM (many browsers capture at 48kHz)
+      const sourceSampleRate = e.inputBuffer.sampleRate;
+      const resampled = sourceSampleRate === 16000
+        ? new Float32Array(inputData)
+        : resampleFloat32(new Float32Array(inputData), sourceSampleRate, 16000);
+
+      const pcm = createPcmBlob(resampled);
       bytesSent += pcm.data.length;
-      
-      if (frameCount === 1) console.log('🎤 First mic frame, mimeType:', pcm.mimeType);
+
+      if (frameCount === 1) {
+        console.log('🎤 Mic sampleRate ctx:', ctx.sampleRate, 'buffer:', sourceSampleRate, '→ sending 16000');
+        console.log('🎤 First mic frame, mimeType:', pcm.mimeType, 'samples:', resampled.length);
+      }
       if (frameCount % 50 === 0) console.log('🎤 Mic frames:', frameCount, 'bytes sent:', bytesSent);
 
       try {
@@ -347,8 +357,7 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
           }
         },
         config: {
-          // Request BOTH audio + text so we can see what Gemini thinks it heard (Hebrew STT)
-          responseModalities: [Modality.AUDIO, Modality.TEXT],
+          responseModalities: [Modality.AUDIO],
           speechConfig: {
             voiceConfig: {
               prebuiltVoiceConfig: {
