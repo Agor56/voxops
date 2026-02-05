@@ -153,11 +153,24 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
     console.log('📨 Server message type:', Object.keys(message));
     console.log('📨 Full message:', JSON.stringify(message, null, 2).slice(0, 500));
 
-    // Handle audio
+    // Handle audio + any text parts (some Live API variants stream transcripts as text parts)
     if (message.serverContent?.modelTurn?.parts) {
       for (const part of message.serverContent.modelTurn.parts) {
         if (part.inlineData?.data) {
           queueAudio(part.inlineData.data);
+        }
+        // Some responses include text parts in addition to (or instead of) outputTranscription
+        if ((part as any).text) {
+          const text = (part as any).text as string;
+          if (text.trim()) {
+            setMessages(prev => {
+              const last = prev[prev.length - 1];
+              if (last?.role === 'model') {
+                return prev.map((m, i) => (i === prev.length - 1 ? { ...m, text: m.text + text } : m));
+              }
+              return [...prev, { id: crypto.randomUUID(), role: 'model', text, timestamp: new Date() }];
+            });
+          }
         }
       }
     }
@@ -334,7 +347,8 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
           }
         },
         config: {
-          responseModalities: [Modality.AUDIO],
+          // Request BOTH audio + text so we can see what Gemini thinks it heard (Hebrew STT)
+          responseModalities: [Modality.AUDIO, Modality.TEXT],
           speechConfig: {
             voiceConfig: {
               prebuiltVoiceConfig: {
