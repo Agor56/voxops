@@ -35,11 +35,16 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
   const audioQueueRef = useRef<AudioBuffer[]>([]);
   const isPlayingRef = useRef(false);
   const isMutedRef = useRef(false);
+  const connectionStateRef = useRef<ConnectionState>(ConnectionState.DISCONNECTED);
 
-  // Keep mute ref in sync
+  // Keep refs in sync with state
   useEffect(() => {
     isMutedRef.current = isMuted;
   }, [isMuted]);
+
+  useEffect(() => {
+    connectionStateRef.current = connectionState;
+  }, [connectionState]);
 
   const isConnected = connectionState === ConnectionState.CONNECTED;
 
@@ -77,71 +82,72 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
     return result;
   }, []);
 
-  // Audio playback queue
-  const playNextInQueue = useCallback(async () => {
-    console.log('🎵 playNextInQueue called, isPlaying:', isPlayingRef.current, 'queueLength:', audioQueueRef.current.length);
-    
+  // Audio playback queue - use refs to avoid stale closures
+  const playNextInQueue = useCallback(() => {
+    // Check if we should skip
     if (isPlayingRef.current || audioQueueRef.current.length === 0) {
-      console.log('🎵 Skipping - already playing or empty queue');
       return;
     }
-    if (!audioContextRef.current) {
+    
+    const ctx = audioContextRef.current;
+    if (!ctx) {
       console.log('⚠️ No audio context in playNextInQueue');
       return;
     }
 
-    // Resume context if suspended
-    if (audioContextRef.current.state === 'suspended') {
-      console.log('🎵 Resuming suspended AudioContext');
-      await audioContextRef.current.resume();
+    // Resume context if suspended (async but don't wait)
+    if (ctx.state === 'suspended') {
+      ctx.resume().catch(console.error);
     }
 
     isPlayingRef.current = true;
     const buffer = audioQueueRef.current.shift()!;
-    console.log('🎵 Playing buffer, duration:', buffer.duration.toFixed(2), 's, context state:', audioContextRef.current.state);
 
     try {
-      const source = audioContextRef.current.createBufferSource();
+      const source = ctx.createBufferSource();
       source.buffer = buffer;
       
       // Connect through analyser for visualization
-      if (analyserRef.current) {
-        source.connect(analyserRef.current);
-        analyserRef.current.connect(audioContextRef.current.destination);
+      const analyser = analyserRef.current;
+      if (analyser) {
+        source.connect(analyser);
+        analyser.connect(ctx.destination);
       } else {
-        source.connect(audioContextRef.current.destination);
+        source.connect(ctx.destination);
       }
 
       source.onended = () => {
-        console.log('🎵 Buffer playback ended');
         isPlayingRef.current = false;
-        playNextInQueue();
+        // Use setTimeout to avoid potential stack overflow with rapid chunks
+        setTimeout(() => playNextInQueue(), 0);
       };
 
       source.start();
-      console.log('🎵 source.start() called');
     } catch (err) {
       console.error('❌ Playback error:', err);
       isPlayingRef.current = false;
-      playNextInQueue();
+      // Continue with next chunk even if current fails
+      setTimeout(() => playNextInQueue(), 0);
     }
   }, []);
 
-  const queueAudio = useCallback(async (base64: string) => {
-    if (!audioContextRef.current) {
+  const queueAudio = useCallback((base64: string) => {
+    const ctx = audioContextRef.current;
+    if (!ctx) {
       console.log('⚠️ No audio context for queueAudio');
       return;
     }
     
-    console.log('🔊 Queueing audio chunk, length:', base64.length);
-    
     try {
       const data = base64ToUint8Array(base64);
-      console.log('🔊 Decoded to Uint8Array, length:', data.length);
-      const buffer = await decodeAudioData(data, audioContextRef.current);
-      console.log('🔊 Created AudioBuffer, duration:', buffer.duration.toFixed(2), 's');
+      const buffer = decodeAudioData(data, ctx);
+      
+      // Skip empty/invalid buffers
+      if (buffer.length <= 1) {
+        return;
+      }
+      
       audioQueueRef.current.push(buffer);
-      console.log('🔊 Queue size:', audioQueueRef.current.length, 'isPlaying:', isPlayingRef.current);
       playNextInQueue();
     } catch (err) {
       console.error('❌ Audio decode error:', err);
@@ -381,20 +387,21 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
     } catch (err) {
       console.error('Connection error:', err);
       toast.error('שגיאה בהתחברות. נסו שוב.');
+      // Clean up resources without setting state to DISCONNECTED (keep ERROR state)
+      cleanupResources();
       setConnectionState(ConnectionState.ERROR);
-      disconnect();
     }
   }, [handleServerMessage, startRecording]);
 
-  // Disconnect
-  const disconnect = useCallback(() => {
+  // Helper to cleanup resources without changing state
+  const cleanupResources = useCallback(() => {
     // Stop recording
     if (sourceRef.current) {
-      sourceRef.current.disconnect();
+      try { sourceRef.current.disconnect(); } catch {}
       sourceRef.current = null;
     }
     if (processorRef.current) {
-      processorRef.current.disconnect();
+      try { processorRef.current.disconnect(); } catch {}
       processorRef.current = null;
     }
     
@@ -406,19 +413,17 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
 
     // Close contexts
     if (inputContextRef.current) {
-      inputContextRef.current.close();
+      try { inputContextRef.current.close(); } catch {}
       inputContextRef.current = null;
     }
     if (audioContextRef.current) {
-      audioContextRef.current.close();
+      try { audioContextRef.current.close(); } catch {}
       audioContextRef.current = null;
     }
 
     // Close session
     if (sessionRef.current) {
-      try {
-        sessionRef.current.close();
-      } catch {}
+      try { sessionRef.current.close(); } catch {}
       sessionRef.current = null;
     }
 
@@ -426,10 +431,14 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
     audioQueueRef.current = [];
     isPlayingRef.current = false;
     analyserRef.current = null;
-
-    setConnectionState(ConnectionState.DISCONNECTED);
-    setIsMuted(false);
   }, []);
+
+  // Disconnect - cleanup and set state
+  const disconnect = useCallback(() => {
+    cleanupResources();
+    setConnectionState(prev => prev === ConnectionState.DISCONNECTED ? prev : ConnectionState.DISCONNECTED);
+    setIsMuted(false);
+  }, [cleanupResources]);
 
   // Cleanup on unmount
   useEffect(() => {
