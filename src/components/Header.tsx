@@ -81,7 +81,7 @@ const Header = () => {
             </Button>
             <ThemeToggle />
             <Button 
-              variant="heroGlass" 
+              variant="hero" 
               size="sm"
               onClick={() => setIsDemoDialogOpen(true)}
             >
