@@ -37,9 +37,9 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
       console.log('Already connecting or connected, skipping...');
       return;
     }
-    
+
     isConnectingRef.current = true;
-    
+
     // CRITICAL: Create AudioPlayer immediately during user gesture to satisfy browser autoplay policy
     playerRef.current = new AudioPlayer({
       onPlaybackStart: () => updateStatus('speaking'),
@@ -47,20 +47,47 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
         if (sessionRef.current) {
           updateStatus('listening');
         }
-      }
+      },
     });
-    
+
+    // CRITICAL: Prime audio output immediately on the same tap (Safari requirement)
+    try {
+      console.log('Priming audio output...');
+      await playerRef.current.init();
+      console.log('Audio output primed');
+    } catch (e) {
+      console.warn('Failed to prime audio output:', e);
+    }
+
+    // CRITICAL: Request mic permission early (before network awaits) for best Safari reliability
+    let micStream: MediaStream | null = null;
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          sampleRate: 16000,
+          channelCount: 1,
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
+      });
+      console.log('Microphone permission granted (preflight)');
+    } catch (micError) {
+      console.warn('Microphone not available (preflight):', micError);
+      // Continue without microphone - user can still use suggestion buttons
+    }
+
     try {
       updateStatus('connecting');
       console.log('Fetching Gemini session credentials...');
 
       // Fetch API key from edge function
       const { data, error } = await supabase.functions.invoke('gemini-session');
-      
+
       if (error || !data?.apiKey) {
         const errorMsg = error?.message || 'Failed to get session credentials';
         console.error('Session error:', errorMsg);
-        setState(prev => ({ ...prev, status: 'error', errorMessage: errorMsg }));
+        setState((prev) => ({ ...prev, status: 'error', errorMessage: errorMsg }));
         onError?.(errorMsg);
         isConnectingRef.current = false;
         return;
@@ -71,9 +98,6 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
       // Initialize the AI client
       aiRef.current = new GoogleGenAI({ apiKey: data.apiKey });
 
-      // Resume audio context (created earlier during user gesture)
-      await playerRef.current.init();
-
       // Connect to the Gemini Live API
       const session = await aiRef.current.live.connect({
         model: data.model,
@@ -83,10 +107,10 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
           speechConfig: {
             voiceConfig: {
               prebuiltVoiceConfig: {
-                voiceName: data.voiceName
-              }
-            }
-          }
+                voiceName: data.voiceName,
+              },
+            },
+          },
         },
         callbacks: {
           onopen: () => {
@@ -100,6 +124,7 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
             if (message?.serverContent?.modelTurn?.parts) {
               for (const part of message.serverContent.modelTurn.parts) {
                 if (part?.inlineData?.data) {
+                  console.log('🔊 Received audio chunk');
                   playerRef.current?.addToQueue(part.inlineData.data);
                 }
               }
@@ -108,7 +133,7 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
           onerror: (error: any) => {
             console.error('Gemini Live API error:', error);
             const errorMsg = error?.message || 'Connection error';
-            setState(prev => ({ ...prev, status: 'error', errorMessage: errorMsg }));
+            setState((prev) => ({ ...prev, status: 'error', errorMessage: errorMsg }));
             onError?.(errorMsg);
           },
           onclose: (event: any) => {
@@ -131,40 +156,46 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
             aiRef.current = null;
             isConnectingRef.current = false;
 
-            setState(prev => ({ ...prev, status: 'error', errorMessage: closeMsg }));
+            setState((prev) => ({ ...prev, status: 'error', errorMessage: closeMsg }));
             onError?.(closeMsg);
           },
-        }
+        },
       });
 
       sessionRef.current = session;
 
-      // Initialize audio recorder - wrapped in try/catch for environments without microphone
-      try {
-        recorderRef.current = new AudioRecorder((audioData) => {
-          if (sessionRef.current && !isMutedRef.current) {
-            sessionRef.current.sendRealtimeInput({
-              audio: {
-                data: audioData,
-                mimeType: 'audio/pcm;rate=16000'
-              }
-            });
-          }
-        });
+      // Initialize audio recorder
+      if (micStream) {
+        try {
+          let sentFrames = 0;
+          recorderRef.current = new AudioRecorder((audioData) => {
+            if (sessionRef.current && !isMutedRef.current) {
+              sentFrames += 1;
+              if (sentFrames === 1) console.log('🎤 Sending mic audio to model...');
+              if (sentFrames % 50 === 0) console.log('🎤 Mic chunks sent:', sentFrames);
 
-        await recorderRef.current.start();
-        console.log('Audio recorder started');
-      } catch (micError) {
-        console.warn('Microphone not available:', micError);
-        // Continue without microphone - user can still use suggestion buttons
+              sessionRef.current.sendRealtimeInput({
+                audio: {
+                  data: audioData,
+                  mimeType: 'audio/pcm;rate=16000',
+                },
+              });
+            }
+          });
+
+          await recorderRef.current.start(micStream);
+          console.log('Audio recorder started');
+        } catch (micError) {
+          console.warn('Microphone could not start:', micError);
+          // Continue without microphone - user can still use suggestion buttons
+        }
       }
 
       isConnectingRef.current = false;
-
     } catch (error) {
       console.error('Failed to connect:', error);
       const errorMsg = error instanceof Error ? error.message : 'Failed to connect';
-      setState(prev => ({ ...prev, status: 'error', errorMessage: errorMsg }));
+      setState((prev) => ({ ...prev, status: 'error', errorMessage: errorMsg }));
       onError?.(errorMsg);
       isConnectingRef.current = false;
     }
