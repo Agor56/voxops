@@ -40,6 +40,16 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
     
     isConnectingRef.current = true;
     
+    // CRITICAL: Create AudioPlayer immediately during user gesture to satisfy browser autoplay policy
+    playerRef.current = new AudioPlayer({
+      onPlaybackStart: () => updateStatus('speaking'),
+      onPlaybackEnd: () => {
+        if (sessionRef.current) {
+          updateStatus('listening');
+        }
+      }
+    });
+    
     try {
       updateStatus('connecting');
       console.log('Fetching Gemini session credentials...');
@@ -61,15 +71,7 @@ export function useGeminiLive({ systemInstruction, onError }: UseGeminiLiveProps
       // Initialize the AI client
       aiRef.current = new GoogleGenAI({ apiKey: data.apiKey });
 
-      // Initialize audio player with callbacks
-      playerRef.current = new AudioPlayer({
-        onPlaybackStart: () => updateStatus('speaking'),
-        onPlaybackEnd: () => {
-          if (sessionRef.current) {
-            updateStatus('listening');
-          }
-        }
-      });
+      // Resume audio context (created earlier during user gesture)
       await playerRef.current.init();
 
       // Connect to the Gemini Live API
