@@ -36,6 +36,7 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
   const isPlayingRef = useRef(false);
   const isMutedRef = useRef(false);
   const connectionStateRef = useRef<ConnectionState>(ConnectionState.DISCONNECTED);
+  const nextPlayTimeRef = useRef<number>(0); // For gapless scheduling
 
   // Keep refs in sync with state
   useEffect(() => {
@@ -82,32 +83,22 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
     return result;
   }, []);
 
-  // Audio playback queue - use refs to avoid stale closures
-  const playNextInQueue = useCallback(() => {
-    // Check if we should skip
-    if (isPlayingRef.current || audioQueueRef.current.length === 0) {
-      return;
-    }
-    
+  // Gapless audio playback - schedule chunks at precise times
+  const scheduleAudioChunk = useCallback((buffer: AudioBuffer) => {
     const ctx = audioContextRef.current;
     if (!ctx) {
-      console.log('⚠️ No audio context in playNextInQueue');
+      console.log('⚠️ No audio context for scheduling');
       return;
     }
 
-    // Resume context if suspended (async but don't wait)
     if (ctx.state === 'suspended') {
       ctx.resume().catch(console.error);
     }
-
-    isPlayingRef.current = true;
-    const buffer = audioQueueRef.current.shift()!;
 
     try {
       const source = ctx.createBufferSource();
       source.buffer = buffer;
       
-      // Connect through analyser for visualization
       const analyser = analyserRef.current;
       if (analyser) {
         source.connect(analyser);
@@ -116,18 +107,23 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
         source.connect(ctx.destination);
       }
 
+      // Calculate the start time for gapless playback
+      const now = ctx.currentTime;
+      const startTime = Math.max(now, nextPlayTimeRef.current);
+      
+      source.start(startTime);
+      nextPlayTimeRef.current = startTime + buffer.duration;
+      
+      isPlayingRef.current = true;
+      
       source.onended = () => {
-        isPlayingRef.current = false;
-        // Use setTimeout to avoid potential stack overflow with rapid chunks
-        setTimeout(() => playNextInQueue(), 0);
+        // Check if there are no more scheduled chunks
+        if (ctx.currentTime >= nextPlayTimeRef.current - 0.01) {
+          isPlayingRef.current = false;
+        }
       };
-
-      source.start();
     } catch (err) {
       console.error('❌ Playback error:', err);
-      isPlayingRef.current = false;
-      // Continue with next chunk even if current fails
-      setTimeout(() => playNextInQueue(), 0);
     }
   }, []);
 
@@ -147,12 +143,12 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
         return;
       }
       
-      audioQueueRef.current.push(buffer);
-      playNextInQueue();
+      // Schedule immediately for gapless playback
+      scheduleAudioChunk(buffer);
     } catch (err) {
       console.error('❌ Audio decode error:', err);
     }
-  }, [playNextInQueue]);
+  }, [scheduleAudioChunk]);
 
   // Message handler
   const handleServerMessage = useCallback((message: LiveServerMessage) => {
@@ -430,6 +426,7 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
     // Clear queue
     audioQueueRef.current = [];
     isPlayingRef.current = false;
+    nextPlayTimeRef.current = 0;
     analyserRef.current = null;
   }, []);
 

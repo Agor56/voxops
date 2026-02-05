@@ -43,6 +43,7 @@ const OrAgentCard = ({ className = '' }: OrAgentCardProps) => {
   const isPlayingRef = useRef(false);
   const isMutedRef = useRef(false);
   const connectionStateRef = useRef<ConnectionState>(ConnectionState.DISCONNECTED);
+  const nextPlayTimeRef = useRef<number>(0); // For gapless scheduling
 
   // Keep refs in sync with state
   useEffect(() => {
@@ -91,21 +92,14 @@ const OrAgentCard = ({ className = '' }: OrAgentCardProps) => {
     return result;
   }, []);
 
-  // Audio playback queue
-  const playNextInQueue = useCallback(() => {
-    if (isPlayingRef.current || audioQueueRef.current.length === 0) {
-      return;
-    }
-    
+  // Gapless audio playback - schedule chunks at precise times
+  const scheduleAudioChunk = useCallback((buffer: AudioBuffer) => {
     const ctx = audioContextRef.current;
     if (!ctx) return;
 
     if (ctx.state === 'suspended') {
       ctx.resume().catch(console.error);
     }
-
-    isPlayingRef.current = true;
-    const buffer = audioQueueRef.current.shift()!;
 
     try {
       const source = ctx.createBufferSource();
@@ -119,16 +113,23 @@ const OrAgentCard = ({ className = '' }: OrAgentCardProps) => {
         source.connect(ctx.destination);
       }
 
+      // Calculate the start time for gapless playback
+      const now = ctx.currentTime;
+      const startTime = Math.max(now, nextPlayTimeRef.current);
+      
+      source.start(startTime);
+      nextPlayTimeRef.current = startTime + buffer.duration;
+      
+      isPlayingRef.current = true;
+      
       source.onended = () => {
-        isPlayingRef.current = false;
-        setTimeout(() => playNextInQueue(), 0);
+        // Check if there are no more scheduled chunks
+        if (ctx.currentTime >= nextPlayTimeRef.current - 0.01) {
+          isPlayingRef.current = false;
+        }
       };
-
-      source.start();
     } catch (err) {
       console.error('Playback error:', err);
-      isPlayingRef.current = false;
-      setTimeout(() => playNextInQueue(), 0);
     }
   }, []);
 
@@ -142,12 +143,12 @@ const OrAgentCard = ({ className = '' }: OrAgentCardProps) => {
       
       if (buffer.length <= 1) return;
       
-      audioQueueRef.current.push(buffer);
-      playNextInQueue();
+      // Schedule immediately for gapless playback
+      scheduleAudioChunk(buffer);
     } catch (err) {
       console.error('Audio decode error:', err);
     }
-  }, [playNextInQueue]);
+  }, [scheduleAudioChunk]);
 
   // Message handler
   const handleServerMessage = useCallback((message: LiveServerMessage) => {
@@ -353,6 +354,7 @@ const OrAgentCard = ({ className = '' }: OrAgentCardProps) => {
     }
     audioQueueRef.current = [];
     isPlayingRef.current = false;
+    nextPlayTimeRef.current = 0;
     analyserRef.current = null;
   }, []);
 
