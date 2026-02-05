@@ -22,8 +22,8 @@ const VoiceAgentDialog = ({ open, onOpenChange, agentName }: VoiceAgentDialogPro
   const translations = {
     en: {
       marcus: {
-        title: 'Talk to Or',
-        subtitle: 'Enter your details and Or will call you right away',
+        title: 'Talk to Eve',
+        subtitle: 'Enter your details and Eve will call you right away',
       },
       david: {
         title: 'Talk to Adam',
@@ -47,8 +47,8 @@ const VoiceAgentDialog = ({ open, onOpenChange, agentName }: VoiceAgentDialogPro
     },
     he: {
       marcus: {
-        title: 'דברו עם אור',
-        subtitle: 'הזינו את הפרטים שלכם ואור יתקשר אליכם מיד',
+        title: 'דברו עם איב',
+        subtitle: 'הזינו את הפרטים שלכם ואיב תתקשר אליכם מיד',
       },
       david: {
         title: 'דברו עם אדם',
