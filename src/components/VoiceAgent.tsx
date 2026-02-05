@@ -177,7 +177,7 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
       ]);
 
       try {
-        startRecording(session);
+        await startRecording(session);
       } catch (e) {
         console.error('Failed to startRecording:', e);
         setErrorMessage(e instanceof Error ? e.message : 'Failed to start microphone stream');
@@ -191,17 +191,30 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
     }
   }, []);
 
-  const startRecording = (session: any) => {
+  const startRecording = async (session: any) => {
     if (!streamRef.current || !inputContextRef.current) {
       console.error('Stream or input context not available');
       return;
     }
-    
-    const source = inputContextRef.current.createMediaStreamSource(streamRef.current);
-    const processor = inputContextRef.current.createScriptProcessor(4096, 1, 1);
+
+    const ctx = inputContextRef.current;
+
+    // Resume context if suspended (critical for iOS Safari)
+    if (ctx.state === 'suspended') {
+      console.log('Resuming input audio context before recording...');
+      await ctx.resume();
+    }
+
+    console.log('Input AudioContext state:', ctx.state, 'sampleRate:', ctx.sampleRate);
+
+    const source = ctx.createMediaStreamSource(streamRef.current);
+
+    // Use ScriptProcessor (deprecated but widely supported)
+    // NOTE: Buffer size of 2048 works better on iOS than 4096
+    const processor = ctx.createScriptProcessor(2048, 1, 1);
 
     micFrameCountRef.current = 0;
-    
+
     processor.onaudioprocess = (e) => {
       if (isMutedRef.current || !session) return;
 
@@ -213,10 +226,10 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
       }
 
       const inputData = e.inputBuffer.getChannelData(0);
-      const pcmData = createPcmBlob(new Float32Array(inputData), 24000);
-      
+      const pcmData = createPcmBlob(new Float32Array(inputData), ctx.sampleRate);
+
       try {
-        session.sendRealtimeInput({ 
+        session.sendRealtimeInput({
           audio: {
             data: pcmData.data,
             mimeType: pcmData.mimeType
@@ -226,12 +239,15 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({ isOpen, onClose }) => {
         console.error('Error sending audio:', err);
       }
     };
-    
+
+    // Connect nodes: source -> processor -> destination
+    // On iOS Safari, you MUST connect processor to destination for onaudioprocess to fire!
     source.connect(processor);
-    processor.connect(inputContextRef.current.destination);
+    processor.connect(ctx.destination);
+
     sourceRef.current = source;
     processorRef.current = processor;
-    
+
     setStatus(AudioStatus.LISTENING);
     console.log('🎤 Microphone recording started');
   };
