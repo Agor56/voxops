@@ -1,4 +1,5 @@
 export { default as LiveAgent } from './LiveAgent';
+export { default as LiveAgentModal } from './LiveAgentModal';
 export { default as AudioVisualizer } from './AudioVisualizer';
 export { default as ChatLog } from './ChatLog';
 export { default as ToolsDisplay } from './ToolsDisplay';
