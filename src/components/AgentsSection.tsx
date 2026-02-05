@@ -3,13 +3,14 @@ import { motion } from 'framer-motion';
 import { Bot, MessageSquare, Phone, PhoneOutgoing, Check, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
-import { LiveAgentModal } from './live-agent';
-
+import VoiceAgentDialog from './VoiceAgentDialog';
+import { LiveAgent } from './live-agent';
 const WHATSAPP_NUMBER = '972555197834';
 
 const AgentsSection = () => {
   const { t, isRTL } = useLanguage();
-  const [liveAgentOpen, setLiveAgentOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState<'marcus' | 'david'>('marcus');
 
   const handleSofiaClick = () => {
     const message = isRTL 
@@ -19,8 +20,9 @@ const AgentsSection = () => {
     window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   };
 
-  const handleVoiceAgentClick = () => {
-    setLiveAgentOpen(true);
+  const handleVoiceAgentClick = (agent: 'marcus' | 'david') => {
+    setSelectedAgent(agent);
+    setDialogOpen(true);
   };
 
   const agents = [
@@ -38,7 +40,7 @@ const AgentsSection = () => {
       variant: 'blue' as const,
       data: t.agents.marcus,
       delay: 0.15,
-      onClick: handleVoiceAgentClick,
+      onClick: () => handleVoiceAgentClick('marcus'),
     },
     {
       key: 'david',
@@ -46,7 +48,7 @@ const AgentsSection = () => {
       variant: 'orangeOutline' as const,
       data: t.agents.david,
       delay: 0.3,
-      onClick: handleVoiceAgentClick,
+      onClick: () => handleVoiceAgentClick('david'),
     },
   ];
 
@@ -165,13 +167,30 @@ const AgentsSection = () => {
             })}
           </div>
 
+          {/* Live Agent Demo */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-16"
+          >
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold mb-2">🎙️ נסו את נועה עכשיו</h3>
+              <p className="text-muted-foreground">מזכירה רפואית וירטואלית - לחצו "התחל שיחה" ודברו</p>
+            </div>
+            <div className="max-w-md mx-auto">
+              <LiveAgent className="h-[500px]" />
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Live Agent Modal */}
-      <LiveAgentModal 
-        isOpen={liveAgentOpen} 
-        onClose={() => setLiveAgentOpen(false)} 
+      {/* Voice Agent Dialog */}
+      <VoiceAgentDialog 
+        open={dialogOpen} 
+        onOpenChange={setDialogOpen} 
+        agentName={selectedAgent}
       />
     </>
   );
