@@ -137,30 +137,66 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({
   }, [currentAgent.systemInstruction]);
 
   const startRecording = (session: any) => {
-    if (!streamRef.current || !inputContextRef.current) return;
+    if (!streamRef.current || !inputContextRef.current) {
+      console.log('⚠️ No stream or context for recording');
+      return;
+    }
 
-    const source = inputContextRef.current.createMediaStreamSource(streamRef.current);
-    const processor = inputContextRef.current.createScriptProcessor(4096, 1, 1);
+    const ctx = inputContextRef.current;
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
 
+    const source = ctx.createMediaStreamSource(streamRef.current);
+    const processor = ctx.createScriptProcessor(2048, 1, 1);
+
+    let frameCount = 0;
     processor.onaudioprocess = (e) => {
       if (isMutedRef.current || !session) return;
+      frameCount++;
+      if (frameCount === 1) console.log('🎤 Mic frames flowing...');
+      if (frameCount % 50 === 0) console.log('🎤 Mic frames:', frameCount);
+
       const pcm = createPcmBlob(new Float32Array(e.inputBuffer.getChannelData(0)));
       try {
         session.sendRealtimeInput({ audio: { data: pcm.data, mimeType: pcm.mimeType } });
-      } catch {}
+      } catch (err) {
+        console.error('Error sending audio:', err);
+      }
     };
 
     source.connect(processor);
-    processor.connect(inputContextRef.current.destination);
+    processor.connect(ctx.destination);
     sourceRef.current = source;
     processorRef.current = processor;
+    console.log('🎤 Recording started');
+  };
+
+  const sendSuggestion = async (text: string) => {
+    if (!sessionRef.current) {
+      console.log('⚠️ No session to send suggestion');
+      return;
+    }
+    console.log('📤 Sending suggestion:', text);
+    try {
+      await sessionRef.current.sendClientContent({
+        turns: [{ role: 'user', parts: [{ text }] }],
+        turnComplete: true
+      });
+    } catch (err) {
+      console.error('Error sending suggestion:', err);
+    }
   };
 
   const playAudio = async (base64: string) => {
-    if (!audioContextRef.current) return;
+    if (!audioContextRef.current) {
+      console.log('⚠️ No audio context for playback');
+      return;
+    }
     const ctx = audioContextRef.current;
     if (ctx.state === 'suspended') await ctx.resume();
 
+    console.log('🔊 Playing audio chunk...');
     try {
       const buffer = await decodeAudioData(base64, ctx);
       const src = ctx.createBufferSource();
@@ -177,7 +213,9 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({
         audioSourcesRef.current.delete(src);
         if (audioSourcesRef.current.size === 0) setStatus('listening');
       };
-    } catch {}
+    } catch (err) {
+      console.error('Error playing audio:', err);
+    }
   };
 
   const stopPlayback = () => {
@@ -247,7 +285,14 @@ export const VoiceAgent: React.FC<VoiceAgentProps> = ({
           <p className="text-xs text-muted-foreground text-center mb-3">נסו לשאול:</p>
           <div className="flex flex-wrap gap-2 justify-center">
             {currentAgent.suggestions.map((s, i) => (
-              <span key={i} className="px-3 py-1.5 bg-primary/10 text-primary text-sm rounded-full">{s}</span>
+              <button
+                key={i}
+                onClick={() => sendSuggestion(s)}
+                disabled={!isConnected}
+                className="px-3 py-1.5 bg-primary/10 text-primary text-sm rounded-full hover:bg-primary/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {s}
+              </button>
             ))}
           </div>
         </div>
