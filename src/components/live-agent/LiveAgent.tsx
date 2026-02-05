@@ -125,7 +125,8 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
 
   // Message handler
   const handleServerMessage = useCallback((message: LiveServerMessage) => {
-    console.log('📨 Server message:', message);
+    console.log('📨 Server message type:', Object.keys(message));
+    console.log('📨 Full message:', JSON.stringify(message, null, 2).slice(0, 500));
 
     // Handle audio
     if (message.serverContent?.modelTurn?.parts) {
@@ -210,22 +211,28 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
     const processor = ctx.createScriptProcessor(2048, 1, 1);
 
     let frameCount = 0;
+    let bytesSent = 0;
     processor.onaudioprocess = (e) => {
-      if (isMutedRef.current || !sessionRef.current) return;
+      if (isMutedRef.current) return;
+      if (!sessionRef.current) {
+        console.log('⚠️ No session available for sending audio');
+        return;
+      }
       
       frameCount++;
-      if (frameCount === 1) console.log('🎤 Mic frames flowing...');
-      if (frameCount % 100 === 0) console.log('🎤 Mic frames:', frameCount);
-
       const inputData = e.inputBuffer.getChannelData(0);
       const pcm = createPcmBlob(new Float32Array(inputData));
+      bytesSent += pcm.data.length;
       
+      if (frameCount === 1) console.log('🎤 First mic frame, mimeType:', pcm.mimeType);
+      if (frameCount % 50 === 0) console.log('🎤 Mic frames:', frameCount, 'bytes sent:', bytesSent);
+
       try {
         sessionRef.current.sendRealtimeInput({
           audio: { data: pcm.data, mimeType: pcm.mimeType }
         });
       } catch (err) {
-        console.error('Send audio error:', err);
+        console.error('❌ Send audio error:', err);
       }
     };
 
