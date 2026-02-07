@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
-import { Linkedin, Instagram, Youtube, Phone } from 'lucide-react';
+import { Linkedin, Instagram, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import LegalDialog from './LegalDialog';
-import { Button } from './ui/button';
 
 // TikTok icon component (not available in lucide-react)
 const TikTokIcon = ({ className }: { className?: string }) => (
@@ -29,6 +28,7 @@ const Footer = () => {
       { label: t.nav.demo, href: '#agents' },
       { label: t.nav.testimonials, href: '#testimonials' },
       { label: t.footer.links.contact, href: '#contact' },
+      { label: t.footer.testLiveCall, href: '/calldemo', isRoute: true },
     ],
   };
 
@@ -69,12 +69,6 @@ const Footer = () => {
                   </a>
                 ))}
               </div>
-              <Link to="/calldemo" className="mt-4 inline-block">
-                <Button variant="glass" size="sm" className="gap-2">
-                  <Phone className="w-4 h-4" />
-                  Test Live Call
-                </Button>
-              </Link>
             </div>
 
             {/* Navigation Links */}
@@ -83,9 +77,15 @@ const Footer = () => {
               <ul className="space-y-3">
                 {footerLinks.navigation.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
-                      {link.label}
-                    </a>
+                    {'isRoute' in link && link.isRoute ? (
+                      <Link to={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors">
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

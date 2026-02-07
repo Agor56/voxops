@@ -176,6 +176,7 @@ export interface TranslationShape {
     privacy: string;
     termsShort: string;
     cookies: string;
+    testLiveCall: string;
   };
 }
 
@@ -464,6 +465,7 @@ export const translations = {
       privacy: 'Privacy',
       termsShort: 'Terms',
       cookies: 'Cookies',
+      testLiveCall: 'Test Live Call',
     },
   },
   he: {
@@ -747,6 +749,7 @@ export const translations = {
       privacy: 'פרטיות',
       termsShort: 'תנאים',
       cookies: 'עוגיות',
+      testLiveCall: 'דברו עם הסוכן בטלפון',
     },
   },
 } as const;
