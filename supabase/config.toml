@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.gemini-session]
 verify_jwt = false
+
+[functions.demo-submit]
+verify_jwt = false
