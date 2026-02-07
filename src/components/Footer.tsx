@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
-import { Linkedin, Instagram, Youtube } from 'lucide-react';
+import { Linkedin, Instagram, Youtube, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import LegalDialog from './LegalDialog';
+import { Button } from './ui/button';
 
 // TikTok icon component (not available in lucide-react)
 const TikTokIcon = ({ className }: { className?: string }) => (
@@ -53,7 +55,7 @@ const Footer = () => {
               <p className="text-muted-foreground mb-6 max-w-sm">
                 {t.footer.description}
               </p>
-              <div className={`flex gap-4 ${isRTL ? 'justify-end' : ''}`}>
+              <div className={`flex items-center gap-4 ${isRTL ? 'justify-end' : ''}`}>
                 {socialLinks.map((social) => (
                   <a
                     key={social.label}
@@ -67,6 +69,12 @@ const Footer = () => {
                   </a>
                 ))}
               </div>
+              <Link to="/calldemo" className="mt-4 inline-block">
+                <Button variant="glass" size="sm" className="gap-2">
+                  <Phone className="w-4 h-4" />
+                  Test Live Call
+                </Button>
+              </Link>
             </div>
 
             {/* Navigation Links */}
