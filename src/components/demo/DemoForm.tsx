@@ -218,7 +218,7 @@ const DemoForm = ({ onSubmitted, submissionCount }: DemoFormProps) => {
         <Button
           variant="hero"
           size="xl"
-          className="w-full animate-[demo-btn-pulse_2s_ease-in-out_infinite]"
+          className="w-full animate-demo-btn-pulse"
           onClick={handleSubmit}
           disabled={loading}
         >
