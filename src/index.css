@@ -636,4 +636,8 @@
     0%, 100% { box-shadow: 0 0 30px hsl(168 100% 40% / 0.4); }
     50% { box-shadow: 0 0 50px hsl(168 100% 40% / 0.6), 0 0 80px hsl(168 100% 40% / 0.3); }
   }
+
+  .animate-demo-btn-pulse {
+    animation: demo-btn-pulse 10s ease-in-out infinite;
+  }
 }
