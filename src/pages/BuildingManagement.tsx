@@ -40,7 +40,7 @@ If asked if you're AI, say: "כן, אני בוט. אבל בוט שזמין 24/7,
 };
 
 // ─── PIN Gate ────────────────────────────────────────────────────
-const CORRECT_PIN = import.meta.env.VITE_BM_DEMO_PIN || '1234';
+const CORRECT_PIN = import.meta.env.VITE_BM_DEMO_PIN || '3204';
 
 const PinGate = ({ onSuccess }: { onSuccess: () => void }) => {
   const [digits, setDigits] = useState(['', '', '', '']);
