@@ -27,9 +27,6 @@ const platforms = [
 const TrustBadges = () => {
   const { t } = useLanguage();
 
-  // Create multiple copies to ensure seamless loop
-  const logoSets = [...platforms, ...platforms, ...platforms, ...platforms];
-
   return (
     <div className="mt-16 w-full">
       {/* Section Label */}
@@ -42,21 +39,26 @@ const TrustBadges = () => {
         {t.hero.trustBadges}
       </motion.p>
 
-      {/* Logo Scroll Container - Full viewport width */}
+      {/* Logos - stationary centered row with staggered pulse */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.7 }}
-        className="logo-scroll-container"
+        className="flex flex-wrap justify-center items-center gap-10"
       >
-        {/* Logo Track - infinite scroll */}
-        <div className="logo-track-infinite">
-          {logoSets.map((platform, index) => (
-            <div key={`logo-${index}`} className="logo-item">
-              <img src={platform.logo} alt={platform.name} />
-            </div>
-          ))}
-        </div>
+        {platforms.map((platform, index) => (
+          <div
+            key={platform.name}
+            className="logo-pulse-item w-12 h-12 flex items-center justify-center"
+            style={{ animationDelay: `${index * 0.4}s` }}
+          >
+            <img
+              src={platform.logo}
+              alt={platform.name}
+              className="w-full h-full object-contain"
+            />
+          </div>
+        ))}
       </motion.div>
     </div>
   );
