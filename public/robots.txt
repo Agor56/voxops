@@ -1,14 +1,19 @@
 User-agent: Googlebot
 Allow: /
+Disallow: /calldemo
 
 User-agent: Bingbot
 Allow: /
+Disallow: /calldemo
 
 User-agent: Twitterbot
 Allow: /
+Disallow: /calldemo
 
 User-agent: facebookexternalhit
 Allow: /
+Disallow: /calldemo
 
 User-agent: *
 Allow: /
+Disallow: /calldemo

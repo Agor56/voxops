@@ -11,6 +11,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import CallDemo from "./pages/CallDemo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -108,6 +109,7 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/calldemo" element={<CallDemo />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
