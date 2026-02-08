@@ -41,7 +41,7 @@ const Header = () => {
       >
         <div className={`container mx-auto flex items-center justify-between ${isRTL ? "flex-row-reverse" : ""}`}>
           {/* Logo */}
-          <a href="#" className="group">
+          <a href="/" className="group">
             <span className="text-xl font-bold opacity-90 font-display transition-colors duration-300 group-hover:text-primary">
               VoxOps
             </span>
