@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Header from '@/components/Header';
-import PinGate from '@/components/demo/PinGate';
 import DemoForm from '@/components/demo/DemoForm';
 import LiveCallScreen from '@/components/demo/LiveCallScreen';
 
-type DemoState = 'pin' | 'form' | 'call';
+type DemoState = 'form' | 'call';
 
 const CallDemo = () => {
-  const [state, setState] = useState<DemoState>('pin');
+  const [state, setState] = useState<DemoState>('form');
   const [submissionCount, setSubmissionCount] = useState(0);
 
   // Set noindex meta tag
@@ -21,10 +20,6 @@ const CallDemo = () => {
       document.head.removeChild(meta);
     };
   }, []);
-
-  const handlePinSuccess = () => {
-    setState('form');
-  };
 
   const handleSubmitted = () => {
     setSubmissionCount((c) => c + 1);
@@ -43,21 +38,10 @@ const CallDemo = () => {
         <div className="hero-glow hero-glow-secondary absolute bottom-[20%] left-[10%] w-[400px] h-[400px] opacity-10" />
       </div>
 
-      {/* Header (only after PIN) */}
-      {state !== 'pin' && <Header />}
+      {/* Header */}
+      <Header />
 
       <AnimatePresence mode="wait">
-        {state === 'pin' && (
-          <motion.div
-            key="pin"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <PinGate onSuccess={handlePinSuccess} />
-          </motion.div>
-        )}
 
         {state === 'form' && (
           <motion.div
