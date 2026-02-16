@@ -127,7 +127,7 @@ serve(async (req) => {
         internationalPhone = '972' + data.phone_number.slice(1);
       }
 
-      const webhookUrl = 'https://n8n.srv1100597.hstgr.cloud/webhook/web_submission';
+      const webhookUrl = 'https://n8n.srv1100597.hstgr.cloud/webhook/voxops-11labs-agent';
 
       const webhookPayload = {
         full_name: data.full_name,
