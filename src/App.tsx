@@ -12,6 +12,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CallDemo from "./pages/CallDemo";
+import CallDemo2 from "./pages/CallDemo2";
 import BuildingManagement from "./pages/BuildingManagement";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -111,6 +112,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/calldemo" element={<CallDemo />} />
+                <Route path="/calldemo2" element={<CallDemo2 />} />
                 <Route path="/bm" element={<BuildingManagement />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
