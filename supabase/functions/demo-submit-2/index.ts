@@ -87,7 +87,7 @@ serve(async (req) => {
         internationalPhone = '972' + data.phone_number.slice(1);
       }
 
-      const webhookUrl = 'https://n8n.srv1100597.hstgr.cloud/webhook/voxops-out-testing';
+      const webhookUrl = 'https://n8n.srv1100597.hstgr.cloud/webhook/voxops-out-testing-vad234';
 
       const webhookPayload = {
         full_name: data.full_name,
