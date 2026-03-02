@@ -76,8 +76,8 @@ const DemoForm2 = ({ onSubmitted, submissionCount }: DemoForm2Props) => {
   return (
     <div className="space-y-12" dir="rtl">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-center space-y-4">
-        <h1 className="section-title">הכירו את אדם — <span className="gradient-text">בזמן אמת</span></h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">מלאו את הפרטים למטה, ואדם יתקשר אליכם תוך 60 שניות. בלי הקלטה. בלי טריקים. שיחה חיה.</p>
+        <h1 className="section-title">הכירו את בר — <span className="gradient-text">בזמן אמת</span></h1>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">מלאו את הפרטים למטה, ובר יתקשר אליכם תוך 60 שניות. בלי הקלטה. בלי טריקים. שיחה חיה.</p>
         <VoiceWaveform bars={7} className="mx-auto mt-4" />
       </motion.div>
 
@@ -129,7 +129,7 @@ const DemoForm2 = ({ onSubmitted, submissionCount }: DemoForm2Props) => {
         {error && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-destructive text-sm text-center">{error}</motion.p>}
 
         <Button variant="hero" size="xl" className="w-full animate-demo-btn-pulse" onClick={handleSubmit} disabled={loading}>
-          {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <>שלחו ואדם מתקשר עכשיו<ArrowLeft className="w-5 h-5 mr-2" /></>}
+          {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <>שלחו ובר מתקשר עכשיו<ArrowLeft className="w-5 h-5 mr-2" /></>}
         </Button>
       </motion.div>
 
@@ -137,7 +137,7 @@ const DemoForm2 = ({ onSubmitted, submissionCount }: DemoForm2Props) => {
         <h3 className="text-xl font-bold font-display text-center mb-6 text-foreground">מה הולך לקרות?</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { icon: Phone, text: 'אדם יתקשר למספר שהזנתם תוך 60 שניות' },
+            { icon: Phone, text: 'בר יתקשר למספר שהזנתם תוך 60 שניות' },
             { icon: MessageSquare, text: 'הוא ינהל שיחה אמיתית — ישאל שאלות ויענה על התנגדויות' },
             { icon: CheckCircle2, text: 'תשמעו בדיוק איך הסוכן עובד עבור הלקוחות שלכם' },
           ].map(({ icon: Icon, text }, i) => (
