@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 // Count-up animation for stats
 const CountUp = ({ end, duration = 2000, prefix = '', suffix = '' }: { end: number; duration?: number; prefix?: string; suffix?: string }) => {
   const [count, setCount] = useState(0);
+  const [done, setDone] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
 
@@ -26,6 +27,7 @@ const CountUp = ({ end, duration = 2000, prefix = '', suffix = '' }: { end: numb
               requestAnimationFrame(animate);
             } else {
               setCount(end);
+              setDone(true);
             }
           };
           
@@ -42,7 +44,15 @@ const CountUp = ({ end, duration = 2000, prefix = '', suffix = '' }: { end: numb
     return () => observer.disconnect();
   }, [end, duration]);
 
-  return <span ref={ref}>{prefix}{count.toLocaleString()}{suffix}</span>;
+  return (
+    <span 
+      ref={ref} 
+      style={done ? { textShadow: '0 0 20px hsl(168 100% 40% / 0.4)' } : undefined}
+      className="transition-all duration-500"
+    >
+      {prefix}{count.toLocaleString()}{suffix}
+    </span>
+  );
 };
 
 const MetricsSection = () => {
@@ -50,10 +60,10 @@ const MetricsSection = () => {
 
   return (
     <section id="metrics" className="py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
-      <div className={`absolute top-1/2 ${isRTL ? 'right-0' : 'left-0'} w-[400px] h-[400px] bg-primary/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2`} />
-      <div className={`absolute top-1/2 ${isRTL ? 'left-0' : 'right-0'} w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2`} />
+      {/* Background - deep purple base with glow orbs */}
+      <div className="absolute inset-0 bg-background" />
+      <div className={`absolute top-1/2 ${isRTL ? 'right-0' : 'left-0'} w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none -translate-y-1/2`} style={{ background: 'hsl(260 60% 50% / 0.1)' }} />
+      <div className={`absolute top-1/2 ${isRTL ? 'left-0' : 'right-0'} w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none -translate-y-1/2`} style={{ background: 'hsl(168 100% 33% / 0.08)' }} />
       
       <div className="container mx-auto relative z-10">
         {/* Header */}

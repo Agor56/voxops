@@ -17,6 +17,11 @@ const AgentsSection = () => {
     window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   };
 
+  const blurInVariant = {
+    hidden: { opacity: 0, y: 30, filter: 'blur(10px)' },
+    visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  };
+
   return (
     <section id="agents" className="py-24 relative">
       {/* Background */}
@@ -45,16 +50,17 @@ const AgentsSection = () => {
 
         {/* Sofia - WhatsApp Agent (Full Width) */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={blurInVariant}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
           whileHover={{ y: -4 }}
           className="glass-card-hover p-8 rounded-2xl flex flex-col lg:flex-row lg:items-center gap-8 mb-6"
         >
           <div className="flex-1">
-            <div className={`w-12 h-12 rounded-xl bg-primary flex items-center justify-center mb-6 ${isRTL ? 'ml-auto lg:ml-0' : ''}`}>
-              <MessageSquare className="w-5 h-5 text-white" />
+            <div className={`w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6 ${isRTL ? 'ml-auto lg:ml-0' : ''}`}>
+              <MessageSquare className="w-5 h-5 text-primary" />
             </div>
             <h3 className={`text-xl font-bold text-foreground mb-3 ${isRTL ? 'text-right lg:text-right' : 'text-left'}`}>
               {t.agents.sofia.name}
@@ -87,8 +93,9 @@ const AgentsSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Eve - Voice Inbound Agent */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={blurInVariant}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
           >
@@ -97,8 +104,9 @@ const AgentsSection = () => {
 
           {/* Adam - Outbound Sales Agent */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={blurInVariant}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: 0.25, ease: "easeOut" }}
           >

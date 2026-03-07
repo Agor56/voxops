@@ -381,7 +381,7 @@ const AdamAgentCard = ({ className = '' }: AdamAgentCardProps) => {
     >
       <div className="p-8 flex flex-col h-full">
         {/* Icon - Top */}
-        <div className={`w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mb-6 ${isRTL ? 'self-end' : 'self-start'}`}>
+        <div className={`w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6 ${isRTL ? 'self-end' : 'self-start'}`}>
           <PhoneOutgoing className="w-5 h-5 text-white" />
         </div>
 
