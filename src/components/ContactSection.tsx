@@ -72,8 +72,8 @@ const ContactSection = () => {
     <section id="contact" className="py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-t from-card/50 to-transparent" />
-      <div className={`absolute bottom-0 ${isRTL ? 'right-0' : 'left-0'} w-[400px] h-[400px] bg-primary/10 rounded-full blur-[120px] pointer-events-none`} />
-      <div className={`absolute top-0 ${isRTL ? 'left-0' : 'right-0'} w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[120px] pointer-events-none`} />
+      <div className={`absolute bottom-0 ${isRTL ? 'right-0' : 'left-0'} w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none`} style={{ background: 'hsl(260 60% 50% / 0.1)' }} />
+      <div className={`absolute top-0 ${isRTL ? 'left-0' : 'right-0'} w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none`} style={{ background: 'hsl(168 100% 33% / 0.08)' }} />
       
       <div className="container mx-auto relative z-10">
         {showCalendar ? (

@@ -51,6 +51,27 @@ const CountUp = ({ end, duration = 2000, suffix = '' }: { end: number; duration?
   return <span ref={ref} className="font-mono">{count.toLocaleString()}{suffix}</span>;
 };
 
+// SplitText animation - each word animates independently
+const SplitTextHeading = ({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) => {
+  const words = text.split(' ');
+  return (
+    <span className={className}>
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: delay + i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="inline-block"
+          style={{ marginInlineEnd: '0.3em' }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
+
 const Hero = () => {
   const { t, isRTL } = useLanguage();
   
@@ -103,8 +124,26 @@ const Hero = () => {
 
   return (
     <section ref={heroSectionRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-60"
+        style={{ marginLeft: '200px', transform: 'scale(1.2)', transformOrigin: 'left' }}
+      >
+        <source src="https://stream.mux.com/s8pMcOvMQXc4GD6AX4e1o01xFogFxipmuKltNfSYza0200.m3u8" type="application/x-mpegURL" />
+      </video>
+      
+      {/* Video gradient overlay */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-40 z-[5]"
+        style={{ background: 'linear-gradient(to top, #070612, transparent)' }}
+      />
+
       {/* Animated Pulsing Rings Background */}
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none" style={{ zIndex: 10 }}>
         {/* Central glowing orb */}
         <div 
           className="absolute w-[200px] h-[200px] rounded-full blur-3xl animate-hero-glow max-sm:w-[120px] max-sm:h-[120px]"
@@ -135,35 +174,25 @@ const Hero = () => {
       </div>
 
       {/* Background Effects - Siri-like pulsating orbs */}
-      <div className={`hero-glow top-1/4 ${isRTL ? '-right-48' : '-left-48'}`} />
-      <div className={`hero-glow hero-glow-secondary top-1/3 ${isRTL ? '-left-48' : '-right-48'}`} />
+      <div className={`hero-glow top-1/4 ${isRTL ? '-right-48' : '-left-48'}`} style={{ zIndex: 10 }} />
+      <div className={`hero-glow hero-glow-secondary top-1/3 ${isRTL ? '-left-48' : '-right-48'}`} style={{ zIndex: 10 }} />
       
-      <div className="container mx-auto py-20 relative z-10">
+      <div className="container mx-auto py-20 relative z-20">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Main Headline with Space Grotesk */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.1 }} 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 font-display"
-          >
-            {t.hero.title}
-          </motion.h1>
+          {/* Main Headline with SplitText animation */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 font-display">
+            <SplitTextHeading text={t.hero.title} delay={0.1} />
+          </h1>
           
-          <motion.h2 
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.2 }} 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 gradient-text glow-text font-display"
-          >
-            {t.hero.titleHighlight}
-          </motion.h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 gradient-text glow-text font-display">
+            <SplitTextHeading text={t.hero.titleHighlight} delay={0.3} />
+          </h2>
 
-          {/* Subtitle with lighter weight */}
+          {/* Subtitle with blur-in effect */}
           <motion.p 
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.3 }} 
+            initial={{ opacity: 0, filter: 'blur(10px)' }} 
+            animate={{ opacity: 1, filter: 'blur(0px)' }} 
+            transition={{ duration: 0.6, delay: 0.4 }} 
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 font-light"
           >
             {t.hero.subtitle}
@@ -171,9 +200,9 @@ const Hero = () => {
 
           {/* Trust Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
+            initial={{ opacity: 0, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 0.5, delay: 0.5 }}
             className="flex justify-center mb-10"
           >
             <div className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs text-muted-foreground/60 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -182,20 +211,20 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          {/* CTAs with new button variants */}
+          {/* CTAs with blur-in */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.4 }} 
+            initial={{ opacity: 0, filter: 'blur(10px)' }} 
+            animate={{ opacity: 1, filter: 'blur(0px)' }} 
+            transition={{ duration: 0.6, delay: 0.6 }} 
             className={`flex flex-col sm:flex-row gap-4 justify-center mb-12 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
           >
-            <Button variant="hero" size="xl" className="group" asChild>
+            <Button size="xl" className="group bg-white text-[#070612] hover:bg-white/90 rounded-full shadow-[0_0_30px_hsl(0_0%_100%/0.2)] hover:shadow-[0_0_50px_hsl(0_0%_100%/0.3)] hover:scale-[1.02] transition-all duration-300" asChild>
               <a href="#contact" className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
                 {t.hero.ctaPrimary}
                 <ArrowRight className={`w-5 h-5 group-hover:translate-x-1 transition-transform ${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2'}`} />
               </a>
             </Button>
-            <Button variant="heroGlass" size="xl" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`} asChild>
+            <Button size="xl" className={`flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white rounded-full border-0 hover:bg-white/30 transition-all duration-300 ${isRTL ? 'flex-row-reverse' : ''}`} asChild>
               <a href="#agents">
                 <Phone className="w-5 h-5" />
                 {t.hero.ctaSecondary}
@@ -207,7 +236,7 @@ const Hero = () => {
           <motion.div 
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.5 }} 
+            transition={{ duration: 0.6, delay: 0.7 }} 
             className={`flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}
           >
             {/* Appointments Saved Card - Glassmorphism style */}
