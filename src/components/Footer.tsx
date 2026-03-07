@@ -42,8 +42,7 @@ const Footer = () => {
   return (
     <>
       <footer 
-        className="border-t py-16"
-        style={{ backgroundColor: '#050410', borderColor: 'hsl(0 0% 100% / 0.05)' }}
+        className="bg-background border-t border-border/50 py-16"
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         <div className="container mx-auto">
@@ -94,7 +93,7 @@ const Footer = () => {
           </div>
 
           {/* Bottom */}
-          <div className={`border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4 ${isRTL ? 'md:flex-row-reverse' : ''}`} style={{ borderColor: 'hsl(0 0% 100% / 0.05)' }}>
+          <div className={`border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
             <p className="text-sm text-muted-foreground">
               © {currentYear} VoxOps. {t.footer.copyright}
             </p>

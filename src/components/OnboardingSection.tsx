@@ -53,11 +53,11 @@ const OnboardingSection = () => {
             delay: index * 0.15
           }} className="relative">
                 {/* Connector Line */}
-                {index < t.onboarding.steps.length - 1 && <div className={`hidden md:block absolute top-16 ${isRTL ? 'right-[calc(50%+60px)]' : 'left-[calc(50%+60px)]'} w-[calc(100%-60px)] h-[2px]`} style={{ background: `linear-gradient(${isRTL ? 'to left' : 'to right'}, hsl(0 0% 100% / 0.1), transparent)` }} />}
+                {index < t.onboarding.steps.length - 1 && <div className={`hidden md:block absolute top-16 ${isRTL ? 'right-[calc(50%+60px)]' : 'left-[calc(50%+60px)]'} w-[calc(100%-60px)] h-[2px] bg-gradient-to-r ${isRTL ? 'from-transparent to-primary/50' : 'from-primary/50 to-transparent'}`} />}
                 
                 <div className="glass-card-hover p-8 rounded-2xl text-center h-full">
                   {/* Step Number */}
-                  <div className="text-5xl font-bold text-white/10 mb-4">
+                  <div className="text-5xl font-bold gradient-text mb-4 opacity-50">
                     {step.number}
                   </div>
                   
