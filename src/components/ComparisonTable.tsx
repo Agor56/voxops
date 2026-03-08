@@ -171,7 +171,7 @@ const ComparisonTable = () => {
                     <td colSpan={5} className="p-3 font-bold text-right">📞 AGENT ADAM ({isRTL ? 'יוצא' : 'Outbound'})</td>
                   </tr>
                   <tr>
-                    <td className="p-4 text-right border-b border-border">{isRTL ? 'מעקב פרואקטיבי + החזרת מטופלים' : 'Proactive Follow-up + Patient Recovery'}</td>
+                    <td className="p-4 text-right border-b border-border">{isRTL ? 'מעקב פרואקטיבי + החזרת לקוחות' : 'Proactive Follow-up + Customer Recovery'}</td>
                     <td className="p-4 text-center border-b border-border">❌</td>
                     <td className="p-4 text-center border-b border-border bg-primary/10">❌</td>
                     <td className="p-4 text-center border-b border-border">✅</td>
