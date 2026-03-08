@@ -271,7 +271,7 @@ const ComparisonTable = () => {
                       {isRTL ? '30-50 שיחות/שבוע' : '30-50 calls/week'}
                     </td>
                     <td className="p-4 text-center bg-primary/10 text-sm text-muted-foreground">
-                      {isRTL ? '3-5 מטפלים' : '3-5 practitioners'}<br />
+                      {isRTL ? '3-5 אנשי צוות' : '3-5 team members'}<br />
                       {isRTL ? '80-150 שיחות/שבוע' : '80-150 calls/week'}
                     </td>
                     <td className="p-4 text-center text-sm text-muted-foreground">
