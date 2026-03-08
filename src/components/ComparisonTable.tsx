@@ -112,7 +112,7 @@ const ComparisonTable = () => {
                     <td className="p-4 text-center border-b border-border bg-amber-500/10">✅</td>
                   </tr>
                   <tr>
-                    <td className="p-4 text-right border-b border-border">{isRTL ? 'קביעת תורים אוטומטית' : 'Automatic Scheduling'}</td>
+                    <td className="p-4 text-right border-b border-border">{isRTL ? 'קביעת פגישות אוטומטית' : 'Automatic Scheduling'}</td>
                     <td className="p-4 text-center border-b border-border">✅</td>
                     <td className="p-4 text-center border-b border-border bg-primary/10">✅</td>
                     <td className="p-4 text-center border-b border-border">✅</td>
