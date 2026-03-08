@@ -233,7 +233,7 @@ export const translations = {
         cta: 'Try Ora',
       },
       marcus: {
-        name: 'Eve - Voice Reception Agent',
+        name: 'Ben - Voice Reception Agent',
         description: 'Answers every incoming call 24/7, provides service information, books appointments during the call, and syncs everything with your calendar and CRM – without involving your staff.',
         features: [
           'Answers every incoming call 24/7 (no more voicemail)',
@@ -243,10 +243,10 @@ export const translations = {
           'Updates CRM with detailed notes after every call',
           'Speaks Hebrew, English, Russian, Arabic, and more',
         ],
-        cta: 'Talk to Eve',
+        cta: 'Talk to Ben',
       },
       david: {
-        name: 'Adam - Outbound Sales Agent',
+        name: 'Bar - Outbound Sales Agent',
         description: 'Calls new leads within 60 minutes, filters serious prospects from browsers, books appointments with qualified leads, and updates CRM – so your team only handles those who actually show up.',
         features: [
           'Calls new leads within 60 minutes (65% higher conversion)',
@@ -256,7 +256,7 @@ export const translations = {
           'Re-engages dormant customers after 6+ months',
           'Trained on your specific services and pricing',
         ],
-        cta: 'Hear Adam',
+        cta: 'Hear Bar',
       },
     },
     // Metrics Section
@@ -417,7 +417,7 @@ export const translations = {
         features: [
           '2,500 voice minutes/month',
           'Everything in GROWTH, plus:',
-          'Adam - Outbound sales agent',
+          'Bar - Outbound sales agent',
           'Custom integrations',
           'Dedicated account manager',
           'Weekly strategy calls',
@@ -519,19 +519,19 @@ export const translations = {
         cta: 'נסו את אורה',
       },
       marcus: {
-        name: 'איב - סוכנת קבלה קולית',
-        description: 'עונה לכל שיחה 24/7, מספקת מידע, קובעת פגישות בזמן השיחה - בלי לטרוד לצוות.',
+        name: 'בן - סוכן קבלה קולי',
+        description: 'עונה לכל שיחה 24/7, מספק מידע, קובע פגישות בזמן השיחה - בלי לטרוד לצוות.',
         features: [
           'אפס תא קולי - כל שיחה נענית',
-          'קובעת פגישות ומסנכרנת עם היומן (Google Calendar / Calendly / Acuity)',
-          'מעבירה שיחות דחופות מיד לצוות',
-          'מעדכנת CRM אחרי כל שיחה',
-          'דוברת עברית, אנגלית, רוסית, ערבית, ועוד',
+          'קובע פגישות ומסנכרן עם היומן (Google Calendar / Calendly / Acuity)',
+          'מעביר שיחות דחופות מיד לצוות',
+          'מעדכן CRM אחרי כל שיחה',
+          'דובר עברית, אנגלית, רוסית, ערבית, ועוד',
         ],
-        cta: 'דברו עם איב',
+        cta: 'דברו עם בן',
       },
       david: {
-        name: 'אדם - סוכן מכירות יוצא',
+        name: 'בר - סוכן מכירות יוצא',
         description: 'מתקשר ללידים תוך 60 דקות, מסנן הרציניים, קובע פגישות - הצוות שלכם מטפל רק במי שבאמת מגיע.',
         features: [
           'קריאה מהירה = 65% המרה גבוהה יותר',
@@ -540,7 +540,7 @@ export const translations = {
           'מחזיר לקוחות רדומים (6+ חודשים)',
           'מסתנכרן עם היומן וה-CRM',
         ],
-        cta: 'שמעו את אדם',
+        cta: 'שמעו את בר',
       },
     },
     // Metrics Section
@@ -680,7 +680,7 @@ export const translations = {
         features: [
           '2,500 דקות קוליות/חודש',
           'כל מה שב-GROWTH, בתוספת:',
-          'אדם - סוכן מכירות יוצא',
+          'בר - סוכן מכירות יוצא',
           'אינטגרציות מותאמות',
           'מנהל חשבון ייעודי',
           'שיחות אסטרטגיה שבועיות',

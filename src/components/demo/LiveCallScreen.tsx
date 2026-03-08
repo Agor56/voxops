@@ -127,7 +127,7 @@ const LiveCallScreen = ({ onReset }: LiveCallScreenProps) => {
 
       {/* Headline */}
       <h2 className="text-2xl md:text-3xl font-bold font-display text-foreground text-center">
-        {inCall ? 'אדם בשיחה' : 'אדם מתקשר אליכם עכשיו...'}
+        {inCall ? 'בר בשיחה' : 'בר מתקשר אליכם עכשיו...'}
       </h2>
 
       {/* Countdown or subtext */}
@@ -142,7 +142,7 @@ const LiveCallScreen = ({ onReset }: LiveCallScreenProps) => {
           >
             {seconds}
           </div>
-          <p className="text-muted-foreground">תרימו את הטלפון ותנו לאדם לעבוד</p>
+          <p className="text-muted-foreground">תרימו את הטלפון ותנו לבר לעבוד</p>
         </div>
       ) : (
         <div className="text-center space-y-4">

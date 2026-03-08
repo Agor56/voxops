@@ -27,7 +27,7 @@ const PricingSection = () => {
       period: t.pricing.perMonth,
       badge: "מתאים ל-300-500 לידים/חודש",
       features: [
-        "סוכן אחד לבחירה (אורה / אור / אדם)",
+        "סוכן אחד לבחירה (אורה / אור / בר)",
         "הליך אפיון הלקוח ופיתוח תסריטים מותאם",
         "אינטגרציה CRM בסיסית (Google Calendar / Calendly)",
         "דשבורד בזמן אמת",
@@ -51,7 +51,7 @@ const PricingSection = () => {
       period: t.pricing.perMonth,
       badge: "מתאים ל-600-1,200 לידים/חודש",
       features: [
-        "2 סוכנים (אור/אורה + אדם WhatsApp)",
+        "2 סוכנים (אור/אורה + בר WhatsApp)",
         "הליך אפיון מעמיק ופיתוח תסריטים מותאם אישית",
         "אינטגרציה CRM מתקדמת (CRM + WhatsApp + Calendar)",
         "דשבורד + דוחות שבועיים",
@@ -80,7 +80,7 @@ const PricingSection = () => {
       period: t.pricing.perMonth,
       badge: "מתאים ל-1,000+ לידים/חודש",
       features: [
-        "צוות סוכנים מלא: אורה + אור + אדם",
+        "צוות סוכנים מלא: אורה + אור + בר",
         "חיבור לסושיאל מדיה (TikTok / Instagram DM)",
         "אפיון מתקדם ברמת אנטרפרייז",
         "אינטגרציה מלאה (CRM + WhatsApp + SMS + PayPal + N8N)",

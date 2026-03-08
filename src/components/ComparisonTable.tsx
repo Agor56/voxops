@@ -168,7 +168,7 @@ const ComparisonTable = () => {
 
                   {/* Agent Adam Section */}
                   <tr className="bg-muted/30">
-                    <td colSpan={5} className="p-3 font-bold text-right">📞 AGENT ADAM ({isRTL ? 'יוצא' : 'Outbound'})</td>
+                    <td colSpan={5} className="p-3 font-bold text-right">📞 AGENT BAR ({isRTL ? 'יוצא' : 'Outbound'})</td>
                   </tr>
                   <tr>
                     <td className="p-4 text-right border-b border-border">{isRTL ? 'מעקב פרואקטיבי + החזרת לקוחות' : 'Proactive Follow-up + Customer Recovery'}</td>

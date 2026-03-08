@@ -462,7 +462,7 @@ const OrAgentCard = ({ className = '' }: OrAgentCardProps) => {
                         }`}
                       >
                         <span className="text-xs text-muted-foreground/60 ml-2">
-                          {msg.role === 'user' ? 'אתם:' : 'איב:'}
+                          {msg.role === 'user' ? 'אתם:' : 'בן:'}
                         </span>
                         {msg.text}
                       </div>
