@@ -13,7 +13,7 @@ interface DemoFormProps {
 }
 
 const BUSINESS_TYPES = [
-  'קליניקה / רפואה',
+  'רפואה / בריאות',
   'נדל"ן',
   'עורכי דין',
   'שיפוצים',
