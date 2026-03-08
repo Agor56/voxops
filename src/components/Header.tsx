@@ -34,15 +34,19 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/50 py-3" : "bg-transparent py-5"
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        style={{
+          background: isScrolled ? 'rgba(0,0,0,0.85)' : 'transparent',
+          backdropFilter: isScrolled ? 'blur(20px)' : 'none',
+          borderBottom: isScrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
+          padding: isScrolled ? '0.75rem 0' : '1.25rem 0',
+        }}
         dir={isRTL ? "rtl" : "ltr"}
       >
         <div className={`container mx-auto flex items-center justify-between ${isRTL ? "flex-row-reverse" : ""}`}>
           {/* Logo */}
           <a href="/" className="group">
-            <span className="text-xl font-bold opacity-90 font-display transition-colors duration-300 group-hover:text-primary">
+            <span className="text-xl font-bold opacity-90 font-display transition-colors duration-300" style={{ color: '#C9A96E' }}>
               VoxOps
             </span>
           </a>
@@ -53,7 +57,10 @@ const Header = () => {
               <a
                 key={item.label}
                 href={item.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                className="text-sm transition-colors duration-200"
+                style={{ color: 'rgba(255,255,255,0.6)' }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#fff')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
               >
                 {item.label}
               </a>
@@ -66,12 +73,12 @@ const Header = () => {
               variant="ghost"
               size="icon"
               onClick={toggleLanguage}
-              className="text-muted-foreground hover:text-foreground"
+              style={{ color: 'rgba(255,255,255,0.6)' }}
             >
               <Globe className="w-5 h-5" />
             </Button>
             <ThemeToggle />
-            <Button variant="hero" size="sm" asChild>
+            <Button size="sm" asChild style={{ background: '#C9A96E', color: '#000' }} className="hover:opacity-90">
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 {t.nav.bookDemo}
               </a>
@@ -94,7 +101,8 @@ const Header = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border/50"
+              style={{ background: 'rgba(0,0,0,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+              className="md:hidden"
             >
               <div className="container mx-auto py-4 flex flex-col gap-4">
                 {navItems.map((item) => (
@@ -103,18 +111,19 @@ const Header = () => {
                   </a>
                 ))}
                 <div
-                  className={`flex items-center gap-3 pt-4 border-t border-border/50 ${isRTL ? "flex-row-reverse" : ""}`}
+                  className={`flex items-center gap-3 pt-4 ${isRTL ? "flex-row-reverse" : ""}`}
+                  style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
                 >
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={toggleLanguage}
-                    className="text-muted-foreground hover:text-foreground"
+                    style={{ color: 'rgba(255,255,255,0.6)' }}
                   >
                     <Globe className="w-4 h-4 mr-2" />
                     {language === "en" ? "עברית" : "English"}
                   </Button>
-                  <Button variant="default" size="sm" className="flex-1" asChild>
+                  <Button size="sm" className="flex-1" asChild style={{ background: '#C9A96E', color: '#000' }}>
                     <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
                       {t.nav.bookDemo}
                     </a>

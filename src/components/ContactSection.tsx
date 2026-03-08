@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Button } from './ui/button';
-import { Input } from './ui/input';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 declare global {
@@ -17,7 +16,6 @@ const ContactSection = () => {
   const [businessType, setBusinessType] = useState('');
   const [error, setError] = useState('');
 
-  // Load Cal.com embed script when calendar should be shown
   useEffect(() => {
     if (showCalendar) {
       (function (C: any, A: string, L: string) {
@@ -70,10 +68,7 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-t from-card/50 to-transparent" />
-      <div className={`absolute bottom-0 ${isRTL ? 'right-0' : 'left-0'} w-[400px] h-[400px] bg-primary/10 rounded-full blur-[120px] pointer-events-none`} />
-      <div className={`absolute top-0 ${isRTL ? 'left-0' : 'right-0'} w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[120px] pointer-events-none`} />
+      <div className={`absolute bottom-0 ${isRTL ? 'right-0' : 'left-0'} w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none`} style={{ background: 'rgba(201,169,110,0.06)' }} />
       
       <div className="container mx-auto relative z-10">
         {showCalendar ? (
@@ -87,20 +82,16 @@ const ContactSection = () => {
               <h2 className="section-title mb-4">
                 {isRTL ? 'בחרו זמן לשיחה' : 'Choose a Time to Talk'}
               </h2>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-lg" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 {isRTL ? 'בחרו את הזמן הנוח לכם לשיחת ההיכרות' : 'Select a convenient time for your discovery call'}
               </p>
             </div>
             <div className="glass-card p-4 rounded-2xl">
-              <div 
-                id="my-cal-inline-callback" 
-                style={{ width: '100%', height: '600px', overflow: 'auto' }}
-              />
+              <div id="my-cal-inline-callback" style={{ width: '100%', height: '600px', overflow: 'auto' }} />
             </div>
           </motion.div>
         ) : (
           <div className={`grid lg:grid-cols-2 gap-12 items-center ${isRTL ? 'direction-rtl' : ''}`}>
-            {/* Left Content */}
             <motion.div
               initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -109,18 +100,17 @@ const ContactSection = () => {
               className={isRTL ? 'text-right' : 'text-left'}
             >
               <div className={`inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <Send className="w-4 h-4 text-primary" />
-                <span className="text-sm text-muted-foreground">{t.contact.badge}</span>
+                <Send className="w-4 h-4" style={{ color: '#C9A96E' }} />
+                <span className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{t.contact.badge}</span>
               </div>
               <h2 className="section-title mb-6">
-                {t.contact.title} <span className="gradient-text">{t.contact.titleHighlight}</span> {t.contact.titleEnd}
+                {t.contact.title} <span style={{ color: '#C9A96E' }}>{t.contact.titleHighlight}</span> {t.contact.titleEnd}
               </h2>
-              <p className="text-lg text-muted-foreground mb-8">
+              <p className="text-lg mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 {t.contact.subtitle}
               </p>
             </motion.div>
 
-            {/* Right Form */}
             <motion.div
               initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -132,30 +122,32 @@ const ContactSection = () => {
                   <label className={`text-lg font-medium block ${isRTL ? 'text-right' : 'text-left'}`}>
                     {t.contact.form.step1Question}
                   </label>
-                  <Input
+                  <input
                     value={businessType}
-                    onChange={(e) => {
-                      setBusinessType(e.target.value);
-                      if (error) setError('');
-                    }}
+                    onChange={(e) => { setBusinessType(e.target.value); if (error) setError(''); }}
                     placeholder={t.contact.form.step1Placeholder}
-                    className={`text-lg py-6 ${isRTL ? 'text-right' : 'text-left'} ${error ? 'border-red-500' : ''}`}
+                    className={`w-full text-lg py-3 px-4 rounded-lg outline-none transition-all duration-300 ${isRTL ? 'text-right' : 'text-left'} ${error ? 'border-red-500' : ''}`}
+                    style={{ 
+                      background: 'rgba(255,255,255,0.03)', 
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      color: '#fff',
+                    }}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = 'rgba(201,169,110,0.5)')}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
                     dir={isRTL ? 'rtl' : 'ltr'}
                   />
                   {error && (
-                    <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
-                      {error}
-                    </p>
+                    <p className={`text-red-500 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>{error}</p>
                   )}
                 </div>
 
                 <div className={`mt-6 ${isRTL ? 'flex flex-row-reverse' : 'flex'}`}>
                   <Button
                     type="button"
-                    variant="hero"
                     size="lg"
                     onClick={handleSubmit}
                     className="flex-1"
+                    style={{ background: '#C9A96E', color: '#000' }}
                   >
                     {t.contact.form.continue}
                     {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}

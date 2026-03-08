@@ -72,38 +72,10 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         },
-        // Extended teal palette for aesthetic medicine
-        teal: {
-          50: 'hsl(168 100% 97%)',
-          100: 'hsl(168 100% 92%)',
-          200: 'hsl(168 100% 82%)',
-          300: 'hsl(168 100% 65%)',
-          400: 'hsl(168 100% 50%)',
-          500: 'hsl(168 100% 40%)',
-          600: 'hsl(168 100% 33%)',
-          700: 'hsl(168 100% 26%)',
-          800: 'hsl(168 100% 20%)',
-          900: 'hsl(168 100% 14%)',
-          950: 'hsl(168 100% 8%)'
-        },
-        mint: {
-          DEFAULT: 'hsl(160 97% 39%)',
-          50: 'hsl(160 97% 97%)',
-          100: 'hsl(160 97% 92%)',
-          200: 'hsl(160 97% 82%)',
-          300: 'hsl(160 97% 68%)',
-          400: 'hsl(160 97% 52%)',
-          500: 'hsl(160 97% 45%)',
-          600: 'hsl(160 97% 39%)',
-          700: 'hsl(160 97% 32%)',
-          800: 'hsl(160 97% 25%)',
-          900: 'hsl(160 97% 18%)'
-        },
-        baltic: {
-          DEFAULT: 'hsl(197 97% 29%)',
-          500: 'hsl(197 97% 29%)',
-          600: 'hsl(197 97% 24%)',
-          700: 'hsl(197 97% 19%)'
+        gold: {
+          DEFAULT: '#C9A96E',
+          dim: 'rgba(201,169,110,0.4)',
+          glow: 'rgba(201,169,110,0.08)',
         }
       },
       borderRadius: {
@@ -153,8 +125,7 @@ export default {
         lg: 'var(--shadow-lg)',
         xl: 'var(--shadow-xl)',
         '2xl': 'var(--shadow-2xl)',
-        'teal-glow': '0 0 60px hsl(168 100% 40% / 0.3)',
-        'mint-glow': '0 0 60px hsl(160 97% 45% / 0.25)'
+        'gold-glow': '0 0 60px rgba(201,169,110,0.2)',
       }
     }
   },

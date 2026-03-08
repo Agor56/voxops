@@ -242,7 +242,7 @@ const ComparisonTable = () => {
                       <div className="text-foreground font-medium">
                         {isRTL ? 'אין התחייבות. בטלו בכל עת.' : 'No commitment. Cancel anytime.'}
                       </div>
-                      <div className="text-sm text-green-600 dark:text-green-400 mt-1 flex items-center justify-center gap-1">
+                      <div className="text-sm mt-1 flex items-center justify-center gap-1" style={{ color: '#C9A96E' }}>
                         <span>✅</span>
                         {isRTL 
                           ? 'הישארו 6 חודשים → קבלו ₪3,500 זיכוי בחודש 7 (ההתקנה חינם למעשה)'
