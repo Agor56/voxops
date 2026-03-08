@@ -98,10 +98,10 @@ const DemoForm = ({ onSubmitted, submissionCount }: DemoFormProps) => {
         className="text-center space-y-4"
       >
         <h1 className="section-title">
-          הכירו את אדם — <span className="gradient-text">בזמן אמת</span>
+           הכירו את בר — <span className="gradient-text">בזמן אמת</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          מלאו את הפרטים למטה, ואדם יתקשר אליכם תוך 60 שניות. בלי הקלטה. בלי טריקים. שיחה חיה.
+          מלאו את הפרטים למטה, ובר יתקשר אליכם תוך 60 שניות. בלי הקלטה. בלי טריקים. שיחה חיה.
         </p>
         <VoiceWaveform bars={7} className="mx-auto mt-4" />
       </motion.div>
