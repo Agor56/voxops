@@ -233,7 +233,7 @@ export const translations = {
         cta: 'Try Ora',
       },
       marcus: {
-        name: 'Eve - Voice Reception Agent',
+        name: 'Ben - Voice Reception Agent',
         description: 'Answers every incoming call 24/7, provides service information, books appointments during the call, and syncs everything with your calendar and CRM – without involving your staff.',
         features: [
           'Answers every incoming call 24/7 (no more voicemail)',
@@ -243,7 +243,7 @@ export const translations = {
           'Updates CRM with detailed notes after every call',
           'Speaks Hebrew, English, Russian, Arabic, and more',
         ],
-        cta: 'Talk to Eve',
+        cta: 'Talk to Ben',
       },
       david: {
         name: 'Adam - Outbound Sales Agent',
