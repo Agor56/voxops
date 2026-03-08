@@ -246,7 +246,7 @@ export const translations = {
         cta: 'Talk to Ben',
       },
       david: {
-        name: 'Adam - Outbound Sales Agent',
+        name: 'Bar - Outbound Sales Agent',
         description: 'Calls new leads within 60 minutes, filters serious prospects from browsers, books appointments with qualified leads, and updates CRM – so your team only handles those who actually show up.',
         features: [
           'Calls new leads within 60 minutes (65% higher conversion)',
@@ -256,7 +256,7 @@ export const translations = {
           'Re-engages dormant customers after 6+ months',
           'Trained on your specific services and pricing',
         ],
-        cta: 'Hear Adam',
+        cta: 'Hear Bar',
       },
     },
     // Metrics Section
