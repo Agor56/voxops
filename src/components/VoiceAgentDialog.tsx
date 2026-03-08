@@ -22,12 +22,12 @@ const VoiceAgentDialog = ({ open, onOpenChange, agentName }: VoiceAgentDialogPro
   const translations = {
     en: {
       marcus: {
-        title: 'Talk to Eve',
-        subtitle: 'Enter your details and Eve will call you right away',
+        title: 'Talk to Ben',
+        subtitle: 'Enter your details and Ben will call you right away',
       },
       david: {
-        title: 'Talk to Adam',
-        subtitle: 'Enter your details and Adam will call you to qualify your needs',
+        title: 'Talk to Bar',
+        subtitle: 'Enter your details and Bar will call you to qualify your needs',
       },
       name: 'Your Name',
       namePlaceholder: 'John Doe',
