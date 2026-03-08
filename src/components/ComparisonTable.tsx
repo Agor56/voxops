@@ -267,7 +267,7 @@ const ComparisonTable = () => {
                   <tr className="bg-card">
                     <td className="p-4 text-right font-bold">{isRTL ? 'מושלם ל:' : 'Perfect for:'}</td>
                     <td className="p-4 text-center text-sm text-muted-foreground">
-                      {isRTL ? '1-2 מטפלים' : '1-2 practitioners'}<br />
+                      {isRTL ? '1-2 אנשי צוות' : '1-2 team members'}<br />
                       {isRTL ? '30-50 שיחות/שבוע' : '30-50 calls/week'}
                     </td>
                     <td className="p-4 text-center bg-primary/10 text-sm text-muted-foreground">
