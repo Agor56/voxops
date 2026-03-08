@@ -27,13 +27,21 @@ const HeroVideo = memo(() => {
   }, []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 10 }}>
-      {/* Edge fade gradient overlay */}
+    <div className="absolute inset-0 flex items-center justify-center overflow-hidden" style={{ zIndex: 10 }}>
+      {/* Radial gradient overlay for edge dissolve */}
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{ 
           zIndex: 15,
-          background: 'linear-gradient(to bottom, #000000 0%, transparent 20%, transparent 60%, #000000 100%)'
+          background: 'radial-gradient(ellipse at 50% 50%, transparent 30%, #000000 80%)'
+        }}
+      />
+      {/* Linear top/bottom fade */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{ 
+          zIndex: 14,
+          background: 'linear-gradient(to bottom, #000000 0%, transparent 15%, transparent 65%, #000000 100%)'
         }}
       />
       <video
@@ -42,8 +50,8 @@ const HeroVideo = memo(() => {
         muted
         loop
         playsInline
-        className="w-full h-full object-cover"
-        style={{ mixBlendMode: 'screen' }}
+        className="w-full h-[70%] object-cover"
+        style={{ mixBlendMode: 'screen', opacity: 0.45 }}
       />
     </div>
   );

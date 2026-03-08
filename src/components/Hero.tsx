@@ -120,7 +120,7 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.48, ease }}
             className="flex justify-center mb-10"
           >
-            <div className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs ${isRTL ? 'flex-row-reverse' : ''}`} style={{ color: 'rgba(255,255,255,0.35)' }}>
+            <div className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs ${isRTL ? 'flex-row-reverse' : ''}`} style={{ color: 'rgba(255,255,255,0.35)', textShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)' }}>
               <span className="text-xs">🎓</span>
               <span>{isRTL ? 'מאומן על מאות שיחות אמיתיות מעסקים בישראל' : 'Trained on hundreds of real calls from businesses in Israel'}</span>
             </div>
