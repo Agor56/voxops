@@ -457,7 +457,7 @@ const LiveAgent = ({ className = '' }: LiveAgentProps) => {
             <p className="text-sm text-muted-foreground">מזכירה רפואית - מדיקל טופ</p>
           </div>
           <div className={`mr-auto w-2 h-2 rounded-full ${
-            isConnected ? 'bg-green-500' : 
+            isConnected ? 'bg-primary' : 
             connectionState === ConnectionState.CONNECTING ? 'bg-yellow-500 animate-pulse' :
             'bg-muted-foreground'
           }`} />

@@ -305,7 +305,7 @@ const VoiceAgent = ({ open, onClose, currentAgent, allAgents, onAgentChange }: V
                   <p className="text-sm text-muted-foreground">{currentAgent.role}</p>
                 </div>
                 <div className={`mr-auto w-2 h-2 rounded-full ${
-                  isConnected ? 'bg-green-500' :
+                  isConnected ? 'bg-primary' :
                   connectionState === ConnectionState.CONNECTING ? 'bg-yellow-500 animate-pulse' :
                   'bg-muted-foreground'
                 }`} />

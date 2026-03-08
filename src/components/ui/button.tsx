@@ -11,17 +11,17 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-primary/20 bg-transparent hover:bg-primary/10 hover:border-primary/40 text-foreground",
+        outline: "border border-[rgba(255,255,255,0.2)] bg-transparent hover:border-[rgba(201,169,110,0.4)] text-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent/10 hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        // Primary CTA with magnetic hover + glow
-        hero: "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-[0_0_30px_hsl(168_100%_40%/0.4)] hover:shadow-[0_0_60px_hsl(168_100%_40%/0.6)] hover:scale-[1.02]",
-        heroSecondary: "bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-[0_0_30px_hsl(160_97%_45%/0.3)] hover:shadow-[0_0_50px_hsl(160_97%_45%/0.5)]",
-        // Glassmorphism with animated shimmer border
-        heroGlass: "relative bg-primary/10 backdrop-blur-xl border border-primary/20 text-foreground hover:bg-primary/15 shadow-[0_8px_32px_hsl(168_100%_40%/0.12)] overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-primary/30 before:to-transparent before:animate-[shimmer_3s_ease-in-out_infinite] transition-all duration-300 hover:border-primary/40 hover:shadow-[0_8px_40px_hsl(168_100%_40%/0.25)]",
-        // Glass variant with static glow on hover
-        glass: "relative bg-primary/8 backdrop-blur-xl border border-primary/15 text-foreground hover:bg-primary/12 overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_30px_hsl(168_100%_40%/0.25)]",
+        // Primary CTA - white bg, black text
+        hero: "bg-white text-black hover:bg-white/90 hover:scale-[1.02] shadow-[0_0_30px_rgba(255,255,255,0.15)]",
+        heroSecondary: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_30px_rgba(201,169,110,0.2)]",
+        // Glassmorphism secondary
+        heroGlass: "relative bg-[rgba(255,255,255,0.06)] backdrop-blur-xl border border-[rgba(255,255,255,0.1)] text-foreground hover:bg-[rgba(255,255,255,0.1)] overflow-hidden transition-all duration-300 hover:border-[rgba(201,169,110,0.4)] hover:shadow-[0_8px_40px_rgba(201,169,110,0.12)]",
+        // Glass variant
+        glass: "relative bg-[rgba(255,255,255,0.06)] backdrop-blur-xl border border-[rgba(255,255,255,0.1)] text-foreground hover:bg-[rgba(255,255,255,0.1)] overflow-hidden transition-all duration-300 hover:border-[rgba(201,169,110,0.4)]",
       },
       size: {
         default: "h-10 px-4 py-2",
