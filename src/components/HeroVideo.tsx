@@ -42,7 +42,7 @@ const HeroVideo = memo(() => {
         muted
         loop
         playsInline
-        className="w-full h-[80vh] object-cover absolute bottom-[-35vh]"
+        className="w-full h-full object-cover"
         style={{ mixBlendMode: 'screen' }}
       />
     </div>
