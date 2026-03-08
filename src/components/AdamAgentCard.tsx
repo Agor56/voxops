@@ -65,12 +65,12 @@ const AdamAgentCard = ({ className = '' }: AdamAgentCardProps) => {
       );
       
       if (slots.length > 0) {
-        result = `נמצאו ${slots.length} תורים פנויים: ${slots.map(s => `${s.time} אצל ${s.doctor}`).join(', ')}`;
+        result = `נמצאו ${slots.length} פגישות פנויות: ${slots.map(s => `${s.time} אצל ${s.doctor}`).join(', ')}`;
       } else {
-        result = 'לא נמצאו תורים פנויים להתמחות זו היום. אפשר לבדוק מחר?';
+        result = 'לא נמצאו פגישות פנויות להתמחות זו היום. אפשר לבדוק מחר?';
       }
     } else if (name === 'bookAppointment') {
-      result = `התור נקבע בהצלחה! ${args.patientName}, בשעה ${args.time}. נשלח תזכורת ב-SMS.`;
+      result = `הפגישה נקבעה בהצלחה! ${args.patientName}, בשעה ${args.time}. נשלח תזכורת ב-SMS.`;
     } else {
       result = 'פעולה לא מוכרת';
     }
