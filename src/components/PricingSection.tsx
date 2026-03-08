@@ -51,7 +51,7 @@ const PricingSection = () => {
       period: t.pricing.perMonth,
       badge: "מתאים ל-600-1,200 לידים/חודש",
       features: [
-        "2 סוכנים (אור/אורה + אדם WhatsApp)",
+        "2 סוכנים (אור/אורה + בר WhatsApp)",
         "הליך אפיון מעמיק ופיתוח תסריטים מותאם אישית",
         "אינטגרציה CRM מתקדמת (CRM + WhatsApp + Calendar)",
         "דשבורד + דוחות שבועיים",
