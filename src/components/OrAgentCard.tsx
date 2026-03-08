@@ -16,7 +16,7 @@ const VOICE_NAME = 'Zephyr';
 const SUGGESTION_CHIPS = [
   'מה זה בוטוקס?',
   'כמה עולה טיפול פילר?',
-  'אפשר לקבוע תור?'
+  'אפשר לקבוע פגישה?'
 ];
 
 interface OrAgentCardProps {
