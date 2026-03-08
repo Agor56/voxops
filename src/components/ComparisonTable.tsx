@@ -112,7 +112,7 @@ const ComparisonTable = () => {
                     <td className="p-4 text-center border-b border-border bg-amber-500/10">✅</td>
                   </tr>
                   <tr>
-                    <td className="p-4 text-right border-b border-border">{isRTL ? 'קביעת תורים אוטומטית' : 'Automatic Scheduling'}</td>
+                    <td className="p-4 text-right border-b border-border">{isRTL ? 'קביעת פגישות אוטומטית' : 'Automatic Scheduling'}</td>
                     <td className="p-4 text-center border-b border-border">✅</td>
                     <td className="p-4 text-center border-b border-border bg-primary/10">✅</td>
                     <td className="p-4 text-center border-b border-border">✅</td>
@@ -171,7 +171,7 @@ const ComparisonTable = () => {
                     <td colSpan={5} className="p-3 font-bold text-right">📞 AGENT ADAM ({isRTL ? 'יוצא' : 'Outbound'})</td>
                   </tr>
                   <tr>
-                    <td className="p-4 text-right border-b border-border">{isRTL ? 'מעקב פרואקטיבי + החזרת מטופלים' : 'Proactive Follow-up + Patient Recovery'}</td>
+                    <td className="p-4 text-right border-b border-border">{isRTL ? 'מעקב פרואקטיבי + החזרת לקוחות' : 'Proactive Follow-up + Customer Recovery'}</td>
                     <td className="p-4 text-center border-b border-border">❌</td>
                     <td className="p-4 text-center border-b border-border bg-primary/10">❌</td>
                     <td className="p-4 text-center border-b border-border">✅</td>
@@ -267,15 +267,15 @@ const ComparisonTable = () => {
                   <tr className="bg-card">
                     <td className="p-4 text-right font-bold">{isRTL ? 'מושלם ל:' : 'Perfect for:'}</td>
                     <td className="p-4 text-center text-sm text-muted-foreground">
-                      {isRTL ? '1-2 מטפלים' : '1-2 practitioners'}<br />
+                      {isRTL ? '1-2 אנשי צוות' : '1-2 team members'}<br />
                       {isRTL ? '30-50 שיחות/שבוע' : '30-50 calls/week'}
                     </td>
                     <td className="p-4 text-center bg-primary/10 text-sm text-muted-foreground">
-                      {isRTL ? '3-5 מטפלים' : '3-5 practitioners'}<br />
+                      {isRTL ? '3-5 אנשי צוות' : '3-5 team members'}<br />
                       {isRTL ? '80-150 שיחות/שבוע' : '80-150 calls/week'}
                     </td>
                     <td className="p-4 text-center text-sm text-muted-foreground">
-                      {isRTL ? '5+ מטפלים' : '5+ practitioners'}<br />
+                      {isRTL ? '5+ אנשי צוות' : '5+ team members'}<br />
                       {isRTL ? '150+ שיחות/שבוע' : '150+ calls/week'}
                     </td>
                     <td className="p-4 text-center bg-amber-500/10 text-sm text-muted-foreground">

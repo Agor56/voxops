@@ -13,7 +13,7 @@ interface DemoFormProps {
 }
 
 const BUSINESS_TYPES = [
-  'קליניקה / רפואה',
+  'רפואה / בריאות',
   'נדל"ן',
   'עורכי דין',
   'שיפוצים',
@@ -174,7 +174,7 @@ const DemoForm = ({ onSubmitted, submissionCount }: DemoFormProps) => {
           <Textarea
             value={painPoint}
             onChange={(e) => setPainPoint(e.target.value)}
-            placeholder="למשל: לידים שלא עונים, תורים שמתבטלים..."
+            placeholder="למשל: לידים שלא עונים, פגישות שמתבטלות..."
             dir="rtl"
             rows={2}
             className="min-h-[72px]"

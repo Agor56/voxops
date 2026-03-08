@@ -65,12 +65,12 @@ const AdamAgentCard = ({ className = '' }: AdamAgentCardProps) => {
       );
       
       if (slots.length > 0) {
-        result = `נמצאו ${slots.length} תורים פנויים: ${slots.map(s => `${s.time} אצל ${s.doctor}`).join(', ')}`;
+        result = `נמצאו ${slots.length} פגישות פנויות: ${slots.map(s => `${s.time} אצל ${s.doctor}`).join(', ')}`;
       } else {
-        result = 'לא נמצאו תורים פנויים להתמחות זו היום. אפשר לבדוק מחר?';
+        result = 'לא נמצאו פגישות פנויות להתמחות זו היום. אפשר לבדוק מחר?';
       }
     } else if (name === 'bookAppointment') {
-      result = `התור נקבע בהצלחה! ${args.patientName}, בשעה ${args.time}. נשלח תזכורת ב-SMS.`;
+      result = `הפגישה נקבעה בהצלחה! ${args.patientName}, בשעה ${args.time}. נשלח תזכורת ב-SMS.`;
     } else {
       result = 'פעולה לא מוכרת';
     }
@@ -362,12 +362,12 @@ const AdamAgentCard = ({ className = '' }: AdamAgentCardProps) => {
   // Adam agent data
   const agentData = {
     name: 'אדם - סוכן מכירות יוצא',
-    description: 'מתקשר ללידים תוך 60 דקות, מסנן הרציניים, מזמין תורים - הצוות שלכם מטפל רק במי שבאמת מגיע.',
+    description: 'מתקשר ללידים תוך 60 דקות, מסנן הרציניים, קובע פגישות - הצוות שלכם מטפל רק במי שבאמת מגיע.',
     features: [
       'קריאה מהירה = 65% המרה גבוהה יותר',
-      'מסנן ומזמין תורים אוטומטית',
+      'מסנן וקובע פגישות אוטומטית',
       'עוקב אחרי לידים חמים עד קביעה',
-      'מחזיר מטופלים רדומים (6+ חודשים)',
+      'מחזיר לקוחות רדומים (6+ חודשים)',
       'מסתנכרן עם היומן וה-CRM'
     ],
     cta: 'שמעו את אדם'
