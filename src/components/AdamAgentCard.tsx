@@ -1,10 +1,8 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PhoneOutgoing, Check, ArrowRight, Mic, MicOff, PhoneOff, Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { PhoneOutgoing, Check, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
-import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
-import { toast } from 'sonner';
 import { useLanguage } from '@/i18n/LanguageContext';
+import { useNavigate } from 'react-router-dom';
 
 import { Message, ToolCallLog, ConnectionState } from './live-agent/types';
 import { MOCK_SLOTS } from './live-agent/constants';
