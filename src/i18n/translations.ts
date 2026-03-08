@@ -417,7 +417,7 @@ export const translations = {
         features: [
           '2,500 voice minutes/month',
           'Everything in GROWTH, plus:',
-          'Adam - Outbound sales agent',
+          'Bar - Outbound sales agent',
           'Custom integrations',
           'Dedicated account manager',
           'Weekly strategy calls',
