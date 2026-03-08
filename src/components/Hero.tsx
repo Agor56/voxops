@@ -4,12 +4,11 @@ import { ArrowRight, Phone } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import TrustBadges from './TrustBadges';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import HeroVideo from './HeroVideo';
 
-gsap.registerPlugin(ScrollTrigger);
+const ease = [0.16, 1, 0.3, 1];
 
-// Count-up animation component with GSAP
+// Count-up animation component
 const CountUp = ({ end, duration = 2000, suffix = '' }: { end: number; duration?: number; suffix?: string }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
@@ -20,31 +19,24 @@ const CountUp = ({ end, duration = 2000, suffix = '' }: { end: number; duration?
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated.current) {
           hasAnimated.current = true;
-          
           let startTime: number;
           const animate = (currentTime: number) => {
             if (!startTime) startTime = currentTime;
             const progress = Math.min((currentTime - startTime) / duration, 1);
             const easeOutQuart = 1 - Math.pow(1 - progress, 4);
             setCount(Math.floor(end * easeOutQuart));
-            
             if (progress < 1) {
               requestAnimationFrame(animate);
             } else {
               setCount(end);
             }
           };
-          
           requestAnimationFrame(animate);
         }
       },
       { threshold: 0.1 }
     );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
+    if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, [end, duration]);
 
@@ -54,139 +46,91 @@ const CountUp = ({ end, duration = 2000, suffix = '' }: { end: number; duration?
 const Hero = () => {
   const { t, isRTL } = useLanguage();
   
-  // Get current date formatted in Hebrew
   const currentDate = new Date().toLocaleDateString('he-IL', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
+    day: 'numeric', month: 'long', year: 'numeric'
   });
-  
   const currentMonthYear = new Date().toLocaleDateString('he-IL', {
-    month: 'long',
-    year: 'numeric'
+    month: 'long', year: 'numeric'
   });
-
-  const floatingCard1Ref = useRef<HTMLDivElement>(null);
-  const floatingCard2Ref = useRef<HTMLDivElement>(null);
-  const heroSectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Parallax effect for floating cards on scroll
-      if (floatingCard1Ref.current) {
-        gsap.to(floatingCard1Ref.current, {
-          y: -100,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: heroSectionRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1
-          }
-        });
-      }
-      if (floatingCard2Ref.current) {
-        gsap.to(floatingCard2Ref.current, {
-          y: -150,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: heroSectionRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1.5
-          }
-        });
-      }
-    }, heroSectionRef);
-    return () => ctx.revert();
-  }, []);
 
   return (
-    <section ref={heroSectionRef} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+      {/* HLS Video Background */}
+      <HeroVideo />
+
       {/* Animated Pulsing Rings Background */}
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
-        {/* Central glowing orb */}
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none" style={{ zIndex: 11 }}>
         <div 
           className="absolute w-[200px] h-[200px] rounded-full blur-3xl animate-hero-glow max-sm:w-[120px] max-sm:h-[120px]"
-          style={{ background: 'hsl(var(--primary) / 0.1)' }}
+          style={{ background: 'rgba(201,169,110,0.06)' }}
         />
-        
-        {/* Pulsing rings */}
-        <div 
-          className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
-          style={{ 
-            border: '1px solid hsl(var(--primary) / 0.2)',
-          }}
-        />
-        <div 
-          className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
-          style={{ 
-            border: '1px solid hsl(var(--primary) / 0.2)',
-            animationDelay: '1.33s',
-          }}
-        />
-        <div 
-          className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
-          style={{ 
-            border: '1px solid hsl(var(--primary) / 0.2)',
-            animationDelay: '2.66s',
-          }}
-        />
+        {[0, 1.33, 2.66].map((delay) => (
+          <div
+            key={delay}
+            className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
+            style={{ 
+              border: '1px solid rgba(201,169,110,0.15)',
+              animationDelay: `${delay}s`,
+            }}
+          />
+        ))}
       </div>
 
-      {/* Background Effects - Siri-like pulsating orbs */}
+      {/* Background glow orbs */}
       <div className={`hero-glow top-1/4 ${isRTL ? '-right-48' : '-left-48'}`} />
       <div className={`hero-glow hero-glow-secondary top-1/3 ${isRTL ? '-left-48' : '-right-48'}`} />
       
-      <div className="container mx-auto py-20 relative z-10">
+      <div className="container mx-auto py-20 relative" style={{ zIndex: 20 }}>
         <div className="max-w-4xl mx-auto text-center">
-          {/* Main Headline with Space Grotesk */}
+          {/* Main Headline */}
           <motion.h1 
-            initial={{ opacity: 0, y: 30 }} 
+            initial={{ opacity: 0, y: 24 }} 
             animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.1 }} 
+            transition={{ duration: 0.7, delay: 0.12, ease }} 
             className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 font-display"
           >
             {t.hero.title}
           </motion.h1>
           
           <motion.h2 
-            initial={{ opacity: 0, y: 30 }} 
+            initial={{ opacity: 0, y: 24 }} 
             animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.2 }} 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 gradient-text glow-text font-display"
+            transition={{ duration: 0.7, delay: 0.24, ease }} 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 font-display"
+            style={{ color: '#C9A96E', textShadow: '0 0 40px rgba(201,169,110,0.4)' }}
           >
             {t.hero.titleHighlight}
           </motion.h2>
 
-          {/* Subtitle with lighter weight */}
+          {/* Subtitle */}
           <motion.p 
-            initial={{ opacity: 0, y: 30 }} 
+            initial={{ opacity: 0, y: 24 }} 
             animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.3 }} 
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 font-light"
+            transition={{ duration: 0.7, delay: 0.36, ease }} 
+            className="text-lg md:text-xl max-w-2xl mx-auto mb-6 font-light"
+            style={{ color: 'rgba(255,255,255,0.6)' }}
           >
             {t.hero.subtitle}
           </motion.p>
 
           {/* Trust Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
+            transition={{ duration: 0.7, delay: 0.48, ease }}
             className="flex justify-center mb-10"
           >
-            <div className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs text-muted-foreground/60 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs ${isRTL ? 'flex-row-reverse' : ''}`} style={{ color: 'rgba(255,255,255,0.35)' }}>
               <span className="text-xs">🎓</span>
               <span>{isRTL ? 'מאומן על מאות שיחות אמיתיות מקליניקות אסתטיקה בישראל' : 'Trained on hundreds of real calls from aesthetic clinics in Israel'}</span>
             </div>
           </motion.div>
 
-          {/* CTAs with new button variants */}
+          {/* CTAs */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }} 
+            initial={{ opacity: 0, y: 24 }} 
             animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.4 }} 
+            transition={{ duration: 0.7, delay: 0.6, ease }} 
             className={`flex flex-col sm:flex-row gap-4 justify-center mb-12 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
           >
             <Button variant="hero" size="xl" className="group" asChild>
@@ -197,35 +141,26 @@ const Hero = () => {
             </Button>
             <Button variant="heroGlass" size="xl" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`} asChild>
               <a href="#agents">
-                <Phone className="w-5 h-5" />
+                <Phone className="w-5 h-5" style={{ color: '#C9A96E' }} />
                 {t.hero.ctaSecondary}
               </a>
             </Button>
           </motion.div>
 
-          {/* Stats Cards with enhanced glassmorphism */}
+          {/* Stats Cards */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }} 
+            initial={{ opacity: 0, y: 24 }} 
             animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.5 }} 
+            transition={{ duration: 0.7, delay: 0.72, ease }} 
             className={`flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}
           >
-            {/* Appointments Saved Card - Glassmorphism style */}
             <div className="stat-card px-8 py-6 flex flex-col sm:flex-row items-center gap-6 min-w-[280px] relative overflow-hidden group cursor-pointer">
-              {/* Purple spotlight on hover */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  background: 'radial-gradient(600px circle at 50% 50%, hsl(262 83% 58% / 0.15), transparent 40%)'
-                }}
-              />
-              
-              <div className={`text-center sm:text-${isRTL ? 'right' : 'left'} ${isRTL ? 'sm:border-l sm:pl-6' : 'sm:border-r sm:pr-6'} border-primary/20 relative z-10`}>
+              <div className={`text-center sm:text-${isRTL ? 'right' : 'left'} ${isRTL ? 'sm:border-l sm:pl-6' : 'sm:border-r sm:pr-6'} border-[rgba(255,255,255,0.08)] relative z-10`}>
                 <p className="label-micro mb-2">{t.hero.stats.appointments.label}</p>
                 <p className="text-4xl font-bold text-foreground font-mono">
                   <CountUp end={1247} duration={2000} />
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">{currentDate}</p>
+                <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>{currentDate}</p>
               </div>
               
               <div className={`text-center sm:text-${isRTL ? 'right' : 'left'} relative z-10`}>
@@ -233,7 +168,7 @@ const Hero = () => {
                 <p className="text-4xl font-bold text-foreground font-mono">
                   <CountUp end={3} duration={1500} suffix={isRTL ? ' נותרו' : ' left'} />
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">{currentMonthYear}</p>
+                <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>{currentMonthYear}</p>
               </div>
             </div>
           </motion.div>
@@ -242,8 +177,8 @@ const Hero = () => {
           <TrustBadges />
         </div>
 
-        {/* Floating Cards with GSAP Parallax */}
-        <div ref={floatingCard1Ref} className={`absolute bottom-10 ${isRTL ? 'right-10' : 'left-10'} hidden lg:block`}>
+        {/* Floating Cards */}
+        <div className={`absolute bottom-10 ${isRTL ? 'right-10' : 'left-10'} hidden lg:block`}>
           <motion.div 
             initial={{ opacity: 0, x: isRTL ? 30 : -30 }} 
             animate={{ opacity: 1, x: 0 }} 
@@ -251,8 +186,8 @@ const Hero = () => {
             className="glass-card p-4 rounded-xl max-w-[200px] animate-float"
           >
             <div className={`flex items-center gap-3 mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center relative">
-                <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
+              <div className="w-8 h-8 rounded-full flex items-center justify-center relative" style={{ background: 'rgba(201,169,110,0.15)' }}>
+                <div className="w-3 h-3 rounded-full animate-pulse" style={{ background: '#C9A96E' }} />
               </div>
               <span className="label-micro">{t.hero.floatingCards.newLead}</span>
             </div>
@@ -260,7 +195,7 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        <div ref={floatingCard2Ref} className={`absolute top-1/3 ${isRTL ? 'left-10' : 'right-10'} hidden lg:block`}>
+        <div className={`absolute top-1/3 ${isRTL ? 'left-10' : 'right-10'} hidden lg:block`}>
           <motion.div 
             initial={{ opacity: 0, x: isRTL ? -30 : 30 }} 
             animate={{ opacity: 1, x: 0 }} 
@@ -268,8 +203,8 @@ const Hero = () => {
             className="glass-card p-4 rounded-xl max-w-[200px] animate-float" 
             style={{ animationDelay: '3s' }}
           >
-            <div className="text-2xl font-bold gradient-text mb-1 font-mono">+40%</div>
-            <p className="text-xs text-muted-foreground">{t.hero.floatingCards.noShowReduction}</p>
+            <div className="text-2xl font-bold mb-1 font-mono" style={{ color: '#C9A96E' }}>+40%</div>
+            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{t.hero.floatingCards.noShowReduction}</p>
           </motion.div>
         </div>
       </div>
