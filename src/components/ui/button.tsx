@@ -16,7 +16,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent/10 hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         // Primary CTA - white bg, black text
-        hero: "bg-white text-black hover:bg-white/90 hover:scale-[1.02] hover:-translate-y-px shadow-[0_0_30px_rgba(255,255,255,0.15)] border border-[rgba(201,169,110,0.3)] hover:shadow-[0_0_20px_rgba(201,169,110,0.15)]",
+        hero: "bg-white text-black hover:bg-white/90 hover:scale-[1.02] hover:-translate-y-px border border-[rgba(201,169,110,0.3)] shadow-[0_0_15px_rgba(201,169,110,0.25),0_0_40px_rgba(201,169,110,0.1)] hover:shadow-[0_0_20px_rgba(201,169,110,0.4),0_0_50px_rgba(201,169,110,0.15)] transition-all duration-300 ease-in-out",
         heroSecondary: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_30px_rgba(201,169,110,0.2)]",
         // Glassmorphism secondary
         heroGlass: "relative bg-[rgba(255,255,255,0.06)] backdrop-blur-xl border border-[rgba(255,255,255,0.1)] text-foreground hover:bg-[rgba(255,255,255,0.1)] overflow-hidden transition-all duration-300 hover:border-[rgba(201,169,110,0.4)] hover:shadow-[0_8px_40px_rgba(201,169,110,0.12)]",
