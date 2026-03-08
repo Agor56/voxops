@@ -100,5 +100,5 @@ export const ADAM_TOOLS: FunctionDeclaration[] = [
 export const ADAM_SUGGESTION_CHIPS = [
   'השארתי פרטים באתר',
   'השארתי פרטים במודעה',
-  'לא ביקרתי במרפאה יותר משנה'
+  'לא הייתי בעסק יותר משנה'
 ];
