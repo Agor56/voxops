@@ -68,10 +68,10 @@ const VoiceAgent = ({ open, onClose, currentAgent, allAgents, onAgentChange }: V
         s.treatment.toLowerCase().includes(treatment) || treatment.includes(s.treatment.toLowerCase())
       );
       result = slots.length > 0
-        ? `נמצאו ${slots.length} תורים פנויים: ${slots.map((s: any) => `${s.time} אצל ${s.doctor}`).join(', ')}`
-        : 'לא נמצאו תורים פנויים. אפשר לבדוק מחר?';
+        ? `נמצאו ${slots.length} פגישות פנויות: ${slots.map((s: any) => `${s.time} אצל ${s.doctor}`).join(', ')}`
+        : 'לא נמצאו פגישות פנויות. אפשר לבדוק מחר?';
     } else if (name === 'bookAppointment') {
-      result = `התור נקבע בהצלחה! ${args.patientName}, בשעה ${args.time}. נשלח תזכורת ב-SMS.`;
+      result = `הפגישה נקבעה בהצלחה! ${args.patientName}, בשעה ${args.time}. נשלח תזכורת ב-SMS.`;
     } else {
       result = 'פעולה לא מוכרת';
     }

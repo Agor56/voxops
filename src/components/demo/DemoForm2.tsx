@@ -112,7 +112,7 @@ const DemoForm2 = ({ onSubmitted, submissionCount }: DemoForm2Props) => {
 
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground">מה הדבר שהכי מבזבז לכם זמן או כסף היום?</label>
-          <Textarea value={painPoint} onChange={(e) => setPainPoint(e.target.value)} placeholder="למשל: לידים שלא עונים, תורים שמתבטלים..." dir="rtl" rows={2} className="min-h-[72px]" />
+          <Textarea value={painPoint} onChange={(e) => setPainPoint(e.target.value)} placeholder="למשל: לידים שלא עונים, פגישות שמתבטלות..." dir="rtl" rows={2} className="min-h-[72px]" />
         </div>
 
         <div className="space-y-2">

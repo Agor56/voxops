@@ -192,9 +192,9 @@ export const translations = {
     },
     // Hero
     hero: {
-      title: "Your Clinic is Fully Booked 24/7",
+      title: "Your Business Runs 24/7",
       titleHighlight: "Even While You Sleep",
-      subtitle: "AI reception team that answers every inquiry, books appointments, and updates your system – automatically, in Hebrew and 3 other languages, without lifting a finger.",
+      subtitle: "AI team that answers every inquiry, books appointments, and updates your system – automatically, in Hebrew and 3 other languages, without lifting a finger.",
       ctaPrimary: 'Book a Live Demo',
       ctaSecondary: 'Talk to the Agent Now',
       valueProps: [
@@ -204,7 +204,7 @@ export const translations = {
       ],
       trustBadges: 'Integrates with your favorite tools',
       stats: {
-        appointments: { label: 'Appointments Saved This Week', value: '1,247', date: 'Dec 23, 2025' },
+        appointments: { label: 'Leads Captured This Week', value: '1,247', date: 'Dec 23, 2025' },
         betaSpots: { label: 'Beta Spots Available', value: '3 left', date: 'December 2025' },
       },
       floatingCards: {
@@ -217,27 +217,27 @@ export const translations = {
     agents: {
       badge: 'AI Solutions',
       title: 'Meet Your',
-      titleHighlight: 'AI Reception Team',
-      subtitle: 'Three specialized agents handling every patient interaction – so your team can focus on care',
+      titleHighlight: 'AI Team',
+      subtitle: 'Three specialized agents handling every customer interaction – so your team can focus on growth',
       sofia: {
         name: 'Ora - WhatsApp Agent',
-        description: 'Responds to every WhatsApp inquiry within 60 seconds, filters leads, books appointments directly to your calendar, and sends reminders – so no patient is forgotten.',
+        description: 'Responds to every WhatsApp inquiry within 60 seconds, filters leads, books appointments directly to your calendar, and sends reminders – so no customer is forgotten.',
         features: [
           'Responds to WhatsApp inquiries within 60 seconds, 24/7',
           'Filters leads and books appointments directly to your calendar',
           'Sends automated reminders (reduces no-shows by 38%)',
           'Updates CRM in real-time with every conversation',
-          'Trained on your treatments, prices, and protocols',
+          'Trained on your services, prices, and protocols',
           'Speaks Hebrew, English, Russian, Arabic, and more',
         ],
         cta: 'Try Ora',
       },
       marcus: {
         name: 'Eve - Voice Reception Agent',
-        description: 'Answers every incoming call 24/7, provides treatment information, books appointments during the call, and syncs everything with your calendar and CRM – without involving your staff.',
+        description: 'Answers every incoming call 24/7, provides service information, books appointments during the call, and syncs everything with your calendar and CRM – without involving your staff.',
         features: [
           'Answers every incoming call 24/7 (no more voicemail)',
-          'Provides treatment and pricing info, books appointments on the call',
+          'Provides service and pricing info, books appointments on the call',
           'Auto-syncs with Google Calendar / Calendly / Acuity',
           'Transfers urgent calls to staff immediately',
           'Updates CRM with detailed notes after every call',
@@ -253,8 +253,8 @@ export const translations = {
           'Filters serious prospects and books appointments to your calendar',
           'Auto-syncs with your calendar and CRM',
           'Follows up on warm leads until they book or opt out',
-          'Re-engages dormant patients after 6+ months',
-          'Trained on your specific treatments and pricing',
+          'Re-engages dormant customers after 6+ months',
+          'Trained on your specific services and pricing',
         ],
         cta: 'Hear Adam',
       },
@@ -264,7 +264,7 @@ export const translations = {
       badge: 'Proven Results',
       title: 'The Numbers',
       titleHighlight: "Don't Lie",
-      subtitle: 'Real results from real clinics using our AI agents.',
+      subtitle: 'Real results from real businesses using our AI agents.',
       stats: [
         {
           number: '<60',
@@ -303,21 +303,21 @@ export const translations = {
           name: 'Dr. Sarah Cohen',
           role: 'Medical Director',
           clinic: 'Glow Aesthetics',
-          quote: "VoxOps transformed how we handle patient inquiries. We went from losing leads overnight to converting them while we sleep. Our booking rate increased by 45% in the first month.",
+          quote: "VoxOps transformed how we handle customer inquiries. We went from losing leads overnight to converting them while we sleep. Our booking rate increased by 45% in the first month.",
           stat: '+45% bookings',
         },
         {
           name: 'Dr. Michael Chen',
-          role: 'Clinic Owner',
+          role: 'Business Owner',
           clinic: 'Premier Med Spa',
-          quote: "The no-show reduction alone paid for the entire system. Our patients love the WhatsApp reminders, and our front desk finally has time to focus on in-person care.",
+          quote: "The no-show reduction alone paid for the entire system. Our customers love the WhatsApp reminders, and our front desk finally has time to focus on in-person service.",
           stat: '38% fewer no-shows',
         },
         {
           name: 'Emma Rodriguez',
           role: 'Operations Manager',
           clinic: 'Beauty & Wellness Center',
-          quote: "We were skeptical about AI handling patient communication, but the responses are so natural that patients often don't realize they're talking to a bot until we tell them.",
+          quote: "We were skeptical about AI handling customer communication, but the responses are so natural that customers often don't realize they're talking to a bot until we tell them.",
           stat: '92% satisfaction rate',
         },
       ],
@@ -328,7 +328,7 @@ export const translations = {
       badge: 'Simple Onboarding',
       title: 'How We',
       titleHighlight: 'Do It',
-      subtitle: 'The BIA™ method ensures your agent is tailored exactly to your clinic',
+      subtitle: 'The BIA™ method ensures your agent is tailored exactly to your business',
       steps: [
         {
           number: '01',
@@ -352,11 +352,11 @@ export const translations = {
       badge: 'Get Started',
       title: 'Ready to',
       titleHighlight: 'Transform',
-      titleEnd: 'Your Clinic?',
+      titleEnd: 'Your Business?',
       subtitle: "Answer a few quick questions and book your free consultation.",
       form: {
         step1Question: 'What type of business do you run?',
-        step1Placeholder: 'e.g., Med Spa, Dental Clinic, Aesthetic Clinic...',
+        step1Placeholder: 'e.g., Clinic, Law Firm, Real Estate Agency, Restaurant...',
         step2Question: 'What challenge are you trying to solve with AI agents?',
         step2Placeholder: 'e.g., Missed calls, slow response times, no-shows...',
         step3Question: 'What are your goals for improving?',
@@ -372,7 +372,7 @@ export const translations = {
     pricing: {
       badge: 'Pricing Plans',
       title: 'The Perfect Plan for',
-      titleHighlight: 'Your Clinic',
+      titleHighlight: 'Your Business',
       subtitle: 'Every package includes everything you need - AI voice agent, WhatsApp/SMS confirmations, and full CRM integration. Choose the capacity that fits you.',
       perMonth: 'month',
       mostPopular: 'Most Popular',
@@ -382,7 +382,7 @@ export const translations = {
         name: 'STARTER',
         tagline: 'Smart Start',
         setup: '+ ₪3,500 setup',
-        badge: '✨ Perfect for: 1-2 practitioners',
+        badge: '✨ Perfect for: 1-2 team members',
         features: [
           '500 voice minutes/month',
           'Ora - AI voice agent 24/7',
@@ -397,7 +397,7 @@ export const translations = {
         name: 'GROWTH',
         tagline: 'Accelerated Growth',
         setup: '+ ₪3,500 setup',
-        badge: '✨ Perfect for: 3-5 practitioners',
+        badge: '✨ Perfect for: 3-5 team members',
         features: [
           '1,200 voice minutes/month',
           'Everything in STARTER, plus:',
@@ -413,7 +413,7 @@ export const translations = {
         name: 'SCALE',
         tagline: 'Enterprise Scale',
         setup: '+ ₪3,500 setup',
-        badge: '✨ Perfect for: 6-10 practitioners',
+        badge: '✨ Perfect for: 6-10 team members',
         features: [
           '2,500 voice minutes/month',
           'Everything in GROWTH, plus:',
@@ -427,7 +427,7 @@ export const translations = {
       },
       buildOwn: {
         name: 'BUILD + OWN',
-        tagline: 'Your Clinic, Your System',
+        tagline: 'Your Business, Your System',
         priceNote: '+ ₪2,400/month',
         badge: '💎 Full ownership',
         features: [
@@ -443,7 +443,7 @@ export const translations = {
     },
     // Footer
     footer: {
-      description: 'AI-powered patient admin solutions for med spas and clinics. Never miss a lead, reduce no-shows, and grow your practice.',
+      description: 'AI-powered customer management solutions for businesses. Never miss a lead, reduce no-shows, and grow your business.',
       product: 'Product',
       company: 'Company',
       support: 'Support',
@@ -479,19 +479,19 @@ export const translations = {
     },
     // Hero
     hero: {
-      title: 'המרפאה שלכם עובדת 24/7',
+      title: 'העסק שלכם עובד 24/7',
       titleHighlight: 'גם כשאתם ישנים',
-      subtitle: 'צוות קבלת AI שעונה 24/7, קובע תורים לטיפולי מעדכן את המערכת ומנווט שיחות - בעברית, אנגלית, רוסית וערבית.',
+      subtitle: 'צוות AI שעונה 24/7, קובע פגישות מעדכן את המערכת ומנווט שיחות - בעברית, אנגלית, רוסית וערבית.',
       ctaPrimary: 'קבעו הדגמה בלייב',
       ctaSecondary: 'דברו עם הסוכן עכשיו',
       valueProps: [
         'אפס שיחות שלא נענו - 100% מענה, אפס תא קולי',
         '38% הפחתה באי-הגעות - תזכורות אוטומטיות ב-WhatsApp',
-        '65% יותר המרות - מענה מיידי = יותר תורים',
+        '65% יותר המרות - מענה מיידי = יותר פגישות',
       ],
       trustBadges: 'משתלב עם הכלים שלכם',
       stats: {
-        appointments: { label: 'תורים שלא אבדו השבוע', value: '1,247', date: '23 דצמבר 2025' },
+        appointments: { label: 'לידים שנתפסו השבוע', value: '1,247', date: '23 דצמבר 2025' },
         betaSpots: { label: 'מקומות פנויים בבטא', value: '3 נותרו', date: 'דצמבר 2025' },
       },
       floatingCards: {
@@ -504,14 +504,14 @@ export const translations = {
     agents: {
       badge: 'פתרונות AI',
       title: 'פגשו את',
-      titleHighlight: 'צוות הקבלה AI שלכם',
-      subtitle: '3 סוכנים מיוחדים שמטפלים בכל אינטראקציה עם מטופלים - כך שאתם תוכלו להתמקד בטיפולים',
+      titleHighlight: 'צוות ה-AI שלכם',
+      subtitle: '3 סוכנים מיוחדים שמטפלים בכל אינטראקציה עם לקוחות - כך שאתם תוכלו להתמקד בצמיחה',
       sofia: {
         name: 'אורה - סוכנת WhatsApp',
-        description: 'תופסת כל לקוח ב-60 שניות. מסננת, מזמינה תורים, ושולחת תזכורות - כך אף מטופל לא חומק.',
+        description: 'תופסת כל לקוח ב-60 שניות. מסננת, קובעת פגישות, ושולחת תזכורות - כך אף לקוח לא חומק.',
         features: [
           'מגיבה תוך 60 שניות, 24/7',
-          'מזמינה תורים ישירות ללוח השנה',
+          'קובעת פגישות ישירות ללוח השנה',
           'תזכורות אוטומטיות (מפחיתה אי-הגעות ב-38%)',
           'מעדכנת CRM בזמן אמת',
           'דוברת עברית, אנגלית, רוסית, ערבית, ועוד',
@@ -520,10 +520,10 @@ export const translations = {
       },
       marcus: {
         name: 'איב - סוכנת קבלה קולית',
-        description: 'עונה לכל שיחה 24/7, מספקת מידע, מזמינה תורים בזמן השיחה - בלי לטרוד לצוות.',
+        description: 'עונה לכל שיחה 24/7, מספקת מידע, קובעת פגישות בזמן השיחה - בלי לטרוד לצוות.',
         features: [
           'אפס תא קולי - כל שיחה נענית',
-          'מזמינה תורים ומסנכרנת עם היומן (Google Calendar / Calendly / Acuity)',
+          'קובעת פגישות ומסנכרנת עם היומן (Google Calendar / Calendly / Acuity)',
           'מעבירה שיחות דחופות מיד לצוות',
           'מעדכנת CRM אחרי כל שיחה',
           'דוברת עברית, אנגלית, רוסית, ערבית, ועוד',
@@ -532,12 +532,12 @@ export const translations = {
       },
       david: {
         name: 'אדם - סוכן מכירות יוצא',
-        description: 'מתקשר ללידים תוך 60 דקות, מסנן הרציניים, מזמין תורים - הצוות שלכם מטפל רק במי שבאמת מגיע.',
+        description: 'מתקשר ללידים תוך 60 דקות, מסנן הרציניים, קובע פגישות - הצוות שלכם מטפל רק במי שבאמת מגיע.',
         features: [
           'קריאה מהירה = 65% המרה גבוהה יותר',
-          'מסנן ומזמין תורים אוטומטית',
+          'מסנן וקובע פגישות אוטומטית',
           'עוקב אחרי לידים חמים עד קביעה',
-          'מחזיר מטופלים רדומים (6+ חודשים)',
+          'מחזיר לקוחות רדומים (6+ חודשים)',
           'מסתנכרן עם היומן וה-CRM',
         ],
         cta: 'שמעו את אדם',
@@ -548,7 +548,7 @@ export const translations = {
       badge: 'תוצאות מוכחות',
       title: 'המספרים',
       titleHighlight: 'מדברים',
-      subtitle: 'תוצאות אמיתיות ממרפאות אמיתיות שמשתמשות בסוכני ה-AI שלנו.',
+      subtitle: 'תוצאות אמיתיות מעסקים אמיתיים שמשתמשים בסוכני ה-AI שלנו.',
       stats: [
         {
           number: '<60',
@@ -561,7 +561,7 @@ export const translations = {
           prefix: '+',
           suffix: '%',
           label: 'הפחתת אי-הגעות',
-          description: 'תזכורות אוטומטיות דרך WhatsApp + קול מפחיתות דרמטית תורים שהוחמצו.',
+          description: 'תזכורות אוטומטיות דרך WhatsApp + קול מפחיתות דרמטית פגישות שהוחמצו.',
         },
         {
           number: '3',
@@ -587,21 +587,21 @@ export const translations = {
           name: 'ד"ר נועה נוסבוים',
           role: 'מנהלת רפואית',
           clinic: 'Glow Aesthetics',
-          quote: 'VoxOps שינתה לחלוטין את הדרך שבה אנחנו מטפלים בפניות מטופלים. עברנו מאיבוד לידים בלילה להמרה שלהם בזמן שאנחנו ישנים. שיעור ההזמנות שלנו עלה ב-45% בחודש הראשון.',
+          quote: 'VoxOps שינתה לחלוטין את הדרך שבה אנחנו מטפלים בפניות לקוחות. עברנו מאיבוד לידים בלילה להמרה שלהם בזמן שאנחנו ישנים. שיעור ההזמנות שלנו עלה ב-45% בחודש הראשון.',
           stat: '+45% הזמנות',
         },
         {
           name: 'ד"ר מייקל חן',
-          role: 'בעל מרפאה',
+          role: 'בעל עסק',
           clinic: 'Premier Med Spa',
-          quote: 'הפחתת אי-ההגעות לבד החזירה את כל עלות המערכת. המטופלים שלנו אוהבים את התזכורות ב-WhatsApp, ולקבלה הראשית סוף סוף יש זמן להתמקד בטיפול פנים מול פנים.',
+          quote: 'הפחתת אי-ההגעות לבד החזירה את כל עלות המערכת. הלקוחות שלנו אוהבים את התזכורות ב-WhatsApp, ולקבלה הראשית סוף סוף יש זמן להתמקד בשירות פנים מול פנים.',
           stat: '38% פחות אי-הגעות',
         },
         {
           name: 'אמה רודריגז',
           role: 'מנהלת תפעול',
           clinic: 'Beauty & Wellness Center',
-          quote: 'היינו סקפטיים לגבי AI שמטפל בתקשורת עם מטופלים, אבל התגובות כל כך טבעיות שמטופלים לרוב לא מבינים שהם מדברים עם בוט עד שאנחנו אומרים להם.',
+          quote: 'היינו סקפטיים לגבי AI שמטפל בתקשורת עם לקוחות, אבל התגובות כל כך טבעיות שלקוחות לרוב לא מבינים שהם מדברים עם בוט עד שאנחנו אומרים להם.',
           stat: '92% שביעות רצון',
         },
       ],
@@ -612,7 +612,7 @@ export const translations = {
       badge: 'הטמעה פשוטה',
       title: 'איך אנחנו',
       titleHighlight: 'עושים את זה',
-      subtitle: 'שיטת BIA™ מבטיחה שהסוכן שלכם מותאם בדיוק למרפאה שלכם',
+      subtitle: 'שיטת BIA™ מבטיחה שהסוכן שלכם מותאם בדיוק לעסק שלכם',
       steps: [
         {
           number: '01',
@@ -635,7 +635,7 @@ export const translations = {
     pricing: {
       badge: 'תמחור',
       title: 'התוכנית המושלמת',
-      titleHighlight: 'לקליניקה שלך',
+      titleHighlight: 'לעסק שלך',
       subtitle: 'כל חבילה כוללת את כל מה שצריך - סוכן קולי AI, אישורי WhatsApp/SMS, ואינטגרציה מלאה ל-CRM. בחר את הקיבולת שמתאימה לך.',
       perMonth: 'חודש',
       mostPopular: 'הכי פופולרי',
@@ -645,7 +645,7 @@ export const translations = {
         name: 'STARTER',
         tagline: 'התחלה חכמה',
         setup: '+ ₪3,500 התקנה',
-        badge: '✨ מושלם ל: 1-2 מטפלים',
+        badge: '✨ מושלם ל: 1-2 אנשי צוות',
         features: [
           '500 דקות קוליות/חודש',
           'אורה - סוכנת AI קולית 24/7',
@@ -660,7 +660,7 @@ export const translations = {
         name: 'GROWTH',
         tagline: 'צמיחה מואצת',
         setup: '+ ₪3,500 התקנה',
-        badge: '✨ מושלם ל: 3-5 מטפלים',
+        badge: '✨ מושלם ל: 3-5 אנשי צוות',
         features: [
           '1,200 דקות קוליות/חודש',
           'כל מה שב-STARTER, בתוספת:',
@@ -676,7 +676,7 @@ export const translations = {
         name: 'SCALE',
         tagline: 'קנה מידה ארגוני',
         setup: '+ ₪3,500 התקנה',
-        badge: '✨ מושלם ל: 6-10 מטפלים',
+        badge: '✨ מושלם ל: 6-10 אנשי צוות',
         features: [
           '2,500 דקות קוליות/חודש',
           'כל מה שב-GROWTH, בתוספת:',
@@ -690,7 +690,7 @@ export const translations = {
       },
       buildOwn: {
         name: 'BUILD + OWN',
-        tagline: 'הקליניקה שלך, המערכת שלך',
+        tagline: 'העסק שלך, המערכת שלך',
         priceNote: '+ ₪2,400/חודש',
         badge: '💎 בעלות מלאה',
         features: [
@@ -709,15 +709,15 @@ export const translations = {
       badge: 'התחילו עכשיו',
       title: 'מוכנים',
       titleHighlight: 'לשנות',
-      titleEnd: 'את המרפאה שלכם?',
+      titleEnd: 'את העסק שלכם?',
       subtitle: 'ענו על מספר שאלות קצרות וקבעו את הייעוץ החינמי שלכם.',
       form: {
         step1Question: 'איזה סוג עסק יש לכם?',
-        step1Placeholder: 'למשל: מרפאת ספא, מרפאת שיניים, קליניקת אסתטיקה...',
+        step1Placeholder: 'למשל: מרפאה, משרד עורכי דין, סוכנות נדל"ן, מסעדה...',
         step2Question: 'איזה אתגר אתם מנסים לפתור עם סוכני AI?',
         step2Placeholder: 'למשל: שיחות שהוחמצו, זמני תגובה איטיים, אי-הגעות...',
         step3Question: 'מהן המטרות שלכם לשיפור?',
-        step3Options: ['לכידת לידים', 'סינון והכשרה', 'קביעת תורים', 'כל הנ"ל'],
+        step3Options: ['לכידת לידים', 'סינון והכשרה', 'קביעת פגישות', 'כל הנ"ל'],
         next: 'הבא',
         back: 'חזרה',
         continue: 'המשך להזמנה',
@@ -727,7 +727,7 @@ export const translations = {
     },
     // Footer
     footer: {
-      description: 'פתרונות ניהול מטופלים מונעי AI למרפאות ספא וקליניקות. לעולם לא תפספסו ליד, הפחיתו אי-הגעות, וצמיחו את העסק.',
+      description: 'פתרונות ניהול לקוחות מונעי AI לעסקים. לעולם לא תפספסו ליד, הפחיתו אי-הגעות, וצמיחו את העסק.',
       product: 'מוצר',
       company: 'חברה',
       support: 'תמיכה',

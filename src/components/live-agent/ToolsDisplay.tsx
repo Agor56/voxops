@@ -33,7 +33,7 @@ const ToolsDisplay = ({ logs }: ToolsDisplayProps) => {
             {getIcon(log.name)}
             <div className="flex-1 min-w-0">
               <p className="font-medium text-foreground">
-                {log.name === 'checkAvailability' ? 'בדיקת זמינות' : 'קביעת תור'}
+                {log.name === 'checkAvailability' ? 'בדיקת זמינות' : 'קביעת פגישה'}
               </p>
               {log.name === 'checkAvailability' && log.args?.specialty && (
                 <p className="text-muted-foreground truncate">

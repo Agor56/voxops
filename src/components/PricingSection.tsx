@@ -100,7 +100,7 @@ const PricingSection = () => {
     {
       id: "buildOwn",
       name: "BUILD + OWN",
-      tagline: "העסק שלך, המערכת שלך",
+      tagline: 'העסק שלך, המערכת שלך',
       monthlyPrice: "₪1,400",
       setupFee: "₪21,000 בנייה חד-פעמית",
       perMinute: null,
