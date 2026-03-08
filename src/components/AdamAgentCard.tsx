@@ -13,7 +13,7 @@ const AdamAgentCard = ({ className = '' }: AdamAgentCardProps) => {
   const navigate = useNavigate();
 
   const agentData = {
-    name: 'אדם - סוכן מכירות יוצא',
+    name: 'בר - סוכן מכירות יוצא',
     description: 'מתקשר ללידים תוך 60 דקות, מסנן הרציניים, קובע פגישות - הצוות שלכם מטפל רק במי שבאמת מגיע.',
     features: [
       'קריאה מהירה = 65% המרה גבוהה יותר',
@@ -22,7 +22,7 @@ const AdamAgentCard = ({ className = '' }: AdamAgentCardProps) => {
       'מחזיר לקוחות רדומים (6+ חודשים)',
       'מסתנכרן עם היומן וה-CRM'
     ],
-    cta: 'שמעו את אדם'
+    cta: 'שמעו את בר'
   };
 
   return (

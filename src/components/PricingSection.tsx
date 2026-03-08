@@ -80,7 +80,7 @@ const PricingSection = () => {
       period: t.pricing.perMonth,
       badge: "מתאים ל-1,000+ לידים/חודש",
       features: [
-        "צוות סוכנים מלא: אורה + אור + אדם",
+        "צוות סוכנים מלא: אורה + אור + בר",
         "חיבור לסושיאל מדיה (TikTok / Instagram DM)",
         "אפיון מתקדם ברמת אנטרפרייז",
         "אינטגרציה מלאה (CRM + WhatsApp + SMS + PayPal + N8N)",

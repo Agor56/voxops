@@ -226,7 +226,7 @@ const DemoForm = ({ onSubmitted, submissionCount }: DemoFormProps) => {
             <Loader2 className="w-5 h-5 animate-spin" />
           ) : (
             <>
-              שלחו ואדם מתקשר עכשיו
+              שלחו ובר מתקשר עכשיו
               <ArrowLeft className="w-5 h-5 mr-2" />
             </>
           )}

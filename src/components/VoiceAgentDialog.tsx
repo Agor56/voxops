@@ -47,12 +47,12 @@ const VoiceAgentDialog = ({ open, onOpenChange, agentName }: VoiceAgentDialogPro
     },
     he: {
       marcus: {
-        title: 'דברו עם איב',
-        subtitle: 'הזינו את הפרטים שלכם ואיב תתקשר אליכם מיד',
+        title: 'דברו עם בן',
+        subtitle: 'הזינו את הפרטים שלכם ובן יתקשר אליכם מיד',
       },
       david: {
-        title: 'דברו עם אדם',
-        subtitle: 'הזינו את הפרטים שלכם ואדם יתקשר אליכם להסמכת הצרכים שלכם',
+        title: 'דברו עם בר',
+        subtitle: 'הזינו את הפרטים שלכם ובר יתקשר אליכם להסמכת הצרכים שלכם',
       },
       name: 'השם שלך',
       namePlaceholder: 'ישראל ישראלי',

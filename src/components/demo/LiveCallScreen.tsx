@@ -142,7 +142,7 @@ const LiveCallScreen = ({ onReset }: LiveCallScreenProps) => {
           >
             {seconds}
           </div>
-          <p className="text-muted-foreground">תרימו את הטלפון ותנו לאדם לעבוד</p>
+          <p className="text-muted-foreground">תרימו את הטלפון ותנו לבר לעבוד</p>
         </div>
       ) : (
         <div className="text-center space-y-4">
