@@ -6,7 +6,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import TrustBadges from './TrustBadges';
 import HeroVideo from './HeroVideo';
 
-const ease = [0.16, 1, 0.3, 1];
+const ease = [0.16, 1, 0.3, 1] as const;
 
 // Count-up animation component
 const CountUp = ({ end, duration = 2000, suffix = '' }: { end: number; duration?: number; suffix?: string }) => {
