@@ -60,7 +60,7 @@ const AdamAgentCard = ({ className = '' }: AdamAgentCardProps) => {
         <Button
           variant="heroGlass"
           className="w-full group"
-          onClick={() => navigate('/calldemo2')}
+          onClick={() => navigate('/calldemo')}
         >
           <span className={`flex items-center justify-center ${isRTL ? 'flex-row-reverse' : ''}`}>
             {agentData.cta}
