@@ -8,3 +8,6 @@ verify_jwt = false
 
 [functions.demo-submit]
 verify_jwt = false
+
+[functions.demo-submit-2]
+verify_jwt = false

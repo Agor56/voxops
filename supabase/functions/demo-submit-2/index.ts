@@ -1,24 +1,49 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
-};
+const ALLOWED_ORIGINS = [
+  'https://voxops.lovable.app',
+  'https://id-preview--9ca31588-ff91-4f95-a649-c91ea49a0398.lovable.app',
+];
+
+function getCorsHeaders(origin: string | null) {
+  const allowedOrigin = origin && ALLOWED_ORIGINS.some(o => origin.startsWith(o.replace(/\/$/, ''))) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  };
+}
 
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
-const MAX_REQUESTS_PER_WINDOW = 5;
+const MAX_REQUESTS_PER_WINDOW = 3;
+
+let globalRequestCount = 0;
+let globalResetTime = Date.now() + RATE_LIMIT_WINDOW_MS;
+const GLOBAL_MAX_REQUESTS = 20;
 
 setInterval(() => {
   const now = Date.now();
   for (const [key, value] of rateLimitStore.entries()) {
     if (now > value.resetTime) rateLimitStore.delete(key);
   }
-}, 5 * 60 * 1000);
+  if (now > globalResetTime) {
+    globalRequestCount = 0;
+    globalResetTime = now + RATE_LIMIT_WINDOW_MS;
+  }
+}, 60 * 1000);
 
 function checkRateLimit(clientIP: string): { allowed: boolean; remaining: number } {
   const now = Date.now();
+  if (now > globalResetTime) {
+    globalRequestCount = 0;
+    globalResetTime = now + RATE_LIMIT_WINDOW_MS;
+  }
+  if (globalRequestCount >= GLOBAL_MAX_REQUESTS) {
+    return { allowed: false, remaining: 0 };
+  }
+  globalRequestCount++;
+
   const record = rateLimitStore.get(clientIP);
   if (!record || now > record.resetTime) {
     rateLimitStore.set(clientIP, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
@@ -41,8 +66,18 @@ const demoSchema = z.object({
 });
 
 serve(async (req) => {
+  const origin = req.headers.get('origin');
+  const corsHeaders = getCorsHeaders(origin);
+
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
+  }
+
+  if (req.method !== 'POST') {
+    return new Response(
+      JSON.stringify({ error: 'Method not allowed' }),
+      { status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
   }
 
   try {
@@ -50,6 +85,14 @@ serve(async (req) => {
       || req.headers.get('cf-connecting-ip')
       || req.headers.get('x-real-ip')
       || 'unknown';
+
+    const contentLength = req.headers.get('content-length');
+    if (contentLength && parseInt(contentLength) > 5120) {
+      return new Response(
+        JSON.stringify({ error: 'Payload too large' }),
+        { status: 413, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     const { allowed, remaining } = checkRateLimit(clientIP);
     if (!allowed) {
@@ -127,10 +170,11 @@ serve(async (req) => {
     );
 
   } catch (error) {
+    const origin2 = req.headers.get('origin');
     console.error('Error processing demo request:', error instanceof Error ? error.message : 'Unknown error');
     return new Response(
       JSON.stringify({ error: 'An unexpected error occurred' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...getCorsHeaders(origin2), 'Content-Type': 'application/json' } }
     );
   }
 });
