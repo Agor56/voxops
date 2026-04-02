@@ -9,21 +9,10 @@ interface AdamAgentCardProps {
 }
 
 const AdamAgentCard = ({ className = '' }: AdamAgentCardProps) => {
-  const { isRTL } = useLanguage();
+  const { isRTL, t } = useLanguage();
   const navigate = useNavigate();
 
-  const agentData = {
-    name: 'בר - סוכן מכירות יוצא',
-    description: 'מתקשר ללידים תוך 60 דקות, מסנן הרציניים, קובע פגישות - הצוות שלכם מטפל רק במי שבאמת מגיע.',
-    features: [
-      'קריאה מהירה = 65% המרה גבוהה יותר',
-      'מסנן וקובע פגישות אוטומטית',
-      'עוקב אחרי לידים חמים עד קביעה',
-      'מחזיר לקוחות רדומים (6+ חודשים)',
-      'מסתנכרן עם היומן וה-CRM'
-    ],
-    cta: 'שמעו את בר'
-  };
+  const agentData = t.agents.david;
 
   return (
     <motion.div
