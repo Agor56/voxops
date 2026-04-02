@@ -1,45 +1,61 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+const ALLOWED_ORIGINS = [
+  'https://voxops.lovable.app',
+  'https://id-preview--9ca31588-ff91-4f95-a649-c91ea49a0398.lovable.app',
+];
 
-// In-memory rate limiting store
+function getCorsHeaders(origin: string | null) {
+  const allowedOrigin = origin && ALLOWED_ORIGINS.some(o => origin.startsWith(o.replace(/\/$/, ''))) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  };
+}
+
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 5; // 5 requests per minute per IP
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const MAX_REQUESTS_PER_WINDOW = 3;
 
-// Cleanup old entries every 5 minutes to prevent memory bloat
+let globalRequestCount = 0;
+let globalResetTime = Date.now() + RATE_LIMIT_WINDOW_MS;
+const GLOBAL_MAX_REQUESTS = 20;
+
 setInterval(() => {
   const now = Date.now();
   for (const [key, value] of rateLimitStore.entries()) {
-    if (now > value.resetTime) {
-      rateLimitStore.delete(key);
-    }
+    if (now > value.resetTime) rateLimitStore.delete(key);
   }
-}, 5 * 60 * 1000);
+  if (now > globalResetTime) {
+    globalRequestCount = 0;
+    globalResetTime = now + RATE_LIMIT_WINDOW_MS;
+  }
+}, 60 * 1000);
 
 function checkRateLimit(clientIP: string): { allowed: boolean; remaining: number } {
   const now = Date.now();
-  const record = rateLimitStore.get(clientIP);
+  if (now > globalResetTime) {
+    globalRequestCount = 0;
+    globalResetTime = now + RATE_LIMIT_WINDOW_MS;
+  }
+  if (globalRequestCount >= GLOBAL_MAX_REQUESTS) {
+    return { allowed: false, remaining: 0 };
+  }
+  globalRequestCount++;
 
+  const record = rateLimitStore.get(clientIP);
   if (!record || now > record.resetTime) {
-    // New window or expired record
     rateLimitStore.set(clientIP, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
     return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - 1 };
   }
-
   if (record.count >= MAX_REQUESTS_PER_WINDOW) {
     return { allowed: false, remaining: 0 };
   }
-
   record.count++;
   return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - record.count };
 }
 
-// Zod schema for server-side validation
 const contactFormSchema = z.object({
   name: z.string().min(1, "Name is required").max(100, "Name too long").trim(),
   email: z.string().email("Invalid email").max(255).optional().or(z.literal('')),
@@ -51,37 +67,35 @@ const contactFormSchema = z.object({
 });
 
 serve(async (req) => {
-  // Handle CORS preflight requests
+  const origin = req.headers.get('origin');
+  const corsHeaders = getCorsHeaders(origin);
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  if (req.method !== 'POST') {
+    return new Response(
+      JSON.stringify({ error: 'Method not allowed' }),
+      { status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  }
+
   try {
-    // Extract client IP for rate limiting
-    const clientIP = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() 
-      || req.headers.get('cf-connecting-ip') 
-      || req.headers.get('x-real-ip') 
+    const clientIP = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+      || req.headers.get('cf-connecting-ip')
+      || req.headers.get('x-real-ip')
       || 'unknown';
 
-    // Check rate limit
     const { allowed, remaining } = checkRateLimit(clientIP);
-    
     if (!allowed) {
       console.warn(`Rate limit exceeded for IP: ${clientIP}`);
       return new Response(
         JSON.stringify({ error: 'Too many requests. Please try again later.' }),
-        { 
-          status: 429, 
-          headers: { 
-            ...corsHeaders, 
-            'Content-Type': 'application/json',
-            'Retry-After': '60'
-          } 
-        }
+        { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Retry-After': '60' } }
       );
     }
 
-    // Check payload size (max 10KB)
     const contentLength = req.headers.get('content-length');
     if (contentLength && parseInt(contentLength) > 10240) {
       console.warn(`Payload too large from IP: ${clientIP}`);
@@ -92,7 +106,6 @@ serve(async (req) => {
     }
 
     const webhookUrl = Deno.env.get('CONTACT_FORM_WEBHOOK_URL');
-    
     if (!webhookUrl) {
       console.error('CONTACT_FORM_WEBHOOK_URL is not configured');
       return new Response(
@@ -101,7 +114,6 @@ serve(async (req) => {
       );
     }
 
-    // Parse and validate request body
     let rawData: unknown;
     try {
       rawData = await req.json();
@@ -112,9 +124,7 @@ serve(async (req) => {
       );
     }
 
-    // Validate with zod schema
     const validationResult = contactFormSchema.safeParse(rawData);
-    
     if (!validationResult.success) {
       console.warn(`Validation failed from IP ${clientIP}:`, validationResult.error.flatten());
       return new Response(
@@ -124,55 +134,36 @@ serve(async (req) => {
     }
 
     const formData = validationResult.data;
-    
-    // Convert Israeli phone to international format (05xxxxxxxx -> 9725xxxxxxxx)
+
     let internationalPhone = formData.phone;
-    if (formData.phone.startsWith('05')) {
-      internationalPhone = '972' + formData.phone.slice(1);
-    } else if (formData.phone.startsWith('0')) {
+    if (formData.phone.startsWith('0')) {
       internationalPhone = '972' + formData.phone.slice(1);
     }
-    
+
     console.log('Contact form submission received:', {
       source: formData.type === 'voice_callback' ? 'Agent Call' : 'Demo Call',
       hasEmail: !!formData.email,
       hasWebsite: !!formData.website,
-      rateLimitRemaining: remaining
+      rateLimitRemaining: remaining,
     });
 
-    // Determine source based on form type
     const source = formData.type === 'voice_callback' ? 'Agent Call' : 'Demo Call';
 
-    // Build webhook payload - only include email if provided
     const webhookPayload: Record<string, unknown> = {
       name: formData.name,
       phone: internationalPhone,
       timestamp: new Date().toISOString(),
-      source: source,
+      source,
     };
-    
-    if (formData.email && formData.email.trim()) {
-      webhookPayload.email = formData.email;
-    }
-    
-    if (formData.website && formData.website.trim()) {
-      webhookPayload.website = formData.website;
-    }
-    
-    if (formData.agent) {
-      webhookPayload.agent = formData.agent;
-    }
-    
-    if (formData.businessType && formData.businessType.trim()) {
-      webhookPayload.businessType = formData.businessType;
-    }
 
-    // Forward to webhook
+    if (formData.email?.trim()) webhookPayload.email = formData.email;
+    if (formData.website?.trim()) webhookPayload.website = formData.website;
+    if (formData.agent) webhookPayload.agent = formData.agent;
+    if (formData.businessType?.trim()) webhookPayload.businessType = formData.businessType;
+
     const webhookResponse = await fetch(webhookUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(webhookPayload),
     });
 
@@ -192,10 +183,11 @@ serve(async (req) => {
     );
 
   } catch (error) {
+    const origin2 = req.headers.get('origin');
     console.error('Error processing contact form:', error instanceof Error ? error.message : 'Unknown error');
     return new Response(
       JSON.stringify({ error: 'An unexpected error occurred' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...getCorsHeaders(origin2), 'Content-Type': 'application/json' } }
     );
   }
 });
