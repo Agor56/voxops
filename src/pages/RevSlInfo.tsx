@@ -279,7 +279,7 @@ const RevSlInfo = () => {
             </div>
             <blockquote className="text-lg md:text-xl font-medium leading-relaxed text-white/90 mb-6 italic">
               "In the first 30 days, the system booked 10+ qualified meetings from leads we'd completely written off.{" "}
-              <span className="text-[#F97316] font-bold not-italic">$30,000 in recovered pipeline</span> — from a dead list."
+              <span className="text-[#F97316] font-bold not-italic">Over $32K in recovered pipeline</span> — from a dead list."
             </blockquote>
             <p className="text-sm text-white/40 font-medium">— Leo M. (VoxOps Client)</p>
           </motion.div>
