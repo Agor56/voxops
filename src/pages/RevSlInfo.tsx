@@ -281,7 +281,7 @@ const RevSlInfo = () => {
               "In the first 30 days, the system booked 10+ qualified meetings from leads we'd completely written off.{" "}
               <span className="text-[#F97316] font-bold not-italic">$30,000 in recovered pipeline</span> — from a dead list."
             </blockquote>
-            <p className="text-sm text-white/40 font-medium">— VoxOps Client</p>
+            <p className="text-sm text-white/40 font-medium">— Leo M. (VoxOps Client)</p>
           </motion.div>
         </div>
       </section>
