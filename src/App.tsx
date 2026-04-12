@@ -15,6 +15,9 @@ import CallDemo from "./pages/CallDemo";
 import CallDemo2 from "./pages/CallDemo2";
 import BuildingManagement from "./pages/BuildingManagement";
 import RevSlInfo from "./pages/RevSlInfo";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import Contact from "./pages/Contact";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -116,6 +119,9 @@ const App = () => (
                 <Route path="/calldemo2" element={<CallDemo2 />} />
                 <Route path="/bm" element={<BuildingManagement />} />
                 <Route path="/revslinfo" element={<RevSlInfo />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/contact" element={<Contact />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
