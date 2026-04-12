@@ -62,7 +62,6 @@ const DisqualifiedScreen = () => (
 /* ─── Success Screen with Cal.com ─── */
 const SuccessScreen = ({ formData }: { formData: FormData }) => {
   useEffect(() => {
-    // Fire confetti
     confetti({
       particleCount: 120,
       spread: 80,
@@ -70,46 +69,31 @@ const SuccessScreen = ({ formData }: { formData: FormData }) => {
       colors: ["#F59E0B", "#FBBF24", "#FDE68A", "#ffffff"],
     });
 
-    // Mount Cal.com after a short delay
     const timer = setTimeout(() => {
-      const existingScript = document.querySelector('script[data-cal-namespace="20min"]');
-      if (existingScript) return;
+      const Cal = (window as any).Cal;
+      if (!Cal) return;
 
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.async = true;
-      script.src = "https://app.cal.com/embed/embed.js";
-      script.setAttribute("data-cal-namespace", "20min");
+      Cal("init", "20min", { origin: "https://app.cal.com" });
 
-      script.onload = () => {
-        const Cal = (window as any).Cal;
-        if (!Cal) return;
-
-        Cal("init", "20min", { origin: "https://cal.com" });
-
-        Cal.ns["20min"]("inline", {
-          elementOrSelector: "#my-cal-inline-20min",
-          calLink: "vox-ops-mvonve/20min",
+      Cal.ns["20min"]("inline", {
+        elementOrSelector: "#my-cal-inline-20min",
+        calLink: "vox-ops-mvonve/20min",
+        config: {
           layout: "month_view",
-          config: {
-            name: formData.fullName,
-            email: formData.email,
-            theme: "dark",
-          },
-        });
+          name: formData.fullName,
+          email: formData.email,
+        },
+      });
 
-        Cal.ns["20min"]("ui", {
-          theme: "dark",
-          cssVarsPerTheme: {
-            dark: { "cal-brand": "#F59E0B" },
-          },
-          hideEventTypeDetails: false,
-          layout: "month_view",
-        });
-      };
-
-      document.head.appendChild(script);
-    }, 500);
+      Cal.ns["20min"]("ui", {
+        theme: "dark",
+        cssVarsPerTheme: {
+          dark: { "cal-brand": "#F59E0B" },
+        },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+    }, 800);
 
     return () => clearTimeout(timer);
   }, [formData]);
@@ -128,7 +112,7 @@ const SuccessScreen = ({ formData }: { formData: FormData }) => {
       <div
         id="my-cal-inline-20min"
         className="w-full rounded-xl overflow-hidden"
-        style={{ minHeight: "800px" }}
+        style={{ width: "100%", height: "800px", display: "block" }}
       />
     </div>
   );
