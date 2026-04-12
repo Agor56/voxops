@@ -15,6 +15,9 @@ import CallDemo from "./pages/CallDemo";
 import CallDemo2 from "./pages/CallDemo2";
 import BuildingManagement from "./pages/BuildingManagement";
 import RevSlInfo from "./pages/RevSlInfo";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import Contact from "./pages/Contact";
 
 gsap.registerPlugin(ScrollTrigger);
 
