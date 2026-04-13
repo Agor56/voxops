@@ -66,37 +66,74 @@ const SuccessScreen = ({ formData }: { formData: FormData }) => {
       colors: ["#F59E0B", "#FBBF24", "#FDE68A", "#ffffff"],
     });
 
-    const timer = setTimeout(() => {
-      const Cal = (window as any).Cal;
-      if (!Cal) return;
+    const calWindow = window as typeof window & { Cal?: any };
 
-      Cal("init", "20min", { origin: "https://app.cal.com" });
+    ((C: typeof calWindow, A: string, L: string) => {
+      const p = (a: any, ar: IArguments | any[]) => {
+        a.q.push(ar);
+      };
+      const d = C.document;
 
-      Cal.ns["20min"]("inline", {
-        elementOrSelector: "#my-cal-inline-20min",
-        calLink: "vox-ops-mvonve/20min",
-        config: {
-          layout: "month_view",
-          name: formData.fullName,
-          email: formData.email,
-        },
-      });
+      C.Cal =
+        C.Cal ||
+        function () {
+          const cal = C.Cal;
+          const ar = arguments;
 
-      Cal.ns["20min"]("ui", {
-        theme: "dark",
-        cssVarsPerTheme: {
-          dark: { "cal-brand": "#F59E0B" },
-        },
-        hideEventTypeDetails: false,
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            d.head.appendChild(d.createElement("script")).src = A;
+            cal.loaded = true;
+          }
+
+          if (ar[0] === L) {
+            const api = function () {
+              p(api, arguments);
+            };
+            const namespace = ar[1];
+            api.q = api.q || [];
+
+            if (typeof namespace === "string") {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p(cal.ns[namespace], ar);
+              p(cal, ["initNamespace", namespace]);
+            } else {
+              p(cal, ar);
+            }
+            return;
+          }
+
+          p(cal, ar);
+        };
+    })(calWindow, "https://app.cal.com/embed/embed.js", "init");
+
+    calWindow.Cal("init", "20min", { origin: "https://app.cal.com" });
+
+    calWindow.Cal.ns["20min"]("inline", {
+      elementOrSelector: "#my-cal-inline-20min",
+      calLink: "vox-ops-mvonve/20min",
+      config: {
         layout: "month_view",
-      });
-    }, 1000);
+        useSlotsViewOnSmallScreen: "true",
+        name: formData.fullName,
+        email: formData.email,
+      },
+    });
 
-    return () => clearTimeout(timer);
+    calWindow.Cal.ns["20min"]("ui", {
+      cssVarsPerTheme: {
+        light: { "cal-brand": "#0F172A" },
+        dark: { "cal-brand": "#F59E0B" },
+      },
+      hideEventTypeDetails: false,
+      layout: "month_view",
+      theme: "dark",
+    });
   }, [formData]);
 
   return (
-    <div className="text-center">
+    <div className="mx-auto max-w-[800px] text-center">
       <div className="flex items-center justify-center gap-2 mb-4">
         <CheckCircle className="w-6 h-6 text-[#F59E0B]" />
         <h3 className="text-xl font-bold text-white" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -108,8 +145,14 @@ const SuccessScreen = ({ formData }: { formData: FormData }) => {
       </p>
       <div
         id="my-cal-inline-20min"
-        className="w-full rounded-xl overflow-hidden"
-        style={{ width: "100%", minHeight: "900px", height: "900px", display: "block" }}
+        style={{
+          width: "100%",
+          minHeight: "700px",
+          height: "100%",
+          overflow: "scroll",
+          borderRadius: "12px",
+          background: "transparent",
+        }}
       />
     </div>
   );
@@ -182,7 +225,7 @@ const QualifierForm = () => {
 
   return (
     <section className="px-5 pb-20 md:pb-28" id="qualifier">
-      <div className="max-w-xl mx-auto">
+      <div className={completed ? "max-w-[800px] mx-auto" : "max-w-xl mx-auto"}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -199,7 +242,6 @@ const QualifierForm = () => {
               {step > 0 && <BackButton onClick={() => setStep((s) => s - 1)} />}
 
               <AnimatePresence mode="wait">
-                {/* Step 1: Identity */}
                 {step === 0 && (
                   <motion.div key="step1" variants={stepVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.25 }}>
                     <div className="flex items-center gap-2 mb-6 justify-center">
@@ -245,7 +287,6 @@ const QualifierForm = () => {
                   </motion.div>
                 )}
 
-                {/* Step 2: Role */}
                 {step === 1 && (
                   <motion.div key="step2" variants={stepVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.25 }}>
                     <div className="flex items-center gap-2 mb-6 justify-center">
@@ -262,7 +303,6 @@ const QualifierForm = () => {
                   </motion.div>
                 )}
 
-                {/* Step 3: Decision Maker */}
                 {step === 2 && (
                   <motion.div key="step3" variants={stepVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.25 }}>
                     <div className="flex items-center gap-2 mb-6 justify-center">
@@ -282,7 +322,6 @@ const QualifierForm = () => {
                   </motion.div>
                 )}
 
-                {/* Step 4: Investment */}
                 {step === 3 && (
                   <motion.div key="step4" variants={stepVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.25 }}>
                     <div className="flex items-center gap-2 mb-6 justify-center">
