@@ -391,7 +391,7 @@ const HebrewQualifierForm = () => {
                   <div className="flex items-center gap-2 mb-6 justify-center">
                     <Rocket className="w-5 h-5 text-[#F59E0B]" />
                     <h3 className="text-lg font-bold text-white text-center">
-                      השירות שלנו מתחיל מ-3,500 ש״ח לחודש. במידה וה-ROI ברור, האם את/ה במצב להשקיע?
+                      השירות שלנו מתחיל מ-2,500 ש״ח לחודש. במידה וה-ROI ברור, האם את/ה במצב להשקיע?. במידה וה-ROI ברור, האם את/ה במצב להשקיע?
                     </h3>
                   </div>
                   <div className="space-y-3">
