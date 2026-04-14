@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, User, Briefcase, BarChart3, Target, Shield, Rocket, CheckCircle, Home } from "lucide-react";
 import confetti from "canvas-confetti";
@@ -84,9 +84,19 @@ const DisqualifiedScreen = () => (
   </div>
 );
 
+type CalNamespaceApi = (...args: any[]) => void;
+type CalGlobal = ((...args: any[]) => void) & {
+  ns?: Record<string, CalNamespaceApi>;
+};
+
 /* ─── Success with Cal.com ─── */
 const SuccessScreen = ({ formData }: { formData: FormData }) => {
+  const hasInitializedCal = useRef(false);
+
   useEffect(() => {
+    if (hasInitializedCal.current) return;
+    hasInitializedCal.current = true;
+
     confetti({
       particleCount: 150,
       spread: 90,
@@ -94,58 +104,68 @@ const SuccessScreen = ({ formData }: { formData: FormData }) => {
       colors: ["#F59E0B", "#FBBF24", "#FDE68A", "#ffffff"],
     });
 
-    const calWindow = window as typeof window & { Cal?: any };
+    const calWindow = window as typeof window & { Cal?: CalGlobal };
+    const container = document.getElementById("cal-he-inline");
 
-    ((C: typeof calWindow, A: string, L: string) => {
-      const p = (a: any, ar: IArguments | any[]) => { a.q.push(ar); };
-      const d = C.document;
-      C.Cal = C.Cal || function () {
-        const cal = C.Cal;
-        const ar = arguments;
-        if (!cal.loaded) {
-          cal.ns = {};
-          cal.q = cal.q || [];
-          d.head.appendChild(d.createElement("script")).src = A;
-          cal.loaded = true;
-        }
-        if (ar[0] === L) {
-          const api = function () { p(api, arguments); };
-          const namespace = ar[1];
-          api.q = api.q || [];
-          if (typeof namespace === "string") {
-            cal.ns[namespace] = cal.ns[namespace] || api;
-            p(cal.ns[namespace], ar);
-            p(cal, ["initNamespace", namespace]);
-          } else { p(cal, ar); }
-          return;
-        }
-        p(cal, ar);
-      };
-    })(calWindow, "https://app.cal.com/embed/embed.js", "init");
+    if (!container) {
+      hasInitializedCal.current = false;
+      return;
+    }
 
-    calWindow.Cal("init", "callback", { origin: "https://app.cal.com" });
+    let retryInterval: number | undefined;
 
-    calWindow.Cal.ns["callback"]("inline", {
-      elementOrSelector: "#cal-he-inline",
-      calLink: "vidleads/callback",
-      config: {
+    const mountCalEmbed = () => {
+      if (!calWindow.Cal) return false;
+
+      calWindow.Cal("init", "callback", { origin: "https://app.cal.com" });
+
+      const callbackApi = calWindow.Cal.ns?.callback;
+      if (!callbackApi) return false;
+
+      container.innerHTML = "";
+      callbackApi("inline", {
+        elementOrSelector: "#cal-he-inline",
+        calLink: "vidleads/callback",
+        config: {
+          layout: "month_view",
+          useSlotsViewOnSmallScreen: "true",
+          name: formData.fullName,
+          email: formData.email,
+        },
+      });
+
+      callbackApi("ui", {
+        cssVarsPerTheme: {
+          light: { "cal-brand": "#292929" },
+          dark: { "cal-brand": "#F59E0B" },
+        },
+        hideEventTypeDetails: false,
         layout: "month_view",
-        useSlotsViewOnSmallScreen: "true",
-        name: formData.fullName,
-        email: formData.email,
-      },
-    });
+        theme: "dark",
+      });
 
-    calWindow.Cal.ns["callback"]("ui", {
-      cssVarsPerTheme: {
-        light: { "cal-brand": "#292929" },
-        dark: { "cal-brand": "#F59E0B" },
-      },
-      hideEventTypeDetails: false,
-      layout: "month_view",
-      theme: "dark",
-    });
-  }, [formData]);
+      return true;
+    };
+
+    const timer = window.setTimeout(() => {
+      if (mountCalEmbed()) return;
+
+      let attempts = 0;
+      retryInterval = window.setInterval(() => {
+        attempts += 1;
+        if (mountCalEmbed() || attempts >= 10) {
+          if (retryInterval) window.clearInterval(retryInterval);
+        }
+      }, 300);
+    }, 800);
+
+    return () => {
+      hasInitializedCal.current = false;
+      window.clearTimeout(timer);
+      if (retryInterval) window.clearInterval(retryInterval);
+      container.innerHTML = "";
+    };
+  }, [formData.email, formData.fullName]);
 
   return (
     <div className="mx-auto max-w-[800px] text-center">
@@ -163,8 +183,9 @@ const SuccessScreen = ({ formData }: { formData: FormData }) => {
         style={{
           width: "100%",
           minHeight: "800px",
-          height: "100%",
-          overflow: "scroll",
+          height: "800px",
+          display: "block",
+          overflow: "auto",
           borderRadius: "12px",
           background: "transparent",
         }}
