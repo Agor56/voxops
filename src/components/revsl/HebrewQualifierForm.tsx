@@ -97,6 +97,7 @@ const SuccessScreen = ({ formData }: { formData: FormData }) => {
     if (hasInitializedCal.current) return;
     hasInitializedCal.current = true;
 
+    // 1. Fire Confetti
     confetti({
       particleCount: 150,
       spread: 90,
@@ -104,89 +105,86 @@ const SuccessScreen = ({ formData }: { formData: FormData }) => {
       colors: ["#F59E0B", "#FBBF24", "#FDE68A", "#ffffff"],
     });
 
-    const calWindow = window as typeof window & { Cal?: CalGlobal };
-    const container = document.getElementById("cal-he-inline");
+    // 2. Load Cal.com Script manually if not present
+    const scriptId = "cal-embed-script";
 
-    if (!container) {
-      hasInitializedCal.current = false;
-      return;
-    }
-
-    let retryInterval: number | undefined;
-
-    const mountCalEmbed = () => {
-      if (!calWindow.Cal) return false;
+    function initCal() {
+      const calWindow = window as typeof window & { Cal?: CalGlobal };
+      if (!calWindow.Cal) return;
 
       calWindow.Cal("init", "callback", { origin: "https://app.cal.com" });
 
       const callbackApi = calWindow.Cal.ns?.callback;
-      if (!callbackApi) return false;
+      if (!callbackApi) return;
 
-      container.innerHTML = "";
+      const container = document.getElementById("my-cal-inline-callback");
+      if (container) container.innerHTML = "";
+
       callbackApi("inline", {
-        elementOrSelector: "#cal-he-inline",
+        elementOrSelector: "#my-cal-inline-callback",
         calLink: "vidleads/callback",
         config: {
-          layout: "month_view",
-          useSlotsViewOnSmallScreen: "true",
           name: formData.fullName,
           email: formData.email,
+          theme: "dark",
+          layout: "month_view",
         },
       });
 
       callbackApi("ui", {
+        theme: "dark",
         cssVarsPerTheme: {
-          light: { "cal-brand": "#292929" },
           dark: { "cal-brand": "#F59E0B" },
         },
         hideEventTypeDetails: false,
         layout: "month_view",
-        theme: "dark",
       });
+    }
 
-      return true;
-    };
-
-    const timer = window.setTimeout(() => {
-      if (mountCalEmbed()) return;
-
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "https://app.cal.com/embed/embed.js";
+      document.head.appendChild(script);
+      script.onload = () => {
+        // Small delay to let Cal initialize
+        setTimeout(initCal, 500);
+      };
+    } else {
+      // Script already loaded, retry until Cal.ns.callback is ready
       let attempts = 0;
-      retryInterval = window.setInterval(() => {
+      const retryInterval = window.setInterval(() => {
         attempts += 1;
-        if (mountCalEmbed() || attempts >= 10) {
-          if (retryInterval) window.clearInterval(retryInterval);
+        const calWindow = window as typeof window & { Cal?: CalGlobal };
+        if ((calWindow.Cal?.ns?.callback) || attempts >= 20) {
+          window.clearInterval(retryInterval);
+          initCal();
         }
       }, 300);
-    }, 800);
+    }
 
     return () => {
       hasInitializedCal.current = false;
-      window.clearTimeout(timer);
-      if (retryInterval) window.clearInterval(retryInterval);
-      container.innerHTML = "";
     };
   }, [formData.email, formData.fullName]);
 
   return (
-    <div className="mx-auto max-w-[800px] text-center">
+    <div id="success-container" className="mx-auto max-w-[800px] text-center">
       <div className="flex items-center justify-center gap-2 mb-4">
         <CheckCircle className="w-6 h-6 text-[#F59E0B]" />
-        <h3 className="text-xl font-bold text-white">
+        <h2 className="text-xl font-bold text-white" dir="rtl">
           תודה רבה! נראה שיש לנו התאמה מעולה. 🙌
-        </h3>
+        </h2>
       </div>
-      <p className="text-white/50 text-sm mb-8 leading-relaxed max-w-lg mx-auto">
-        עכשיו תוכלו לבחור מועד לשיחת גילוי קצרה (Discovery Call) ישירות ביומן שלנו כאן למטה:
+      <p className="text-white/50 text-sm mb-8 leading-relaxed max-w-lg mx-auto" dir="rtl">
+        עכשיו תוכלו לבחור מועד לשיחת גילוי ישירות ביומן:
       </p>
       <div
-        id="cal-he-inline"
+        id="my-cal-inline-callback"
         style={{
           width: "100%",
-          minHeight: "800px",
-          height: "800px",
-          display: "block",
-          overflow: "auto",
-          borderRadius: "12px",
+          minHeight: "900px",
+          overflow: "visible",
           background: "transparent",
         }}
       />
