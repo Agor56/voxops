@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "./i18n/LanguageContext";
 import { gsap } from "gsap";
@@ -103,6 +103,10 @@ const GSAPParallaxProvider = ({ children }: { children: React.ReactNode }) => {
 
   return <>{children}</>;
 };
+const DomainAwareHome = () => {
+  const isVoxopsSpace = window.location.hostname === "voxops.space" || window.location.hostname === "www.voxops.space";
+  return isVoxopsSpace ? <Navigate to="/voxformhe" replace /> : <Index />;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -115,7 +119,7 @@ const App = () => (
             <Sonner />
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Index />} />
+                <Route path="/" element={<DomainAwareHome />} />
                 <Route path="/calldemo" element={<CallDemo />} />
                 <Route path="/calldemo2" element={<CallDemo2 />} />
                 <Route path="/bm" element={<BuildingManagement />} />
