@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, User, Briefcase, BarChart3, Target, Shield, Rocket, CheckCircle, Home } from "lucide-react";
+import { ArrowLeft, User, Briefcase, BarChart3, Target, Shield, Rocket, Home } from "lucide-react";
 import confetti from "canvas-confetti";
 
 type FormData = {
@@ -84,99 +84,31 @@ const DisqualifiedScreen = () => (
   </div>
 );
 
-type CalNamespaceApi = (...args: any[]) => void;
-type CalGlobal = ((...args: any[]) => void) & {
-  ns?: Record<string, CalNamespaceApi>;
-};
-
 /* ─── Success with Cal.com ─── */
 const SuccessScreen = ({ formData }: { formData: FormData }) => {
-  const hasInitializedCal = useRef(false);
+  const iframeSrc = `https://cal.com/vidleads/callback?embed=true&theme=dark&layout=month_view&name=${encodeURIComponent(formData.fullName)}&email=${encodeURIComponent(formData.email)}`;
 
   useEffect(() => {
-    if (hasInitializedCal.current) return;
-    hasInitializedCal.current = true;
-
-    // 1. Fire Confetti
-    confetti({
-      particleCount: 150,
-      spread: 90,
-      origin: { y: 0.55 },
-      colors: ["#F59E0B", "#FBBF24", "#FDE68A", "#ffffff"],
+    const frame = window.requestAnimationFrame(() => {
+      confetti({
+        particleCount: 150,
+        spread: 90,
+        origin: { y: 0.55 },
+        colors: ["#F59E0B", "#FBBF24", "#FDE68A", "#ffffff"],
+      });
     });
 
-    // 2. Load Cal.com Script manually if not present
-    const scriptId = "cal-embed-script";
-
-    function initCal() {
-      const calWindow = window as typeof window & { Cal?: CalGlobal };
-      if (!calWindow.Cal) return;
-
-      calWindow.Cal("init", "callback", { origin: "https://app.cal.com" });
-
-      const callbackApi = calWindow.Cal.ns?.callback;
-      if (!callbackApi) return;
-
-      const container = document.getElementById("my-cal-inline-callback");
-      if (container) container.innerHTML = "";
-
-      callbackApi("inline", {
-        elementOrSelector: "#my-cal-inline-callback",
-        calLink: "vidleads/callback",
-        config: {
-          name: formData.fullName,
-          email: formData.email,
-          theme: "dark",
-          layout: "month_view",
-        },
-      });
-
-      callbackApi("ui", {
-        theme: "dark",
-        cssVarsPerTheme: {
-          dark: { "cal-brand": "#F59E0B" },
-        },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
-    }
-
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.src = "https://app.cal.com/embed/embed.js";
-      document.head.appendChild(script);
-      script.onload = () => {
-        // Small delay to let Cal initialize
-        setTimeout(initCal, 500);
-      };
-    } else {
-      // Script already loaded, retry until Cal.ns.callback is ready
-      let attempts = 0;
-      const retryInterval = window.setInterval(() => {
-        attempts += 1;
-        const calWindow = window as typeof window & { Cal?: CalGlobal };
-        if ((calWindow.Cal?.ns?.callback) || attempts >= 20) {
-          window.clearInterval(retryInterval);
-          initCal();
-        }
-      }, 300);
-    }
-
     return () => {
-      hasInitializedCal.current = false;
+      window.cancelAnimationFrame(frame);
     };
-  }, [formData.email, formData.fullName]);
+  }, []);
 
   return (
-    <div id="success-container" className="mx-auto max-w-[800px] text-center">
-      <div className="flex items-center justify-center gap-2 mb-4">
-        <CheckCircle className="w-6 h-6 text-[#F59E0B]" />
-        <h2 className="text-xl font-bold text-white" dir="rtl">
-          תודה רבה! נראה שיש לנו התאמה מעולה. 🙌
-        </h2>
-      </div>
-      <p className="text-white/50 text-sm mb-8 leading-relaxed max-w-lg mx-auto" dir="rtl">
+    <div id="success-container" style={{ width: "100%", textAlign: "center" }}>
+      <h2 className="mb-4 text-xl font-bold text-white" style={{ direction: "rtl" }}>
+        תודה רבה! נראה שיש לנו התאמה מעולה. 🙌
+      </h2>
+      <p className="mx-auto mb-8 max-w-lg text-sm leading-relaxed text-white/50" style={{ direction: "rtl" }}>
         עכשיו תוכלו לבחור מועד לשיחת גילוי ישירות ביומן:
       </p>
       <div
@@ -187,7 +119,15 @@ const SuccessScreen = ({ formData }: { formData: FormData }) => {
           overflow: "visible",
           background: "transparent",
         }}
-      />
+      >
+        <iframe
+          src={iframeSrc}
+          title="VoxOps Callback Calendar"
+          loading="eager"
+          className="w-full min-h-[900px] border-0 bg-transparent"
+          style={{ width: "100%", minHeight: "900px", border: 0, background: "transparent" }}
+        />
+      </div>
     </div>
   );
 };
