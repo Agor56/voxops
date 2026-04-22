@@ -62,14 +62,14 @@ const Hero = () => {
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none" style={{ zIndex: 11 }}>
         <div 
           className="absolute w-[200px] h-[200px] rounded-full blur-3xl animate-hero-glow max-sm:w-[120px] max-sm:h-[120px]"
-          style={{ background: 'rgba(201,169,110,0.06)' }}
+          style={{ background: 'rgba(201,169,110,0.048)' }}
         />
         {[0, 1.33, 2.66].map((delay) => (
           <div
             key={delay}
             className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
             style={{ 
-              border: '1px solid rgba(201,169,110,0.15)',
+              border: '1px solid rgba(201,169,110,0.12)',
               animationDelay: `${delay}s`,
             }}
           />
