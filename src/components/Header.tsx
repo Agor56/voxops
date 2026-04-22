@@ -78,7 +78,7 @@ const Header = () => {
               <Globe className="w-5 h-5" />
             </Button>
             <Button size="sm" asChild style={{ background: '#C9A96E', color: '#000', boxShadow: '0 0 15px rgba(201,169,110,0.25), 0 0 40px rgba(201,169,110,0.1)' }} className="hover:opacity-90 hover:shadow-[0_0_20px_rgba(201,169,110,0.4),0_0_50px_rgba(201,169,110,0.15)] hover:-translate-y-px transition-all duration-300 ease-in-out">
-              <a href={getBookingUrl()} target={getBookingTarget()} rel="noopener noreferrer">
+              <a href={BOOKING_URL}>
                 {t.nav.bookDemo}
               </a>
             </Button>
@@ -122,7 +122,7 @@ const Header = () => {
                     {language === "en" ? "עברית" : "English"}
                   </Button>
                   <Button size="sm" className="flex-1" asChild style={{ background: '#C9A96E', color: '#000' }}>
-                    <a href={getBookingUrl()} target={getBookingTarget()} rel="noopener noreferrer">
+                    <a href={BOOKING_URL}>
                       {t.nav.bookDemo}
                     </a>
                   </Button>
