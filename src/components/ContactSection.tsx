@@ -63,6 +63,11 @@ const ContactSection = () => {
       setError(t.contact.form.required);
       return;
     }
+    const host = window.location.hostname;
+    if (host === "voxops.space" || host === "www.voxops.space") {
+      window.location.href = "/voxformhe";
+      return;
+    }
     setShowCalendar(true);
   };
 
