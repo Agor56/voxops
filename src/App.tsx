@@ -104,7 +104,8 @@ const GSAPParallaxProvider = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 const DomainAwareHome = () => {
-  const isVoxopsSpace = window.location.hostname === "voxops.space" || window.location.hostname === "www.voxops.space";
+  const host = window.location.hostname.toLowerCase().replace(/\.$/, "");
+  const isVoxopsSpace = host === "voxops.space" || host.endsWith(".voxops.space");
   return isVoxopsSpace ? <Navigate to="/voxformhe" replace /> : <Index />;
 };
 
