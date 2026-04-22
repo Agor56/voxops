@@ -5,7 +5,12 @@ import { Button } from "./ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
 import ThemeToggle from "./ThemeToggle";
 
-const BOOKING_URL = "https://cal.com/vidleads/callback";
+const CAL_BOOKING_URL = "https://cal.com/vidleads/callback";
+const isVoxopsSpace = () =>
+  typeof window !== "undefined" &&
+  (window.location.hostname === "voxops.space" || window.location.hostname === "www.voxops.space");
+const getBookingUrl = () => (isVoxopsSpace() ? "/voxformhe" : CAL_BOOKING_URL);
+const getBookingTarget = () => (isVoxopsSpace() ? "_self" : "_blank");
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
