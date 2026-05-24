@@ -113,7 +113,7 @@ const ROICalculator = () => {
     setRoi(Math.round(roiValue));
   }, [callsPerWeek, missedCallsPercent, avgTreatmentPrice, appointmentsPerMonth, noShowPercent]);
   
-  const formatCurrency = (val: number) => `₪${val.toLocaleString()}`;
+  const formatCurrency = (val: number) => `$${val.toLocaleString()}`;
   
   return (
     <section id="roi-calculator" dir={isRTL ? 'rtl' : 'ltr'} className="relative py-24 overflow-hidden">
@@ -155,12 +155,12 @@ const ROICalculator = () => {
                 >
                   <div className="glass-card p-8 rounded-2xl">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 mb-8">
-                      <Slider label={isRTL ? 'כמה שיחות מקבלים בשבוע בערך?' : 'How many calls per week?'} value={callsPerWeek} min={10} max={200} step={5} minLabel={isRTL ? '10 שיחות' : '10 calls'} maxLabel={isRTL ? '200 שיחות' : '200 calls'} formatValue={(v) => isRTL ? `${v} שיחות` : `${v} calls`} onChange={setCallsPerWeek} isRTL={isRTL} />
-                      <Slider label={isRTL ? 'כמה אחוז משיחות לא נענות?' : 'Missed calls percentage?'} value={missedCallsPercent} min={10} max={50} step={5} minLabel="10%" maxLabel="50%" formatValue={(v) => `${v}%`} onChange={setMissedCallsPercent} isRTL={isRTL} />
-                      <Slider label={isRTL ? 'מחיר ממוצע לשירות?' : 'Average service price?'} value={avgTreatmentPrice} min={300} max={3000} step={100} minLabel="₪300" maxLabel="₪3,000" formatValue={(v) => `₪${v.toLocaleString()}`} onChange={setAvgTreatmentPrice} isRTL={isRTL} />
-                      <Slider label={isRTL ? 'כמה פגישות בחודש בערך?' : 'Appointments per month?'} value={appointmentsPerMonth} min={20} max={300} step={10} minLabel={isRTL ? '20 פגישות' : '20 appts'} maxLabel={isRTL ? '300 פגישות' : '300 appts'} formatValue={(v) => isRTL ? `${v} פגישות` : `${v} appts`} onChange={setAppointmentsPerMonth} isRTL={isRTL} />
+                      <Slider label={isRTL ? 'כמה לידים חדשים בשבוע?' : 'New leads per week?'} value={callsPerWeek} min={50} max={5000} step={50} minLabel={isRTL ? '50 לידים' : '50 leads'} maxLabel={isRTL ? '5,000 לידים' : '5,000 leads'} formatValue={(v) => isRTL ? `${v.toLocaleString()} לידים` : `${v.toLocaleString()} leads`} onChange={setCallsPerWeek} isRTL={isRTL} />
+                      <Slider label={isRTL ? 'כמה אחוז משיחות לא נענות?' : 'Missed calls percentage?'} value={missedCallsPercent} min={0} max={100} step={1} minLabel="0%" maxLabel="100%" formatValue={(v) => `${v}%`} onChange={setMissedCallsPercent} isRTL={isRTL} />
+                      <Slider label={isRTL ? 'מחיר ממוצע לשירות?' : 'Average service price?'} value={avgTreatmentPrice} min={100} max={10000} step={100} minLabel="$100" maxLabel="$10,000" formatValue={(v) => `$${v.toLocaleString()}`} onChange={setAvgTreatmentPrice} isRTL={isRTL} />
+                      <Slider label={isRTL ? 'כמה לקוחות פוטנציאליים מוכשרים בחודש?' : 'Qualified prospects per month?'} value={appointmentsPerMonth} min={20} max={300} step={10} minLabel={isRTL ? '20 לקוחות' : '20 prospects'} maxLabel={isRTL ? '300 לקוחות' : '300 prospects'} formatValue={(v) => isRTL ? `${v} לקוחות` : `${v} prospects`} onChange={setAppointmentsPerMonth} isRTL={isRTL} />
                       <div className="md:col-span-2 max-w-md mx-auto w-full">
-                        <Slider label={isRTL ? 'שיעור אי-הגעות נוכחי?' : 'Current no-show rate?'} value={noShowPercent} min={10} max={50} step={5} minLabel="10%" maxLabel="50%" formatValue={(v) => `${v}%`} onChange={setNoShowPercent} isRTL={isRTL} />
+                        <Slider label={isRTL ? 'שיעור אי-הגעות נוכחי?' : 'Current no-show rate?'} value={noShowPercent} min={0} max={100} step={1} minLabel="0%" maxLabel="100%" formatValue={(v) => `${v}%`} onChange={setNoShowPercent} isRTL={isRTL} />
                       </div>
                     </div>
                     
