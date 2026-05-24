@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Calculator, TrendingUp, ChevronDown } from 'lucide-react';
+import { Calculator, TrendingDown, Zap, AlertTriangle, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface SliderProps {
@@ -20,18 +20,17 @@ interface SliderProps {
 
 const Slider = ({ label, value, min, max, step, minLabel, maxLabel, formatValue, onChange, isRTL }: SliderProps) => {
   const percentage = ((value - min) / (max - min)) * 100;
-  
+
   return (
     <div className="slider-container mb-8">
-      <label className={`block text-sm font-medium text-foreground mb-4 ${isRTL ? 'text-right' : 'text-left'}`}>
+      <label className="block text-sm font-medium text-foreground mb-4 text-left">
         {label}
       </label>
       <div className="relative pt-8">
-        <div 
+        <div
           className="value-bubble absolute -top-1 px-3 py-1 rounded-lg text-sm font-bold whitespace-nowrap pointer-events-none z-10"
-          style={{ 
-            left: isRTL ? 'auto' : `${percentage}%`,
-            right: isRTL ? `${percentage}%` : 'auto',
+          style={{
+            left: `${percentage}%`,
             transform: 'translateX(-50%)',
             background: '#C9A96E',
             color: '#000',
@@ -40,7 +39,7 @@ const Slider = ({ label, value, min, max, step, minLabel, maxLabel, formatValue,
           {formatValue(value)}
           <div className="absolute top-full left-1/2 -translate-x-1/2 border-[6px] border-transparent" style={{ borderTopColor: '#C9A96E' }} />
         </div>
-        
+
         <input
           type="range"
           min={min}
@@ -50,13 +49,11 @@ const Slider = ({ label, value, min, max, step, minLabel, maxLabel, formatValue,
           onChange={(e) => onChange(Number(e.target.value))}
           className="roi-slider w-full h-2 rounded-full appearance-none cursor-pointer"
           style={{
-            background: isRTL 
-              ? `linear-gradient(to left, #C9A96E ${percentage}%, rgba(255,255,255,0.1) ${percentage}%)`
-              : `linear-gradient(to right, #C9A96E ${percentage}%, rgba(255,255,255,0.1) ${percentage}%)`
+            background: `linear-gradient(to right, #C9A96E ${percentage}%, rgba(255,255,255,0.1) ${percentage}%)`,
           }}
         />
-        
-        <div className={`flex justify-between mt-2 text-xs ${isRTL ? 'flex-row-reverse' : ''}`} style={{ color: 'rgba(255,255,255,0.35)' }}>
+
+        <div className="flex justify-between mt-2 text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
           <span>{minLabel}</span>
           <span>{maxLabel}</span>
         </div>
@@ -69,55 +66,40 @@ const ROICalculator = () => {
   const { language } = useLanguage();
   const isRTL = language === 'he';
   const [isOpen, setIsOpen] = useState(false);
-  
-  const [callsPerWeek, setCallsPerWeek] = useState(50);
-  const [missedCallsPercent, setMissedCallsPercent] = useState(30);
-  const [avgTreatmentPrice, setAvgTreatmentPrice] = useState(800);
-  const [qualifiedProspectsPerWeek, setQualifiedProspectsPerWeek] = useState(200);
-  const [noShowPercent, setNoShowPercent] = useState(25);
-  
-  const [lostFromCalls, setLostFromCalls] = useState(0);
-  const [lostFromNoShows, setLostFromNoShows] = useState(0);
-  const [totalLost, setTotalLost] = useState(0);
-  const [voxopsSavings, setVoxopsSavings] = useState(0);
-  const [voxopsCost, setVoxopsCost] = useState(0);
-  const [roi, setRoi] = useState(0);
-  
-  const conversionRate = 0.4;
-  const callRecoveryRate = 0.65;
-  const noShowReductionRate = 0.38;
-  
+
+  // Inputs
+  const [leadsPerMonth, setLeadsPerMonth] = useState(2000);
+  const [costPerLead, setCostPerLead] = useState(190);
+  const [missedLeadsPercent, setMissedLeadsPercent] = useState(73);
+  const [conversionRate, setConversionRate] = useState(8);
+  const [avgDealValue, setAvgDealValue] = useState(12000);
+
+  // Outputs
+  const [lostLeads, setLostLeads] = useState(0);
+  const [lostDeals, setLostDeals] = useState(0);
+  const [wastedMarketing, setWastedMarketing] = useState(0);
+  const [directRevenueLoss, setDirectRevenueLoss] = useState(0);
+  const [totalDamage, setTotalDamage] = useState(0);
+
   useEffect(() => {
-    const monthlyMissedCalls = (callsPerWeek * 4) * (missedCallsPercent / 100);
-    const lostCalls = monthlyMissedCalls * conversionRate * avgTreatmentPrice;
-    setLostFromCalls(Math.round(lostCalls));
+    const lostLeadsCount = Math.round(leadsPerMonth * (missedLeadsPercent / 100));
+    const lostDealsCount = Math.round(lostLeadsCount * (conversionRate / 100));
+    const wasted = lostLeadsCount * costPerLead;
+    const revenueLoss = lostDealsCount * avgDealValue;
+    const total = wasted + revenueLoss;
 
-    const monthlyQualifiedProspects = qualifiedProspectsPerWeek * 4;
-    const lostNoShows = monthlyQualifiedProspects * (noShowPercent / 100) * avgTreatmentPrice;
-    setLostFromNoShows(Math.round(lostNoShows));
+    setLostLeads(lostLeadsCount);
+    setLostDeals(lostDealsCount);
+    setWastedMarketing(wasted);
+    setDirectRevenueLoss(revenueLoss);
+    setTotalDamage(total);
+  }, [leadsPerMonth, costPerLead, missedLeadsPercent, conversionRate, avgDealValue]);
 
-    const total = lostCalls + lostNoShows;
-    setTotalLost(Math.round(total));
-
-    let monthlyCost = 1997;
-    if (callsPerWeek > 80 || qualifiedProspectsPerWeek > 600) monthlyCost = 3997;
-    if (callsPerWeek > 120 || qualifiedProspectsPerWeek > 1000) monthlyCost = 6997;
-    setVoxopsCost(monthlyCost * 12);
-
-    const callRecovery = lostCalls * callRecoveryRate;
-    const noShowRecovery = lostNoShows * noShowReductionRate;
-    const annualSavings = (callRecovery + noShowRecovery) * 12;
-    setVoxopsSavings(Math.round(annualSavings));
-
-    const annualCost = monthlyCost * 12;
-    const roiValue = annualSavings > 0 ? ((annualSavings - annualCost) / annualCost) * 100 : 0;
-    setRoi(Math.round(roiValue));
-  }, [callsPerWeek, missedCallsPercent, avgTreatmentPrice, qualifiedProspectsPerWeek, noShowPercent]);
-  
   const formatCurrency = (val: number) => `$${val.toLocaleString()}`;
-  
+  const formatNumber = (val: number) => val.toLocaleString();
+
   return (
-    <section id="roi-calculator" dir={isRTL ? 'rtl' : 'ltr'} className="relative py-24 overflow-hidden">
+    <section id="roi-calculator" dir="ltr" className="relative py-24 overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
           <motion.div
@@ -128,22 +110,20 @@ const ROICalculator = () => {
             className="text-center mb-8"
           >
             <h2 className="section-title text-foreground mb-6">
-              {isRTL ? 'כמה כסף אתם מאבדים ' : 'How Much Money Are You '}
-              <span style={{ color: '#C9A96E' }}>{isRTL ? 'כל חודש?' : 'Losing Each Month?'}</span>
+              How Much Money Are You{' '}
+              <span style={{ color: '#C9A96E' }}>Losing Each Month?</span>
             </h2>
             <CollapsibleTrigger asChild>
-              <button 
-                className={`group inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full cursor-pointer transition-all duration-300 ${isRTL ? 'flex-row-reverse' : ''} ${!isOpen ? 'animate-pulse-glow' : ''}`}
+              <button
+                className={`group inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full cursor-pointer transition-all duration-300 ${!isOpen ? 'animate-pulse-glow' : ''}`}
               >
                 <Calculator className="w-4 h-4" style={{ color: '#C9A96E' }} />
-                <span className="label-micro">
-                  {isRTL ? 'מחשבון ROI' : 'ROI Calculator'}
-                </span>
+                <span className="label-micro">Financial Damage Calculator</span>
                 <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} style={{ color: '#C9A96E' }} />
               </button>
             </CollapsibleTrigger>
           </motion.div>
-          
+
           <CollapsibleContent>
             <AnimatePresence>
               {isOpen && (
@@ -155,69 +135,181 @@ const ROICalculator = () => {
                   className="max-w-4xl mx-auto"
                 >
                   <div className="glass-card p-8 rounded-2xl">
+                    {/* Inputs */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 mb-8">
-                      <Slider label={isRTL ? 'כמה לידים חדשים בשבוע?' : 'New leads per week?'} value={callsPerWeek} min={50} max={5000} step={50} minLabel={isRTL ? '50 לידים' : '50 leads'} maxLabel={isRTL ? '5,000 לידים' : '5,000 leads'} formatValue={(v) => isRTL ? `${v.toLocaleString()} לידים` : `${v.toLocaleString()} leads`} onChange={setCallsPerWeek} isRTL={isRTL} />
-                      <Slider label={isRTL ? 'כמה אחוז משיחות לא נענות?' : 'Missed calls percentage?'} value={missedCallsPercent} min={0} max={100} step={1} minLabel="0%" maxLabel="100%" formatValue={(v) => `${v}%`} onChange={setMissedCallsPercent} isRTL={isRTL} />
-                      <Slider label={isRTL ? 'מחיר ממוצע לשירות?' : 'Average service price?'} value={avgTreatmentPrice} min={100} max={10000} step={100} minLabel="$100" maxLabel="$10,000" formatValue={(v) => `$${v.toLocaleString()}`} onChange={setAvgTreatmentPrice} isRTL={isRTL} />
-                      <Slider label={isRTL ? 'כמה לקוחות פוטנציאליים מוכשרים בשבוע?' : 'Qualified prospects per week?'} value={qualifiedProspectsPerWeek} min={50} max={5000} step={50} minLabel={isRTL ? '50 לקוחות' : '50 prospects'} maxLabel={isRTL ? '5,000 לקוחות' : '5,000 prospects'} formatValue={(v) => isRTL ? `${v.toLocaleString()} לקוחות` : `${v.toLocaleString()} prospects`} onChange={setQualifiedProspectsPerWeek} isRTL={isRTL} />
+                      <Slider
+                        label="New leads per month?"
+                        value={leadsPerMonth}
+                        min={100}
+                        max={10000}
+                        step={100}
+                        minLabel="100 leads"
+                        maxLabel="10,000 leads"
+                        formatValue={(v) => `${v.toLocaleString()} leads`}
+                        onChange={setLeadsPerMonth}
+                        isRTL={isRTL}
+                      />
+                      <Slider
+                        label="Cost per lead?"
+                        value={costPerLead}
+                        min={10}
+                        max={500}
+                        step={5}
+                        minLabel="$10"
+                        maxLabel="$500"
+                        formatValue={(v) => `$${v}`}
+                        onChange={setCostPerLead}
+                        isRTL={isRTL}
+                      />
+                      <Slider
+                        label="% of leads not contacted within 5 seconds?"
+                        value={missedLeadsPercent}
+                        min={0}
+                        max={100}
+                        step={1}
+                        minLabel="0%"
+                        maxLabel="100%"
+                        formatValue={(v) => `${v}%`}
+                        onChange={setMissedLeadsPercent}
+                        isRTL={isRTL}
+                      />
+                      <Slider
+                        label="Lead-to-deal conversion rate?"
+                        value={conversionRate}
+                        min={1}
+                        max={50}
+                        step={1}
+                        minLabel="1%"
+                        maxLabel="50%"
+                        formatValue={(v) => `${v}%`}
+                        onChange={setConversionRate}
+                        isRTL={isRTL}
+                      />
                       <div className="md:col-span-2 max-w-md mx-auto w-full">
-                        <Slider label={isRTL ? 'שיעור אי-הגעות נוכחי?' : 'Current no-show rate?'} value={noShowPercent} min={0} max={100} step={1} minLabel="0%" maxLabel="100%" formatValue={(v) => `${v}%`} onChange={setNoShowPercent} isRTL={isRTL} />
+                        <Slider
+                          label="Average deal value?"
+                          value={avgDealValue}
+                          min={500}
+                          max={50000}
+                          step={500}
+                          minLabel="$500"
+                          maxLabel="$50,000"
+                          formatValue={(v) => `$${v.toLocaleString()}`}
+                          onChange={setAvgDealValue}
+                          isRTL={isRTL}
+                        />
                       </div>
                     </div>
-                    
+
+                    {/* Financial Damage Report */}
                     <div className="space-y-6">
-                      <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
-                        <div className="rounded-xl p-5 text-center" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)' }}>
-                          <p className="text-sm mb-2" style={{ color: 'rgba(248,113,113,1)' }}>💸 {isRTL ? 'אבוד משיחות שלא נענו' : 'Lost from missed calls'}</p>
-                          <p className="text-3xl font-bold font-mono" style={{ color: 'rgba(248,113,113,1)' }}>{formatCurrency(lostFromCalls)}</p>
-                          <p className="text-xs mt-1" style={{ color: 'rgba(248,113,113,0.7)' }}>{isRTL ? 'בחודש' : 'per month'}</p>
-                        </div>
-                        
-                        <div className="rounded-xl p-5 text-center" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)' }}>
-                          <p className="text-sm mb-2" style={{ color: 'rgba(248,113,113,1)' }}>🚫 {isRTL ? 'אבוד מאי-הגעות' : 'Lost from no-shows'}</p>
-                          <p className="text-3xl font-bold font-mono" style={{ color: 'rgba(248,113,113,1)' }}>{formatCurrency(lostFromNoShows)}</p>
-                          <p className="text-xs mt-1" style={{ color: 'rgba(248,113,113,0.7)' }}>{isRTL ? 'בחודש' : 'per month'}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="rounded-xl p-6 text-center" style={{ background: 'linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))', border: '1px solid rgba(239,68,68,0.3)' }}>
-                        <p className="text-sm mb-2" style={{ color: 'rgba(252,165,165,1)' }}>{isRTL ? 'סה"כ הכנסות אבודות' : 'Total Lost Revenue'}</p>
-                        <p className="text-5xl font-bold font-mono animate-pulse" style={{ color: 'rgba(248,113,113,1)' }}>{formatCurrency(totalLost)}</p>
-                        <p className="text-sm mt-2" style={{ color: 'rgba(248,113,113,0.7)' }}>
-                          {isRTL ? 'בחודש' : 'per month'} | {formatCurrency(totalLost * 12)} {isRTL ? 'בשנה' : 'per year'}
+                      {/* Total Damage */}
+                      <div
+                        className="rounded-xl p-6 text-center"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(239,68,68,0.15), rgba(239,68,68,0.05))',
+                          border: '1px solid rgba(239,68,68,0.3)',
+                        }}
+                      >
+                        <p className="text-xs uppercase tracking-widest mb-2 flex items-center justify-center gap-2" style={{ color: 'rgba(252,165,165,1)' }}>
+                          <TrendingDown className="w-4 h-4" />
+                          Financial Damage Report
+                        </p>
+                        <p className="text-sm mb-2" style={{ color: 'rgba(252,165,165,0.85)' }}>
+                          Total estimated monthly financial damage
+                        </p>
+                        <p className="text-5xl font-bold font-mono animate-pulse" style={{ color: 'rgba(248,113,113,1)' }}>
+                          {formatCurrency(totalDamage)}
+                        </p>
+                        <p className="text-xs mt-2" style={{ color: 'rgba(248,113,113,0.7)' }}>
+                          per month · conservative estimate
                         </p>
                       </div>
-                      
-                      {/* VoxOps Savings - GOLD */}
-                      <div className="rounded-xl p-6 text-center" style={{ background: 'linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05))', border: '1px solid rgba(201,169,110,0.3)' }}>
-                        <p className="text-sm mb-2 flex items-center justify-center gap-2" style={{ color: '#C9A96E' }}>
-                          <TrendingUp className="w-4 h-4" />
-                          {isRTL ? 'VoxOps יכול לחסוך/להחזיר לכם' : 'VoxOps Can Save You'}
-                        </p>
-                        <p className="text-5xl font-bold font-mono" style={{ color: '#C9A96E' }}>{formatCurrency(voxopsSavings)}</p>
-                        <p className="text-sm mt-2" style={{ color: 'rgba(201,169,110,0.7)' }}>{isRTL ? 'בשנה' : 'per year'}</p>
-                        
-                        <div className={`flex items-center justify-center gap-6 mt-4 text-xs ${isRTL ? 'flex-row-reverse' : ''}`} style={{ color: 'rgba(255,255,255,0.6)' }}>
-                          <span>{isRTL ? 'עלות VoxOps:' : 'VoxOps Cost:'} {formatCurrency(voxopsCost)}/{isRTL ? 'שנה' : 'yr'}</span>
-                          <span className="font-bold" style={{ color: '#C9A96E' }}>ROI: {roi}%</span>
+
+                      {/* Loss Breakdown */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="rounded-xl p-5" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>
+                          <p className="text-sm mb-2" style={{ color: 'rgba(248,113,113,1)' }}>💸 Wasted marketing budget</p>
+                          <p className="text-3xl font-bold font-mono mb-1" style={{ color: 'rgba(248,113,113,1)' }}>
+                            {formatCurrency(wastedMarketing)}
+                          </p>
+                          <p className="text-xs" style={{ color: 'rgba(248,113,113,0.7)' }}>
+                            {formatNumber(lostLeads)} leads × ${costPerLead} per lead
+                          </p>
                         </div>
-                        
-                        <p className="text-xs mt-3" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                          * {isRTL 
-                            ? 'חישוב מבוסס על 65% שיפור בהמרת שיחות ו-38% הפחתה באי-הגעות'
-                            : 'Based on 65% call conversion improvement and 38% no-show reduction'}
-                        </p>
+
+                        <div className="rounded-xl p-5" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>
+                          <p className="text-sm mb-2" style={{ color: 'rgba(248,113,113,1)' }}>📉 Direct revenue loss</p>
+                          <p className="text-3xl font-bold font-mono mb-1" style={{ color: 'rgba(248,113,113,1)' }}>
+                            {formatCurrency(directRevenueLoss)}
+                          </p>
+                          <p className="text-xs" style={{ color: 'rgba(248,113,113,0.7)' }}>
+                            {formatNumber(lostDeals)} lost deals × {formatCurrency(avgDealValue)}
+                          </p>
+                        </div>
                       </div>
-                      
-                      <div className="text-center pt-4">
+
+                      {/* Stats */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="rounded-xl p-5 text-center" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                          <p className="text-4xl font-bold font-mono" style={{ color: '#C9A96E' }}>{formatNumber(lostLeads)}</p>
+                          <p className="text-xs mt-2" style={{ color: 'rgba(255,255,255,0.6)' }}>lost leads per month</p>
+                        </div>
+                        <div className="rounded-xl p-5 text-center" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                          <p className="text-4xl font-bold font-mono" style={{ color: '#C9A96E' }}>{formatNumber(lostDeals)}</p>
+                          <p className="text-xs mt-2" style={{ color: 'rgba(255,255,255,0.6)' }}>deals that won't close</p>
+                        </div>
+                      </div>
+
+                      {/* 5-Second Insight */}
+                      <div
+                        className="rounded-xl p-6"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(201,169,110,0.12), rgba(201,169,110,0.04))',
+                          border: '1px solid rgba(201,169,110,0.3)',
+                        }}
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'rgba(201,169,110,0.2)' }}>
+                            <Zap className="w-5 h-5" style={{ color: '#C9A96E' }} />
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold mb-1" style={{ color: '#C9A96E' }}>The 5-Second Insight</p>
+                            <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.85)' }}>
+                              A VoxOps voice agent answers every lead within 5 seconds, 24/7 — and brings back those{' '}
+                              <span className="font-bold" style={{ color: '#C9A96E' }}>{formatCurrency(totalDamage)}</span>{' '}
+                              every month.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* CTA */}
+                      <div
+                        className="rounded-xl p-6 text-center"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(239,68,68,0.1), rgba(201,169,110,0.1))',
+                          border: '1px solid rgba(201,169,110,0.25)',
+                        }}
+                      >
+                        <div className="flex items-center justify-center gap-2 mb-3">
+                          <AlertTriangle className="w-5 h-5" style={{ color: '#C9A96E' }} />
+                          <p className="text-base font-bold" style={{ color: '#C9A96E' }}>
+                            Don't let your money keep flowing to competitors
+                          </p>
+                        </div>
+                        <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.75)' }}>
+                          We'll build you a custom voice agent that answers every lead within 5 seconds, 24/7 —
+                          and stops the <span className="font-bold" style={{ color: '#C9A96E' }}>{formatCurrency(totalDamage)}/month</span> leak.
+                        </p>
                         <Button variant="hero" size="xl" className="group" asChild>
-                          <a href="#contact" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                            {isRTL ? 'קבעו אבחון חינמי - נראה איך לחסוך את הכסף הזה' : 'Book Free Audit - See How to Save This Money'}
+                          <a href="#contact" className="flex items-center gap-2">
+                            📅 Book a Free Strategy Call
                             <span className="group-hover:translate-x-1 transition-transform">→</span>
                           </a>
                         </Button>
                         <p className="text-xs mt-3" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                          {isRTL ? '15 דקות, Zoom או טלפון | אפס התחייבות' : '15 minutes, Zoom or phone | Zero commitment'}
+                          15 minutes, Zoom or phone · zero commitment
                         </p>
                       </div>
                     </div>
