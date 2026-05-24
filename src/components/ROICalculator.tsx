@@ -73,7 +73,7 @@ const ROICalculator = () => {
   const [callsPerWeek, setCallsPerWeek] = useState(50);
   const [missedCallsPercent, setMissedCallsPercent] = useState(30);
   const [avgTreatmentPrice, setAvgTreatmentPrice] = useState(800);
-  const [appointmentsPerMonth, setAppointmentsPerMonth] = useState(80);
+  const [qualifiedProspectsPerWeek, setQualifiedProspectsPerWeek] = useState(200);
   const [noShowPercent, setNoShowPercent] = useState(25);
   
   const [lostFromCalls, setLostFromCalls] = useState(0);
