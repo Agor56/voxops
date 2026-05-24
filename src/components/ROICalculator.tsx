@@ -91,27 +91,28 @@ const ROICalculator = () => {
     const monthlyMissedCalls = (callsPerWeek * 4) * (missedCallsPercent / 100);
     const lostCalls = monthlyMissedCalls * conversionRate * avgTreatmentPrice;
     setLostFromCalls(Math.round(lostCalls));
-    
-    const lostNoShows = appointmentsPerMonth * (noShowPercent / 100) * avgTreatmentPrice;
+
+    const monthlyQualifiedProspects = qualifiedProspectsPerWeek * 4;
+    const lostNoShows = monthlyQualifiedProspects * (noShowPercent / 100) * avgTreatmentPrice;
     setLostFromNoShows(Math.round(lostNoShows));
-    
+
     const total = lostCalls + lostNoShows;
     setTotalLost(Math.round(total));
-    
+
     let monthlyCost = 1997;
-    if (callsPerWeek > 80 || appointmentsPerMonth > 150) monthlyCost = 3997;
-    if (callsPerWeek > 120 || appointmentsPerMonth > 200) monthlyCost = 6997;
+    if (callsPerWeek > 80 || qualifiedProspectsPerWeek > 600) monthlyCost = 3997;
+    if (callsPerWeek > 120 || qualifiedProspectsPerWeek > 1000) monthlyCost = 6997;
     setVoxopsCost(monthlyCost * 12);
-    
+
     const callRecovery = lostCalls * callRecoveryRate;
     const noShowRecovery = lostNoShows * noShowReductionRate;
     const annualSavings = (callRecovery + noShowRecovery) * 12;
     setVoxopsSavings(Math.round(annualSavings));
-    
+
     const annualCost = monthlyCost * 12;
     const roiValue = annualSavings > 0 ? ((annualSavings - annualCost) / annualCost) * 100 : 0;
     setRoi(Math.round(roiValue));
-  }, [callsPerWeek, missedCallsPercent, avgTreatmentPrice, appointmentsPerMonth, noShowPercent]);
+  }, [callsPerWeek, missedCallsPercent, avgTreatmentPrice, qualifiedProspectsPerWeek, noShowPercent]);
   
   const formatCurrency = (val: number) => `$${val.toLocaleString()}`;
   
