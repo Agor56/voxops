@@ -73,7 +73,7 @@ const ROICalculator = () => {
   const [callsPerWeek, setCallsPerWeek] = useState(50);
   const [missedCallsPercent, setMissedCallsPercent] = useState(30);
   const [avgTreatmentPrice, setAvgTreatmentPrice] = useState(800);
-  const [appointmentsPerMonth, setAppointmentsPerMonth] = useState(80);
+  const [qualifiedProspectsPerWeek, setQualifiedProspectsPerWeek] = useState(200);
   const [noShowPercent, setNoShowPercent] = useState(25);
   
   const [lostFromCalls, setLostFromCalls] = useState(0);
@@ -91,27 +91,28 @@ const ROICalculator = () => {
     const monthlyMissedCalls = (callsPerWeek * 4) * (missedCallsPercent / 100);
     const lostCalls = monthlyMissedCalls * conversionRate * avgTreatmentPrice;
     setLostFromCalls(Math.round(lostCalls));
-    
-    const lostNoShows = appointmentsPerMonth * (noShowPercent / 100) * avgTreatmentPrice;
+
+    const monthlyQualifiedProspects = qualifiedProspectsPerWeek * 4;
+    const lostNoShows = monthlyQualifiedProspects * (noShowPercent / 100) * avgTreatmentPrice;
     setLostFromNoShows(Math.round(lostNoShows));
-    
+
     const total = lostCalls + lostNoShows;
     setTotalLost(Math.round(total));
-    
+
     let monthlyCost = 1997;
-    if (callsPerWeek > 80 || appointmentsPerMonth > 150) monthlyCost = 3997;
-    if (callsPerWeek > 120 || appointmentsPerMonth > 200) monthlyCost = 6997;
+    if (callsPerWeek > 80 || qualifiedProspectsPerWeek > 600) monthlyCost = 3997;
+    if (callsPerWeek > 120 || qualifiedProspectsPerWeek > 1000) monthlyCost = 6997;
     setVoxopsCost(monthlyCost * 12);
-    
+
     const callRecovery = lostCalls * callRecoveryRate;
     const noShowRecovery = lostNoShows * noShowReductionRate;
     const annualSavings = (callRecovery + noShowRecovery) * 12;
     setVoxopsSavings(Math.round(annualSavings));
-    
+
     const annualCost = monthlyCost * 12;
     const roiValue = annualSavings > 0 ? ((annualSavings - annualCost) / annualCost) * 100 : 0;
     setRoi(Math.round(roiValue));
-  }, [callsPerWeek, missedCallsPercent, avgTreatmentPrice, appointmentsPerMonth, noShowPercent]);
+  }, [callsPerWeek, missedCallsPercent, avgTreatmentPrice, qualifiedProspectsPerWeek, noShowPercent]);
   
   const formatCurrency = (val: number) => `$${val.toLocaleString()}`;
   
@@ -158,7 +159,7 @@ const ROICalculator = () => {
                       <Slider label={isRTL ? 'כמה לידים חדשים בשבוע?' : 'New leads per week?'} value={callsPerWeek} min={50} max={5000} step={50} minLabel={isRTL ? '50 לידים' : '50 leads'} maxLabel={isRTL ? '5,000 לידים' : '5,000 leads'} formatValue={(v) => isRTL ? `${v.toLocaleString()} לידים` : `${v.toLocaleString()} leads`} onChange={setCallsPerWeek} isRTL={isRTL} />
                       <Slider label={isRTL ? 'כמה אחוז משיחות לא נענות?' : 'Missed calls percentage?'} value={missedCallsPercent} min={0} max={100} step={1} minLabel="0%" maxLabel="100%" formatValue={(v) => `${v}%`} onChange={setMissedCallsPercent} isRTL={isRTL} />
                       <Slider label={isRTL ? 'מחיר ממוצע לשירות?' : 'Average service price?'} value={avgTreatmentPrice} min={100} max={10000} step={100} minLabel="$100" maxLabel="$10,000" formatValue={(v) => `$${v.toLocaleString()}`} onChange={setAvgTreatmentPrice} isRTL={isRTL} />
-                      <Slider label={isRTL ? 'כמה לקוחות פוטנציאליים מוכשרים בחודש?' : 'Qualified prospects per month?'} value={appointmentsPerMonth} min={20} max={300} step={10} minLabel={isRTL ? '20 לקוחות' : '20 prospects'} maxLabel={isRTL ? '300 לקוחות' : '300 prospects'} formatValue={(v) => isRTL ? `${v} לקוחות` : `${v} prospects`} onChange={setAppointmentsPerMonth} isRTL={isRTL} />
+                      <Slider label={isRTL ? 'כמה לקוחות פוטנציאליים מוכשרים בשבוע?' : 'Qualified prospects per week?'} value={qualifiedProspectsPerWeek} min={50} max={5000} step={50} minLabel={isRTL ? '50 לקוחות' : '50 prospects'} maxLabel={isRTL ? '5,000 לקוחות' : '5,000 prospects'} formatValue={(v) => isRTL ? `${v.toLocaleString()} לקוחות` : `${v.toLocaleString()} prospects`} onChange={setQualifiedProspectsPerWeek} isRTL={isRTL} />
                       <div className="md:col-span-2 max-w-md mx-auto w-full">
                         <Slider label={isRTL ? 'שיעור אי-הגעות נוכחי?' : 'Current no-show rate?'} value={noShowPercent} min={0} max={100} step={1} minLabel="0%" maxLabel="100%" formatValue={(v) => `${v}%`} onChange={setNoShowPercent} isRTL={isRTL} />
                       </div>
