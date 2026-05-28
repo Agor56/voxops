@@ -5,16 +5,11 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import OrAgentCard from './OrAgentCard';
 import AdamAgentCard from './AdamAgentCard';
 
-const WHATSAPP_NUMBER = '972555197834';
-
 const AgentsSection = () => {
   const { t, isRTL } = useLanguage();
 
   const handleSofiaClick = () => {
-    const message = isRTL 
-      ? 'שלום, אשמח לשמוע עוד על סוכני ה-AI שלכם' 
-      : 'Hi, I would like to learn more about your AI agents';
-    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.location.href = 'https://api.whatsapp.com/send/?phone=972534261527&text=Hi%2C+I+would+like+to+learn+more+about+your+AI+systems&type=phone_number&app_absent=0';
   };
 
   return (
