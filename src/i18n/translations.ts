@@ -319,35 +319,35 @@ export const translations = {
     },
     // Onboarding
     onboarding: {
-      badge: 'Simple Onboarding',
-      title: 'How We',
-      titleHighlight: 'Do It',
-      subtitle: 'The BIA™ method ensures your agent is tailored exactly to your business',
+      badge: 'Why It Works',
+      title: 'Why clinics',
+      titleHighlight: 'say yes.',
+      subtitle: 'No risk. No work. Live in days, not months.',
       steps: [
         {
           number: '01',
-          title: 'Phase 1: Build',
-          description: 'We build your agent in an isolated environment - so you can see how it works before it goes live',
+          title: 'Zero risk',
+          description: "You pay 1,000 dollars upfront, and if you're not happy after 30 days, you get every dollar back.",
         },
         {
           number: '02',
-          title: 'Phase 2: Integrate',
-          description: 'We connect the agent to your systems, run tests, and guide you through the full implementation',
+          title: 'Zero work',
+          description: 'Setup takes minutes on your end. After that, your team does nothing different.',
         },
         {
           number: '03',
-          title: 'Phase 3: Adjust',
-          description: 'We improve the agent and support you over time as your needs evolve',
+          title: 'Fast',
+          description: "You're live within 72 hours.",
         },
       ],
     },
     // Contact
     contact: {
-      badge: 'Get Started',
-      title: 'Ready to',
-      titleHighlight: 'Transform',
-      titleEnd: 'Your Business?',
-      subtitle: "Answer a few quick questions and book your free consultation.",
+      badge: 'Final Step',
+      title: 'Stop losing patients',
+      titleHighlight: 'you already',
+      titleEnd: 'earned.',
+      subtitle: "One call. We find your biggest leak and show you exactly how to plug it. No pressure, no jargon.",
       form: {
         step1Question: 'What type of business do you run?',
         step1Placeholder: 'e.g., Clinic, Law Firm, Real Estate Agency, Restaurant...',
