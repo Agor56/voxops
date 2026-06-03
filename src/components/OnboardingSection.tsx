@@ -67,7 +67,7 @@ const OnboardingSection = () => {
                   </div>
 
                   {/* Content */}
-                  
+                  <h3 className="text-xl font-semibold mb-3 text-foreground">{step.title}</h3>
                   <p className="text-muted-foreground">{step.description}</p>
                 </div>
               </motion.div>;

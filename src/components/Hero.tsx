@@ -82,6 +82,17 @@ const Hero = () => {
       
       <div className="container mx-auto py-20 relative" style={{ zIndex: 20 }}>
         <div className="max-w-4xl mx-auto text-center">
+          {/* Eyebrow */}
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.06, ease }}
+            className="text-xs md:text-sm uppercase tracking-[0.2em] mb-6 font-medium"
+            style={{ color: '#C9A96E' }}
+          >
+            {isRTL ? 'מרכזיית AI למרפאות אסתטיקה' : 'The AI front desk for aesthetic clinics'}
+          </motion.p>
+
           {/* Main Headline */}
           <motion.h1 
             initial={{ opacity: 0, y: 24 }} 
@@ -122,7 +133,7 @@ const Hero = () => {
           >
             <div className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs ${isRTL ? 'flex-row-reverse' : ''}`} style={{ color: 'rgba(255,255,255,0.35)', textShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)' }}>
               <span className="text-xs">🎓</span>
-              <span>{isRTL ? 'מאומן על מאות שיחות אמיתיות מעסקים בישראל' : 'Trained on hundreds of real calls from businesses in Israel'}</span>
+              <span>{isRTL ? 'מאומן על אלפי שיחות אמיתיות עם לקוחות. עולה לאוויר ב-72 שעות.' : 'Trained on thousands of real client conversations. Live in 72 hours.'}</span>
             </div>
           </motion.div>
 
@@ -140,7 +151,7 @@ const Hero = () => {
               </a>
             </Button>
             <Button variant="heroGlass" size="xl" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`} asChild>
-              <a href="#agents">
+              <a href="#how-it-works">
                 <Phone className="w-5 h-5" style={{ color: '#C9A96E' }} />
                 {t.hero.ctaSecondary}
               </a>

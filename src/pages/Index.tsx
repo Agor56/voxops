@@ -8,6 +8,9 @@ import ComparisonTable from '@/components/ComparisonTable';
 import ROICalculator from '@/components/ROICalculator';
 import OnboardingSection from '@/components/OnboardingSection';
 import ContactSection from '@/components/ContactSection';
+import HowItWorks from '@/components/HowItWorks';
+import TwoLeaks from '@/components/TwoLeaks';
+import OffersSection from '@/components/OffersSection';
 import Footer from '@/components/Footer';
 
 
@@ -22,8 +25,11 @@ const Index = () => {
         <Header />
         <main>
           <Hero />
-          <AgentsSection />
+          <HowItWorks />
+          <TwoLeaks />
           <MetricsSection />
+          <AgentsSection />
+          <OffersSection />
           <TestimonialsSection />
           {/* <PricingSection /> */}
           {/* <section className="container mx-auto px-4">
