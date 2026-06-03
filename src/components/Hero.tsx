@@ -82,6 +82,17 @@ const Hero = () => {
       
       <div className="container mx-auto py-20 relative" style={{ zIndex: 20 }}>
         <div className="max-w-4xl mx-auto text-center">
+          {/* Eyebrow */}
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.06, ease }}
+            className="text-xs md:text-sm uppercase tracking-[0.2em] mb-6 font-medium"
+            style={{ color: '#C9A96E' }}
+          >
+            {isRTL ? 'מרכזיית AI למרפאות אסתטיקה' : 'The AI front desk for aesthetic clinics'}
+          </motion.p>
+
           {/* Main Headline */}
           <motion.h1 
             initial={{ opacity: 0, y: 24 }} 
