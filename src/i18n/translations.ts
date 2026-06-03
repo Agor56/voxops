@@ -192,11 +192,11 @@ export const translations = {
     },
     // Hero
     hero: {
-      title: "Your Business Runs 24/7",
-      titleHighlight: "Even While You Sleep",
-      subtitle: "AI team that answers every inquiry, books appointments, and updates your system – automatically, in Hebrew and 3 other languages, without lifting a finger.",
-      ctaPrimary: 'Book a Live Demo',
-      ctaSecondary: 'Talk to the Agent Now',
+      title: "Never lose another patient",
+      titleHighlight: "to a slow reply.",
+      subtitle: "VoxOps Bloom calls, texts, and emails every lead in under a minute, then keeps following up until they book. It also wakes up your old client list and brings them back. Your team does nothing.",
+      ctaPrimary: 'Book a Free Strategy Call',
+      ctaSecondary: 'See How It Works',
       valueProps: [
         'Zero missed calls - 100% answered, zero voicemail',
         '38% reduction in no-shows - automatic WhatsApp reminders',
