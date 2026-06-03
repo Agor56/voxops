@@ -151,7 +151,7 @@ const Hero = () => {
               </a>
             </Button>
             <Button variant="heroGlass" size="xl" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`} asChild>
-              <a href="#agents">
+              <a href="#how-it-works">
                 <Phone className="w-5 h-5" style={{ color: '#C9A96E' }} />
                 {t.hero.ctaSecondary}
               </a>
