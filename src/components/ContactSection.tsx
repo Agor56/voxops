@@ -49,7 +49,7 @@ const ContactSection = () => {
               </h3>
               <p className="mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 {isRTL
-                  ? 'קבעו שיחת היכרות חינם וגלו איך VoxOps יכול להגדיל לכם את העסק'
+                  ? 'קבעו שיחת היכרות חינם וגלו איך VoxOps Aesthetics יכול להגדיל לכם את העסק'
                   : 'One free strategy call. We find your biggest leak and show you exactly how to fix it.'}
               </p>
               <Button

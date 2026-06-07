@@ -194,7 +194,7 @@ export const translations = {
     hero: {
       title: "Never lose another patient",
       titleHighlight: "to a slow reply.",
-      subtitle: "VoxOps Bloom calls, texts, and emails every lead in under a minute, then keeps following up until they book. It also wakes up your old client list and brings them back. Your team does nothing.",
+      subtitle: "VoxOps Aesthetics calls, texts, and emails every lead in under a minute, then keeps following up until they book. It also wakes up your old client list and brings them back. Your team does nothing.",
       ctaPrimary: 'Book a Free Strategy Call',
       ctaSecondary: 'See How It Works',
       valueProps: [
@@ -297,7 +297,7 @@ export const translations = {
           name: 'Dr. Sarah Cohen',
           role: 'Medical Director',
           clinic: 'Glow Aesthetics',
-          quote: "VoxOps transformed how we handle customer inquiries. We went from losing leads overnight to converting them while we sleep. Our booking rate increased by 45% in the first month.",
+          quote: "VoxOps Aesthetics transformed how we handle customer inquiries. We went from losing leads overnight to converting them while we sleep. Our booking rate increased by 45% in the first month.",
           stat: '+45% bookings',
         },
         {
@@ -581,7 +581,7 @@ export const translations = {
           name: 'ד"ר נועה נוסבוים',
           role: 'מנהלת רפואית',
           clinic: 'Glow Aesthetics',
-          quote: 'VoxOps שינתה לחלוטין את הדרך שבה אנחנו מטפלים בפניות לקוחות. עברנו מאיבוד לידים בלילה להמרה שלהם בזמן שאנחנו ישנים. שיעור ההזמנות שלנו עלה ב-45% בחודש הראשון.',
+          quote: 'VoxOps Aesthetics שינתה לחלוטין את הדרך שבה אנחנו מטפלים בפניות לקוחות. עברנו מאיבוד לידים בלילה להמרה שלהם בזמן שאנחנו ישנים. שיעור ההזמנות שלנו עלה ב-45% בחודש הראשון.',
           stat: '+45% הזמנות',
         },
         {
