@@ -103,15 +103,17 @@ const Hero = () => {
             {t.hero.title}
           </motion.h1>
           
-          <motion.h2 
-            initial={{ opacity: 0, y: 24 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.7, delay: 0.24, ease }} 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 font-display"
-            style={{ color: '#C9A96E', textShadow: '0 0 40px rgba(201,169,110,0.4)' }}
-          >
-            {t.hero.titleHighlight}
-          </motion.h2>
+          {t.hero.titleHighlight && (
+            <motion.h2 
+              initial={{ opacity: 0, y: 24 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.7, delay: 0.24, ease }} 
+              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 font-display"
+              style={{ color: '#C9A96E', textShadow: '0 0 40px rgba(201,169,110,0.4)' }}
+            >
+              {t.hero.titleHighlight}
+            </motion.h2>
+          )}
 
           {/* Subtitle */}
           <motion.p 
