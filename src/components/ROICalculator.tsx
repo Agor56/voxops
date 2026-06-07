@@ -276,7 +276,7 @@ const ROICalculator = () => {
                           <div>
                             <p className="text-sm font-bold mb-1" style={{ color: '#C9A96E' }}>The 5-Second Insight</p>
                             <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.85)' }}>
-                              A VoxOps voice agent answers every lead within 5 seconds, 24/7 — and brings back those{' '}
+                              A VoxOps Aesthetics voice agent answers every lead within 5 seconds, 24/7 — and brings back those{' '}
                               <span className="font-bold" style={{ color: '#C9A96E' }}>{formatCurrency(totalDamage)}</span>{' '}
                               every month.
                             </p>
