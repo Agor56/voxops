@@ -160,6 +160,17 @@ const Hero = () => {
             </Button>
           </motion.div>
 
+          {/* Trust Anchor */}
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.66, ease }}
+            className="text-sm md:text-base max-w-xl mx-auto mb-12 font-light italic"
+            style={{ color: 'rgba(201,169,110,0.7)', textShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)' }}
+          >
+            Stop letting unvetted leads go cold. Plug the leaks. Claim the revenue.
+          </motion.p>
+
           {/* Stats Cards */}
           <motion.div 
             initial={{ opacity: 0, y: 24 }} 
