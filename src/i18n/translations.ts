@@ -192,11 +192,11 @@ export const translations = {
     },
     // Hero
     hero: {
-      title: "Never lose another patient",
-      titleHighlight: "to a slow reply.",
-      subtitle: "VoxOps Aesthetics calls, texts, and emails every lead in under a minute, then keeps following up until they book. It also wakes up your old client list and brings them back. Your team does nothing.",
+      title: "Most clinics don't have a lead problem. They have a plumbing problem.",
+      titleHighlight: "",
+      subtitle: `You are spending thousands to fill a funnel that is leaking patients at every stage. VoxOps Aesthetics installs an automated defense shield - deploying a 45-second Speed Engine to lock down new leads, and a Reactivation Engine to pull "found money" straight out of your old database. Your team does zero extra work.`,
       ctaPrimary: 'Book a Free Strategy Call',
-      ctaSecondary: 'See How It Works',
+      ctaSecondary: 'Case Study (Free)',
       valueProps: [
         'Zero missed calls - 100% answered, zero voicemail',
         '38% reduction in no-shows - automatic WhatsApp reminders',
