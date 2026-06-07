@@ -90,7 +90,7 @@ const Hero = () => {
             className="text-xs md:text-sm uppercase tracking-[0.2em] mb-6 font-medium"
             style={{ color: '#C9A96E' }}
           >
-            {isRTL ? 'מרכזיית AI למרפאות אסתטיקה' : 'The AI front desk for aesthetic clinics'}
+            {isRTL ? 'מרכזיית AI למרפאות אסתטיקה' : 'VOXOPS AESTHETICS // THE REVENUE LEAK RECOVERY SYSTEM'}
           </motion.p>
 
           {/* Main Headline */}
@@ -103,15 +103,17 @@ const Hero = () => {
             {t.hero.title}
           </motion.h1>
           
-          <motion.h2 
-            initial={{ opacity: 0, y: 24 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.7, delay: 0.24, ease }} 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 font-display"
-            style={{ color: '#C9A96E', textShadow: '0 0 40px rgba(201,169,110,0.4)' }}
-          >
-            {t.hero.titleHighlight}
-          </motion.h2>
+          {t.hero.titleHighlight && (
+            <motion.h2 
+              initial={{ opacity: 0, y: 24 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.7, delay: 0.24, ease }} 
+              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 font-display"
+              style={{ color: '#C9A96E', textShadow: '0 0 40px rgba(201,169,110,0.4)' }}
+            >
+              {t.hero.titleHighlight}
+            </motion.h2>
+          )}
 
           {/* Subtitle */}
           <motion.p 
@@ -157,6 +159,17 @@ const Hero = () => {
               </a>
             </Button>
           </motion.div>
+
+          {/* Trust Anchor */}
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.66, ease }}
+            className="text-sm md:text-base max-w-xl mx-auto mb-12 font-light italic"
+            style={{ color: 'rgba(201,169,110,0.7)', textShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)' }}
+          >
+            Stop letting unvetted leads go cold. Plug the leaks. Claim the revenue.
+          </motion.p>
 
           {/* Stats Cards */}
           <motion.div 
