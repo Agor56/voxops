@@ -29,13 +29,13 @@ const HowItWorks = () => {
             <span className="text-sm text-muted-foreground">How It Works</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 font-display">
-            One agent. Every channel.
+            One system. Every patient inquiry channel.
           </h2>
           <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 font-display" style={{ color: '#C9A96E' }}>
-            Books like your best receptionist.
+            Answers like your best front-desk coordinator — but never clocks out.
           </h3>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light">
-            Trained on your services, your prices, and your tone. It works every channel until the patient picks up.
+            VoxOps is trained on your services, pricing, FAQs, tone, and booking process. It responds across calls, SMS, DMs, WhatsApp, email, and web forms — then moves qualified patients toward scheduling.
           </p>
         </motion.div>
 
