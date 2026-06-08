@@ -135,7 +135,7 @@ const Hero = () => {
           >
             <div className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs ${isRTL ? 'flex-row-reverse' : ''}`} style={{ color: 'rgba(255,255,255,0.35)', textShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)' }}>
               <span className="text-xs">🎓</span>
-              <span>{isRTL ? 'מאומן על אלפי שיחות אמיתיות עם לקוחות. עולה לאוויר ב-72 שעות.' : 'Trained on thousands of real client conversations. Live in 72 hours.'}</span>
+              <span>{isRTL ? 'מאומן על אלפי שיחות אמיתיות עם לקוחות. עולה לאוויר ב-72 שעות.' : 'Custom-built around your services, pricing, FAQs, and booking flow. Live in 72 hours.'}</span>
             </div>
           </motion.div>
 
