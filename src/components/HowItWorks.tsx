@@ -3,10 +3,10 @@ import { Phone, MessageSquare, Mail, Calendar, Workflow } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 const cards = [
-  { n: '01', title: 'Voice', icon: Phone, text: "Calls the lead in seconds, answers their questions, and books them while they're still interested." },
-  { n: '02', title: 'Text', icon: MessageSquare, text: "SMS and DMs handled. If they don't answer the call, the same agent follows up by text until they do." },
-  { n: '03', title: 'Email', icon: Mail, text: 'Same agent, same voice, now in their inbox with the details and the booking link.' },
-  { n: '04', title: 'Calendar', icon: Calendar, text: 'The moment the conversation ends, the appointment lands in your calendar. No notes, no back and forth.' },
+  { n: '01', title: 'Voice', icon: Phone, text: 'Answers inbound calls, recovers missed calls, handles common admin questions, and routes interested patients toward booking while intent is still high.' },
+  { n: '02', title: 'Text', icon: MessageSquare, text: 'Handles SMS, Instagram DMs, Facebook DMs, and WhatsApp follow-up so patients do not disappear after the first touch.' },
+  { n: '03', title: 'Email', icon: Mail, text: 'Sends follow-up details, reminders, and booking links by email when patients need more context before scheduling.' },
+  { n: '04', title: 'Calendar', icon: Calendar, text: 'Qualified patients get routed to your booking flow, calendar, or staff — with conversation notes captured automatically.' },
 ];
 
 const HowItWorks = () => {
