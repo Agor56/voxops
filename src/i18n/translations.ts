@@ -342,10 +342,10 @@ export const translations = {
     // Contact
     contact: {
       badge: 'Final Step',
-      title: 'Stop losing patients',
-      titleHighlight: 'you already',
-      titleEnd: 'earned.',
-      subtitle: "One call. We find your biggest leak and show you exactly how to plug it. No pressure, no jargon.",
+      title: 'Stop losing patients who',
+      titleHighlight: 'already raised',
+      titleEnd: 'their hand.',
+      subtitle: "In one free audit, we review your calls, forms, DMs, texts, WhatsApp flow, follow-up process, and booking path — then show you where patient inquiries are leaking before they become consults.",
       form: {
         step1Question: 'What type of business do you run?',
         step1Placeholder: 'e.g., Clinic, Law Firm, Real Estate Agency, Restaurant...',
