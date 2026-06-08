@@ -68,7 +68,7 @@ const OffersSection = () => {
                   }}
                 >
                   <a href="#contact" className={`flex items-center justify-center ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    Book a Call
+                    Book a Pilot Call
                     {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
                   </a>
                 </Button>
