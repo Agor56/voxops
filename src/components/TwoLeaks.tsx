@@ -70,8 +70,8 @@ const TwoLeaks = () => {
           className="text-center text-lg md:text-xl max-w-2xl mx-auto font-light"
           style={{ color: 'rgba(255,255,255,0.75)' }}
         >
-          You don't have a marketing problem. You have a follow-up problem.{' '}
-          <span style={{ color: '#C9A96E' }}>We fix both.</span>
+          You may not need more leads. You may need a better system for{' '}
+          <span style={{ color: '#C9A96E' }}>responding, qualifying, and following up</span> with the ones you already have.
         </motion.p>
       </div>
     </section>
