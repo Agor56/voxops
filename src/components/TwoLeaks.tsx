@@ -8,13 +8,13 @@ const TwoLeaks = () => {
   const blocks = [
     {
       icon: Clock,
-      title: 'The leads you never answer',
-      text: 'Someone messages your clinic at 9pm. Your front desk is closed. By morning they booked with whoever replied first. Wait an hour to respond and you lose up to 70 percent of them.',
+      title: 'The new inquiries you answer too late',
+      text: 'A patient asks about GLP-1, hormone therapy, or peptides after hours. Your front desk is closed. By morning, they may already be talking to another clinic. VoxOps responds in under 60 seconds, captures intent, answers basic process questions, and pushes the patient toward the next step.',
     },
     {
       icon: Users,
-      title: 'The clients you forgot',
-      text: 'Hundreds of past clients sit in your system, ignored. They already trust you. They already paid you once. One of them is worth 2,000 to 5,000 dollars a year.',
+      title: 'The old inquiries sitting in your database',
+      text: 'Past leads, no-shows, pricing shoppers, and unfinished consult requests often sit untouched in your CRM or spreadsheet. Many were interested, they just never got consistent follow-up. VoxOps reactivates old inquiries with calls, texts, WhatsApp, and email so interested patients can re-enter your booking flow.',
     },
   ];
 
@@ -35,7 +35,7 @@ const TwoLeaks = () => {
             <span className="text-sm text-muted-foreground">The Problem</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display max-w-3xl mx-auto">
-            Two leaks are draining your clinic <span style={{ color: '#C9A96E' }}>right now.</span>
+            Two leaks are costing GLP-1, HRT & peptide clinics <span style={{ color: '#C9A96E' }}>booked consults every day.</span>
           </h2>
         </motion.div>
 
@@ -70,8 +70,8 @@ const TwoLeaks = () => {
           className="text-center text-lg md:text-xl max-w-2xl mx-auto font-light"
           style={{ color: 'rgba(255,255,255,0.75)' }}
         >
-          You don't have a marketing problem. You have a follow-up problem.{' '}
-          <span style={{ color: '#C9A96E' }}>We fix both.</span>
+          You may not need more leads. You may need a better system for{' '}
+          <span style={{ color: '#C9A96E' }}>responding, qualifying, and following up</span> with the ones you already have.
         </motion.p>
       </div>
     </section>

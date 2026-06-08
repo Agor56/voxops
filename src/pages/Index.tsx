@@ -11,6 +11,7 @@ import ContactSection from '@/components/ContactSection';
 import HowItWorks from '@/components/HowItWorks';
 import TwoLeaks from '@/components/TwoLeaks';
 import OffersSection from '@/components/OffersSection';
+import ComplianceSection from '@/components/ComplianceSection';
 import Footer from '@/components/Footer';
 
 
@@ -37,6 +38,7 @@ const Index = () => {
           </section> */}
           <ROICalculator />
           <OnboardingSection />
+          <ComplianceSection />
           <ContactSection />
         </main>
         <Footer />

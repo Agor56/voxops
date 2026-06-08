@@ -1,38 +1,26 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { BarChart3, Clock, PhoneMissed, Users, CheckCircle2, CalendarCheck, RotateCcw, Timer, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 
+const metrics = [
+  { icon: Clock, label: 'Average response time before vs. after' },
+  { icon: PhoneMissed, label: 'Missed calls recovered' },
+  { icon: Users, label: 'Leads contacted' },
+  { icon: CheckCircle2, label: 'Qualified inquiries' },
+  { icon: CalendarCheck, label: 'Consults booked' },
+  { icon: RotateCcw, label: 'No-shows followed up' },
+  { icon: Sparkles, label: 'Old leads reactivated' },
+  { icon: Timer, label: 'Staff time saved' },
+];
+
 const TestimonialsSection = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const { t, isRTL } = useLanguage();
-
-  const testimonials = t.testimonials.items.map((item, index) => ({
-    ...item,
-    image: [
-      'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=face',
-      'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100&h=100&fit=crop&crop=face',
-      'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face',
-    ][index],
-  }));
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    }, 8000);
-    return () => clearInterval(timer);
-  }, [testimonials.length]);
-
-  const goToNext = () => setActiveIndex((prev) => (prev + 1) % testimonials.length);
-  const goToPrev = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const { isRTL } = useLanguage();
 
   return (
-    <section id="testimonials" className="py-24 relative overflow-hidden">
-      {/* Background */}
+    <section id="pilot-metrics" className="py-24 relative overflow-hidden">
       <div className={`absolute top-0 ${isRTL ? 'left-0' : 'right-0'} w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none -translate-y-1/2`} />
-      
-      <div className="container mx-auto relative z-10">
-        {/* Header */}
+
+      <div className="container mx-auto relative z-10 px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -41,92 +29,37 @@ const TestimonialsSection = () => {
           className="text-center mb-16"
         >
           <div className={`inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <Quote className="w-4 h-4 text-primary" />
-            <span className="text-sm text-muted-foreground">{t.testimonials.badge}</span>
+            <BarChart3 className="w-4 h-4 text-primary" />
+            <span className="text-sm text-muted-foreground">Pilot Metrics</span>
           </div>
-          <h2 className="section-title mb-4">
-            {t.testimonials.title} <span className="gradient-text">{t.testimonials.titleHighlight}</span>
+          <h2 className="section-title mb-4 font-display">
+            What we measure during <span className="gradient-text">your pilot</span>
           </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light">
+            Instead of vague promises, we track the numbers that matter.
+          </p>
         </motion.div>
 
-        {/* Testimonial Carousel */}
-        <div className="max-w-4xl mx-auto">
-          <div className="relative">
-            <AnimatePresence mode="wait">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+          {metrics.map((m, i) => {
+            const Icon = m.icon;
+            return (
               <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: isRTL ? 50 : -50 }}
-                transition={{ duration: 0.5 }}
-                className="glass-card p-8 md:p-12 rounded-3xl"
+                key={m.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                whileHover={{ y: -3 }}
+                className="glass-card-hover p-6 rounded-2xl"
               >
-                {/* Stars */}
-                <div className={`flex gap-1 mb-6 ${isRTL ? 'justify-end' : ''}`}>
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
-                  ))}
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style={{ background: 'rgba(201,169,110,0.12)' }}>
+                  <Icon className="w-4 h-4" style={{ color: '#C9A96E' }} />
                 </div>
-
-                {/* Quote */}
-                <blockquote className={`text-xl md:text-2xl font-medium mb-8 leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>
-                  "{testimonials[activeIndex].quote}"
-                </blockquote>
-
-                {/* Author */}
-                <div className={`flex items-center justify-between flex-wrap gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <div className={`flex items-center gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    <img
-                      src={testimonials[activeIndex].image}
-                      alt={testimonials[activeIndex].name}
-                      className="w-14 h-14 rounded-full object-cover border-2 border-primary/30"
-                    />
-                    <div className={isRTL ? 'text-right' : 'text-left'}>
-                      <div className="font-semibold">{testimonials[activeIndex].name}</div>
-                      <div className="text-sm text-muted-foreground">
-                        {testimonials[activeIndex].role} {t.testimonials.at}{testimonials[activeIndex].clinic}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="glass-card px-4 py-2 rounded-full">
-                    <span className="text-sm font-semibold gradient-text">
-                      {testimonials[activeIndex].stat}
-                    </span>
-                  </div>
-                </div>
+                <p className="text-sm font-medium leading-snug">{m.label}</p>
               </motion.div>
-            </AnimatePresence>
-
-            {/* Navigation */}
-            <div className={`flex justify-center gap-4 mt-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <button
-                onClick={isRTL ? goToNext : goToPrev}
-                className="glass-card p-3 rounded-full hover:border-primary/30 transition-colors"
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <div className="flex items-center gap-2">
-                {testimonials.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveIndex(i)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      i === activeIndex ? 'w-6 bg-primary' : 'bg-muted-foreground/30'
-                    }`}
-                    aria-label={`Go to testimonial ${i + 1}`}
-                  />
-                ))}
-              </div>
-              <button
-                onClick={isRTL ? goToPrev : goToNext}
-                className="glass-card p-3 rounded-full hover:border-primary/30 transition-colors"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

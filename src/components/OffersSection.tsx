@@ -6,13 +6,13 @@ import { useLanguage } from '@/i18n/LanguageContext';
 const offers = [
   {
     icon: Gift,
-    title: 'Reactivation Pilot',
-    text: 'Your next 40,000 dollars is already in your contacts. A 30-day AI campaign that calls, texts, and emails your old clients and books them back in. 1,000 dollars. I run it for 30 days, and if you\'re not happy, you get your money back.',
+    title: 'Old Lead Reactivation Pilot',
+    text: 'A 30-day campaign that re-engages old leads, no-shows, pricing shoppers, and past inquiries through calls, texts, WhatsApp, and email — then routes interested patients back into your booking flow. Pilot: $1,000 for 30 days. If you are not happy, you get your money back.',
   },
   {
     icon: Zap,
-    title: 'Speed-to-Lead System',
-    text: 'Answer every lead in under a minute, automatically, before your competitor wakes up. 1,000 dollars. I run it for 30 days, and if you\'re not happy, you get your money back.',
+    title: '60-Second Speed-to-Lead Pilot',
+    text: 'New GLP-1, HRT, and peptide inquiries get answered in under 60 seconds across calls, forms, DMs, texts, and WhatsApp — then qualified, followed up with, and routed toward booking. Pilot: $1,000 for 30 days. If you are not happy, you get your money back.',
   },
 ];
 
@@ -36,7 +36,7 @@ const OffersSection = () => {
             <span className="text-sm text-muted-foreground">The Offers</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display">
-            Start with one pilot. <span style={{ color: '#C9A96E' }}>Zero risk.</span>
+            Start with one service line. <span style={{ color: '#C9A96E' }}>Prove it in 30 days.</span>
           </h2>
         </motion.div>
 
@@ -68,7 +68,7 @@ const OffersSection = () => {
                   }}
                 >
                   <a href="#contact" className={`flex items-center justify-center ${isRTL ? 'flex-row-reverse' : ''}`}>
-                    Book a Call
+                    Book a Pilot Call
                     {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
                   </a>
                 </Button>

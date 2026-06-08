@@ -3,10 +3,10 @@ import { Phone, MessageSquare, Mail, Calendar, Workflow } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 const cards = [
-  { n: '01', title: 'Voice', icon: Phone, text: "Calls the lead in seconds, answers their questions, and books them while they're still interested." },
-  { n: '02', title: 'Text', icon: MessageSquare, text: "SMS and DMs handled. If they don't answer the call, the same agent follows up by text until they do." },
-  { n: '03', title: 'Email', icon: Mail, text: 'Same agent, same voice, now in their inbox with the details and the booking link.' },
-  { n: '04', title: 'Calendar', icon: Calendar, text: 'The moment the conversation ends, the appointment lands in your calendar. No notes, no back and forth.' },
+  { n: '01', title: 'Voice', icon: Phone, text: 'Answers inbound calls, recovers missed calls, handles common admin questions, and routes interested patients toward booking while intent is still high.' },
+  { n: '02', title: 'Text', icon: MessageSquare, text: 'Handles SMS, Instagram DMs, Facebook DMs, and WhatsApp follow-up so patients do not disappear after the first touch.' },
+  { n: '03', title: 'Email', icon: Mail, text: 'Sends follow-up details, reminders, and booking links by email when patients need more context before scheduling.' },
+  { n: '04', title: 'Calendar', icon: Calendar, text: 'Qualified patients get routed to your booking flow, calendar, or staff — with conversation notes captured automatically.' },
 ];
 
 const HowItWorks = () => {
@@ -29,13 +29,13 @@ const HowItWorks = () => {
             <span className="text-sm text-muted-foreground">How It Works</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 font-display">
-            One agent. Every channel.
+            One system. Every patient inquiry channel.
           </h2>
           <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 font-display" style={{ color: '#C9A96E' }}>
-            Books like your best receptionist.
+            Answers like your best front-desk coordinator — but never clocks out.
           </h3>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light">
-            Trained on your services, your prices, and your tone. It works every channel until the patient picks up.
+            VoxOps is trained on your services, pricing, FAQs, tone, and booking process. It responds across calls, SMS, DMs, WhatsApp, email, and web forms — then moves qualified patients toward scheduling.
           </p>
         </motion.div>
 

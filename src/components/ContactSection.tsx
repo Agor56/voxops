@@ -45,12 +45,12 @@ const ContactSection = () => {
                 <Calendar className="w-6 h-6" style={{ color: '#C9A96E' }} />
               </div>
               <h3 className="text-2xl font-bold mb-3">
-                {isRTL ? 'מוכנים להתחיל?' : 'Ready to plug the leak?'}
+                {isRTL ? 'מוכנים להתחיל?' : 'Find the leak before it costs you more consults.'}
               </h3>
               <p className="mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 {isRTL
                   ? 'קבעו שיחת היכרות חינם וגלו איך VoxOps Aesthetics יכול להגדיל לכם את העסק'
-                  : 'One free strategy call. We find your biggest leak and show you exactly how to fix it.'}
+                  : 'One free audit. We review your inquiry, follow-up, and booking flow, then show you exactly where patients are leaking.'}
               </p>
               <Button
                 size="lg"
@@ -63,7 +63,7 @@ const ContactSection = () => {
                 }}
               >
                 <a href="/voxformhe" className={`flex items-center justify-center ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  {isRTL ? 'קבעו שיחת גילוי' : 'Book My Free Strategy Call'}
+                  {isRTL ? 'קבעו שיחת גילוי' : 'Get a Free Lost Lead Audit'}
                   {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
                 </a>
               </Button>
