@@ -38,6 +38,7 @@ const Index = () => {
           </section> */}
           <ROICalculator />
           <OnboardingSection />
+          <ComplianceSection />
           <ContactSection />
         </main>
         <Footer />
