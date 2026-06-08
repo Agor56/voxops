@@ -36,7 +36,7 @@ const OffersSection = () => {
             <span className="text-sm text-muted-foreground">The Offers</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display">
-            Start with one pilot. <span style={{ color: '#C9A96E' }}>Zero risk.</span>
+            Start with one service line. <span style={{ color: '#C9A96E' }}>Prove it in 30 days.</span>
           </h2>
         </motion.div>
 
