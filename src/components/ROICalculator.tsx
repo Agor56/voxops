@@ -110,9 +110,12 @@ const ROICalculator = () => {
             className="text-center mb-8"
           >
             <h2 className="section-title text-foreground mb-6">
-              How Much Money Are You{' '}
-              <span style={{ color: '#C9A96E' }}>Losing Each Month?</span>
+              How many booked consults are{' '}
+              <span style={{ color: '#C9A96E' }}>leaking from your current follow-up?</span>
             </h2>
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 font-light">
+              If your clinic gets patient inquiries from ads, SEO, referrals, Instagram, or your website, even a small delay in response can quietly reduce bookings. We help you find the leak and install the system to recover it.
+            </p>
             <CollapsibleTrigger asChild>
               <button
                 className={`group inline-flex items-center gap-2 glass-card px-4 py-2 rounded-full cursor-pointer transition-all duration-300 ${!isOpen ? 'animate-pulse-glow' : ''}`}
