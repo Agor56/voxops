@@ -35,7 +35,7 @@ const TwoLeaks = () => {
             <span className="text-sm text-muted-foreground">The Problem</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-display max-w-3xl mx-auto">
-            Two leaks are draining your clinic <span style={{ color: '#C9A96E' }}>right now.</span>
+            Two leaks are costing GLP-1, HRT & peptide clinics <span style={{ color: '#C9A96E' }}>booked consults every day.</span>
           </h2>
         </motion.div>
 
