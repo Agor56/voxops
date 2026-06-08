@@ -192,25 +192,25 @@ export const translations = {
     },
     // Hero
     hero: {
-      title: "Most clinics don't have a lead problem. They have a plumbing problem.",
+      title: "Turn GLP-1, HRT & peptide inquiries into booked consults — in under 60 seconds.",
       titleHighlight: "",
-      subtitle: `You are spending thousands to fill a funnel that is leaking patients at every stage. VoxOps Aesthetics installs an automated defense shield - deploying a 45-second Speed Engine to lock down new leads, and a Reactivation Engine to pull "found money" straight out of your old database. Your team does zero extra work.`,
-      ctaPrimary: 'Book a Free Strategy Call',
-      ctaSecondary: 'Case Study (Free)',
+      subtitle: "Most clinics don't need more leads. They need to stop losing the ones they already paid for. VoxOps helps GLP-1, HRT/TRT, and peptide clinics answer new leads, missed calls, DMs, texts, and WhatsApp messages fast, then qualify, follow up, and route patients toward booking without adding front-desk staff.",
+      ctaPrimary: 'Get a Free Lost Lead Audit',
+      ctaSecondary: 'Watch 3-Min Demo',
       valueProps: [
-        'Zero missed calls - 100% answered, zero voicemail',
-        '38% reduction in no-shows - automatic WhatsApp reminders',
-        '65% more conversions - instant response = more appointments',
+        'New leads and missed calls answered in under 60 seconds',
+        '24/7 follow-up across calls, SMS, DMs, WhatsApp, and email',
+        'Live in 72 hours, with zero added front-desk work',
       ],
-      trustBadges: 'Integrates with your favorite tools',
+      trustBadges: 'Connects to the tools your clinic already uses',
       stats: {
-        appointments: { label: 'Leads Captured This Week', value: '1,247', date: 'Dec 23, 2025' },
-        betaSpots: { label: 'Beta Spots Available', value: '3 left', date: 'December 2025' },
+        appointments: { label: 'Inquiries Recovered This Week', value: '1,247', date: 'Dec 23, 2025' },
+        betaSpots: { label: 'Pilot Spots Available', value: '3 left', date: 'December 2025' },
       },
       floatingCards: {
-        newLead: 'New Lead',
+        newLead: 'New Inquiry',
         respondedIn: 'Responded in 8 seconds',
-        noShowReduction: 'Reduction in no-shows',
+        noShowReduction: 'Faster response time',
       },
     },
     // Agents Section
