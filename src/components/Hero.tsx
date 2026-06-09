@@ -120,7 +120,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 24 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.7, delay: 0.36, ease }} 
-            className="text-lg md:text-xl max-w-2xl mx-auto mb-6 font-light"
+            className="text-lg max-w-2xl mx-auto mb-6 font-light md:text-xl my-[32px]"
             style={{ color: 'rgba(255,255,255,0.6)', textShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)' }}
           >
             {t.hero.subtitle}
