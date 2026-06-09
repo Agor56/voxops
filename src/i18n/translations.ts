@@ -192,7 +192,7 @@ export const translations = {
     },
     // Hero
     hero: {
-      title: "Turn GLP-1, HRT & peptide inquiries into booked consults — in under 60 seconds.",
+      title: "Turn GLP-1, HRT & peptide inquiries into booked consults - in under 60 seconds.",
       titleHighlight: "",
       subtitle: "Most clinics don't need more leads. They need to stop losing the ones they already paid for. VoxOps helps GLP-1, HRT/TRT, and peptide clinics answer new leads, missed calls, DMs, texts, and WhatsApp messages fast, then qualify, follow up, and route patients toward booking without adding front-desk staff.",
       ctaPrimary: 'Get a Free Lost Lead Audit',
@@ -579,7 +579,7 @@ export const translations = {
           name: 'ד"ר נועה נוסבוים',
           role: 'מנהלת רפואית',
           clinic: 'Glow Aesthetics',
-          quote: 'VoxOps Aesthetics שינתה לחלוטין את הדרך שבה אנחנו מטפלים בפניות לקוחות. עברנו מאיבוד לידים בלילה להמרה שלהם בזמן שאנחנו ישנים. שיעור ההזמנות שלנו עלה ב-45% בחודש הראשון.',
+          quote: 'VoxOps שינתה לחלוטין את הדרך שבה אנחנו מטפלים בפניות לקוחות. עברנו מאיבוד לידים בלילה להמרה שלהם בזמן שאנחנו ישנים. שיעור ההזמנות שלנו עלה ב-45% בחודש הראשון.',
           stat: '+45% הזמנות',
         },
         {

@@ -44,7 +44,7 @@ const Footer = () => {
           <div className={`grid md:grid-cols-2 gap-12 mb-12 ${isRTL ? 'direction-rtl' : ''}`}>
             <div className={isRTL ? 'text-right' : 'text-left'}>
               <a href="#" className={`mb-4 inline-block ${isRTL ? 'text-right' : ''}`}>
-                <span className="text-xl font-bold" style={{ color: '#C9A96E' }}>VoxOps Aesthetics</span>
+                <span className="text-xl font-bold" style={{ color: '#C9A96E' }}>VoxOps</span>
               </a>
               <p style={{ color: 'rgba(255,255,255,0.6)' }} className="mb-6 max-w-sm">
                 {t.footer.description}
@@ -94,7 +94,7 @@ const Footer = () => {
 
           <div className={`pt-8 flex flex-col md:flex-row justify-between items-center gap-4 ${isRTL ? 'md:flex-row-reverse' : ''}`} style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
             <p className="text-sm" style={{ color: 'rgba(255,255,255,0.35)' }}>
-              © {currentYear} VoxOps Aesthetics. {t.footer.copyright}
+              © {currentYear} VoxOps. {t.footer.copyright}
             </p>
             <div className={`flex gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <button onClick={() => setPrivacyOpen(true)} className="text-sm transition-colors" style={{ color: 'rgba(255,255,255,0.35)' }}>

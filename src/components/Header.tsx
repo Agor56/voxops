@@ -47,7 +47,7 @@ const Header = () => {
           {/* Logo */}
           <a href="/" className="group">
             <span className="text-xl font-bold opacity-90 font-display transition-colors duration-300" style={{ color: '#C9A96E' }}>
-              VoxOps Aesthetics
+              VoxOps
             </span>
           </a>
 
