@@ -44,7 +44,7 @@ const Footer = () => {
           <div className={`grid md:grid-cols-2 gap-12 mb-12 ${isRTL ? 'direction-rtl' : ''}`}>
             <div className={isRTL ? 'text-right' : 'text-left'}>
               <a href="#" className={`mb-4 inline-block ${isRTL ? 'text-right' : ''}`}>
-                <span className="text-xl font-bold" style={{ color: '#C9A96E' }}>VoxOps Aesthetics</span>
+                <span className="text-xl font-bold" style={{ color: '#C9A96E' }}>VoxOps</span>
               </a>
               <p style={{ color: 'rgba(255,255,255,0.6)' }} className="mb-6 max-w-sm">
                 {t.footer.description}
