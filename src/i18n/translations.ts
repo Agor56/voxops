@@ -192,7 +192,7 @@ export const translations = {
     },
     // Hero
     hero: {
-      title: "Turn GLP-1, HRT & peptide inquiries into booked consults — in under 60 seconds.",
+      title: "Turn GLP-1, HRT & peptide inquiries into booked consults - in under 60 seconds.",
       titleHighlight: "",
       subtitle: "Most clinics don't need more leads. They need to stop losing the ones they already paid for. VoxOps helps GLP-1, HRT/TRT, and peptide clinics answer new leads, missed calls, DMs, texts, and WhatsApp messages fast, then qualify, follow up, and route patients toward booking without adding front-desk staff.",
       ctaPrimary: 'Get a Free Lost Lead Audit',
