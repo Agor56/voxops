@@ -41,6 +41,7 @@ const Index = () => {
           <OnboardingSection />
           <ComplianceSection />
           <ContactSection />
+          <CalEmbed />
         </main>
         <Footer />
       </div>
