@@ -1,48 +1,19 @@
 import { useEffect } from 'react';
+import Cal, { getCalApi } from '@calcom/embed-react';
 
 const CalEmbed = () => {
   useEffect(() => {
-    (function (C: any, A: string, L: string) {
-      let p = function (a: any, ar: any) { a.q.push(ar); };
-      let d = C.document;
-      C.Cal = C.Cal || function () {
-        let cal = C.Cal;
-        let ar = arguments;
-        if (!cal.loaded) {
-          cal.ns = {};
-          cal.q = cal.q || [];
-          d.head.appendChild(d.createElement("script")).src = A;
-          cal.loaded = true;
-        }
-        if (ar[0] === L) {
-          const api = function () { p(api, arguments); };
-          const namespace = ar[1];
-          (api as any).q = (api as any).q || [];
-          if (typeof namespace === "string") {
-            cal.ns[namespace] = cal.ns[namespace] || api;
-            p(cal.ns[namespace], ar);
-            p(cal, ["initNamespace", namespace]);
-          } else p(cal, ar);
-          return;
-        }
-        p(cal, ar);
-      };
-    })(window, "https://app.cal.com/embed/embed.js", "init");
-
-    // @ts-ignore
-    window.Cal("init", "20min", { origin: "https://app.cal.com" });
-    // @ts-ignore
-    window.Cal.ns["20min"]("inline", {
-      elementOrSelector: "#my-cal-inline-20min",
-      config: { layout: "month_view", useSlotsViewOnSmallScreen: "true" },
-      calLink: "vox-ops-mvonve/20min",
-    });
-    // @ts-ignore
-    window.Cal.ns["20min"]("ui", {
-      cssVarsPerTheme: { light: { "cal-brand": "#0F172A" }, dark: { "cal-brand": "#ffcc84" } },
-      hideEventTypeDetails: false,
-      layout: "month_view",
-    });
+    (async () => {
+      const cal = await getCalApi({ namespace: '20min' });
+      cal('ui', {
+        cssVarsPerTheme: {
+          light: { 'cal-brand': '#0F172A' },
+          dark: { 'cal-brand': '#ffcc84' },
+        },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+    })();
   }, []);
 
   return (
@@ -57,12 +28,14 @@ const CalEmbed = () => {
           </p>
         </div>
         <div
-          className="glass-card rounded-2xl p-2 md:p-4 max-w-5xl mx-auto"
+          className="glass-card rounded-2xl p-2 md:p-4 max-w-5xl mx-auto overflow-hidden"
           style={{ background: 'rgba(255,255,255,0.02)' }}
         >
-          <div
-            id="my-cal-inline-20min"
+          <Cal
+            namespace="20min"
+            calLink="vox-ops-mvonve/20min"
             style={{ width: '100%', height: '700px', overflow: 'scroll' }}
+            config={{ layout: 'month_view', theme: 'dark' }}
           />
         </div>
       </div>
