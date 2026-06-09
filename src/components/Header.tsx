@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
 import ThemeToggle from "./ThemeToggle";
 
-const BOOKING_URL = "/voxformhe";
+const BOOKING_URL = "#book-demo";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);

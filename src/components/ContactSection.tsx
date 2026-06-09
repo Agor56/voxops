@@ -62,7 +62,7 @@ const ContactSection = () => {
                   boxShadow: '0 0 20px rgba(201,169,110,0.3), 0 0 50px rgba(201,169,110,0.12)',
                 }}
               >
-                <a href="/voxformhe" className={`flex items-center justify-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <a href="#book-demo" className={`flex items-center justify-center ${isRTL ? 'flex-row-reverse' : ''}`}>
                   {isRTL ? 'קבעו שיחת גילוי' : 'Get a Free Lost Lead Audit'}
                   {isRTL ? <ArrowLeft className="w-4 h-4 mr-2" /> : <ArrowRight className="w-4 h-4 ml-2" />}
                 </a>

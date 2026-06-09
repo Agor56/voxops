@@ -12,6 +12,7 @@ import HowItWorks from '@/components/HowItWorks';
 import TwoLeaks from '@/components/TwoLeaks';
 import OffersSection from '@/components/OffersSection';
 import ComplianceSection from '@/components/ComplianceSection';
+import CalEmbed from '@/components/CalEmbed';
 import Footer from '@/components/Footer';
 
 
@@ -40,6 +41,7 @@ const Index = () => {
           <OnboardingSection />
           <ComplianceSection />
           <ContactSection />
+          <CalEmbed />
         </main>
         <Footer />
       </div>
