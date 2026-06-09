@@ -94,7 +94,7 @@ const Footer = () => {
 
           <div className={`pt-8 flex flex-col md:flex-row justify-between items-center gap-4 ${isRTL ? 'md:flex-row-reverse' : ''}`} style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
             <p className="text-sm" style={{ color: 'rgba(255,255,255,0.35)' }}>
-              © {currentYear} VoxOps Aesthetics. {t.footer.copyright}
+              © {currentYear} VoxOps. {t.footer.copyright}
             </p>
             <div className={`flex gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <button onClick={() => setPrivacyOpen(true)} className="text-sm transition-colors" style={{ color: 'rgba(255,255,255,0.35)' }}>
