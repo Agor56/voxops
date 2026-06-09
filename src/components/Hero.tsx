@@ -90,7 +90,7 @@ const Hero = () => {
             className="text-xs md:text-sm uppercase tracking-[0.2em] mb-6 font-medium"
             style={{ color: '#C9A96E' }}
           >
-            {isRTL ? 'מרכזיית AI למרפאות אסתטיקה' : 'VOXOPS // PATIENT INQUIRY RECOVERY SYSTEM — For GLP-1, HRT/TRT & Peptide Clinics'}
+            {isRTL ? 'מרכזיית AI למרפאות אסתטיקה' : 'VOXOPS // PATIENT INQUIRY RECOVERY SYSTEM - For GLP-1, HRT/TRT & Peptide Clinics'}
           </motion.p>
 
           {/* Main Headline */}
