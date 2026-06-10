@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
 import ThemeToggle from "./ThemeToggle";
@@ -10,7 +10,7 @@ const BOOKING_URL = "#book-demo";
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { t, language, setLanguage, isRTL } = useLanguage();
+  const { t, isRTL } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,9 +27,6 @@ const Header = () => {
     { label: t.nav.results, href: "#contact" },
   ];
 
-  const toggleLanguage = () => {
-    setLanguage(language === "en" ? "he" : "en");
-  };
 
   return (
     <>
@@ -69,14 +66,6 @@ const Header = () => {
 
           {/* Desktop Actions */}
           <div className={`hidden md:flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleLanguage}
-              style={{ color: 'rgba(255,255,255,0.6)' }}
-            >
-              <Globe className="w-5 h-5" />
-            </Button>
             <Button size="sm" asChild style={{ background: '#C9A96E', color: '#000', boxShadow: '0 0 15px rgba(201,169,110,0.25), 0 0 40px rgba(201,169,110,0.1)' }} className="hover:opacity-90 hover:shadow-[0_0_20px_rgba(201,169,110,0.4),0_0_50px_rgba(201,169,110,0.15)] hover:-translate-y-px transition-all duration-300 ease-in-out">
               <a href={BOOKING_URL}>
                 {t.nav.bookDemo}
@@ -112,15 +101,6 @@ const Header = () => {
                   className={`flex items-center gap-3 pt-4 ${isRTL ? "flex-row-reverse" : ""}`}
                   style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
                 >
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={toggleLanguage}
-                    style={{ color: 'rgba(255,255,255,0.6)' }}
-                  >
-                    <Globe className="w-4 h-4 mr-2" />
-                    {language === "en" ? "עברית" : "English"}
-                  </Button>
                   <Button size="sm" className="flex-1" asChild style={{ background: '#C9A96E', color: '#000' }}>
                     <a href={BOOKING_URL}>
                       {t.nav.bookDemo}
