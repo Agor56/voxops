@@ -1,51 +1,39 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
-import AgentsSection from '@/components/AgentsSection';
-import MetricsSection from '@/components/MetricsSection';
-import TestimonialsSection from '@/components/TestimonialsSection';
-import PricingSection from '@/components/PricingSection';
-import ComparisonTable from '@/components/ComparisonTable';
-import ROICalculator from '@/components/ROICalculator';
-import OnboardingSection from '@/components/OnboardingSection';
-import ContactSection from '@/components/ContactSection';
-import HowItWorks from '@/components/HowItWorks';
+import MicroIntegrationStrip from '@/components/MicroIntegrationStrip';
 import TwoLeaks from '@/components/TwoLeaks';
+import HowItWorks from '@/components/HowItWorks';
+import SocialProof from '@/components/SocialProof';
+import ROICalculator from '@/components/ROICalculator';
+import AgentsSection from '@/components/AgentsSection';
 import OffersSection from '@/components/OffersSection';
 import ComplianceSection from '@/components/ComplianceSection';
+import FinalCTA from '@/components/FinalCTA';
 import CalEmbed from '@/components/CalEmbed';
 import Footer from '@/components/Footer';
-
-
 
 const Index = () => {
   return (
     <div className="min-h-screen overflow-x-hidden selection:bg-primary selection:text-primary-foreground">
-      {/* Dot Grid Background */}
       <div className="fixed inset-0 dot-grid pointer-events-none z-0 opacity-40" />
-      
+
       <div className="relative z-10">
         <Header />
         <main>
           <Hero />
-          <HowItWorks />
+          <MicroIntegrationStrip />
           <TwoLeaks />
-          <MetricsSection />
+          <HowItWorks />
+          <SocialProof />
+          <ROICalculator />
           <AgentsSection />
           <OffersSection />
-          <TestimonialsSection />
-          {/* <PricingSection /> */}
-          {/* <section className="container mx-auto px-4">
-            <ComparisonTable />
-          </section> */}
-          <ROICalculator />
-          <OnboardingSection />
           <ComplianceSection />
-          <ContactSection />
+          <FinalCTA />
           <CalEmbed />
         </main>
         <Footer />
       </div>
-      
     </div>
   );
 };

@@ -21,11 +21,14 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { label: t.nav.solutions, href: "#features" },
-    { label: t.nav.demo, href: "#agents" },
-    { label: t.nav.testimonials, href: "#testimonials" },
-    { label: t.nav.results, href: "#contact" },
+    { label: "The Leak", href: "#two-leaks" },
+    { label: "How It Works", href: "#how-it-works" },
+    { label: "Proof", href: "#testimonials" },
+    { label: "Calculator", href: "#roi-calculator" },
+    { label: "Pilot", href: "#offers" },
   ];
+
+  const ctaLabel = "Free Audit";
 
 
   return (
@@ -68,7 +71,7 @@ const Header = () => {
           <div className={`hidden md:flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
             <Button size="sm" asChild style={{ background: '#C9A96E', color: '#000', boxShadow: '0 0 15px rgba(201,169,110,0.25), 0 0 40px rgba(201,169,110,0.1)' }} className="hover:opacity-90 hover:shadow-[0_0_20px_rgba(201,169,110,0.4),0_0_50px_rgba(201,169,110,0.15)] hover:-translate-y-px transition-all duration-300 ease-in-out">
               <a href={BOOKING_URL}>
-                {t.nav.bookDemo}
+                {ctaLabel}
               </a>
             </Button>
           </div>
@@ -103,7 +106,7 @@ const Header = () => {
                 >
                   <Button size="sm" className="flex-1" asChild style={{ background: '#C9A96E', color: '#000' }}>
                     <a href={BOOKING_URL}>
-                      {t.nav.bookDemo}
+                      {ctaLabel}
                     </a>
                   </Button>
                 </div>
