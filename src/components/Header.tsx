@@ -10,7 +10,7 @@ const BOOKING_URL = "#book-demo";
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { t, language, setLanguage, isRTL } = useLanguage();
+  const { t, isRTL } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
