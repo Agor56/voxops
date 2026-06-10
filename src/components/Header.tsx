@@ -101,15 +101,6 @@ const Header = () => {
                   className={`flex items-center gap-3 pt-4 ${isRTL ? "flex-row-reverse" : ""}`}
                   style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
                 >
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={toggleLanguage}
-                    style={{ color: 'rgba(255,255,255,0.6)' }}
-                  >
-                    <Globe className="w-4 h-4 mr-2" />
-                    {language === "en" ? "עברית" : "English"}
-                  </Button>
                   <Button size="sm" className="flex-1" asChild style={{ background: '#C9A96E', color: '#000' }}>
                     <a href={BOOKING_URL}>
                       {t.nav.bookDemo}
