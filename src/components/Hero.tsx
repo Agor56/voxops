@@ -1,234 +1,108 @@
-import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Phone } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import { Button } from './ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
-import TrustBadges from './TrustBadges';
 import HeroVideo from './HeroVideo';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-// Count-up animation component
-const CountUp = ({ end, duration = 2000, suffix = '' }: { end: number; duration?: number; suffix?: string }) => {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const hasAnimated = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-          let startTime: number;
-          const animate = (currentTime: number) => {
-            if (!startTime) startTime = currentTime;
-            const progress = Math.min((currentTime - startTime) / duration, 1);
-            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-            setCount(Math.floor(end * easeOutQuart));
-            if (progress < 1) {
-              requestAnimationFrame(animate);
-            } else {
-              setCount(end);
-            }
-          };
-          requestAnimationFrame(animate);
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [end, duration]);
-
-  return <span ref={ref} className="font-mono">{count.toLocaleString()}{suffix}</span>;
-};
-
 const Hero = () => {
-  const { t, isRTL } = useLanguage();
-  
-  const currentDate = new Date().toLocaleDateString('he-IL', {
-    day: 'numeric', month: 'long', year: 'numeric'
-  });
-  const currentMonthYear = new Date().toLocaleDateString('he-IL', {
-    month: 'long', year: 'numeric'
-  });
+  const { isRTL } = useLanguage();
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* HLS Video Background */}
+    <section className="relative min-h-[88vh] flex items-center pt-24 pb-16 overflow-hidden">
       <HeroVideo />
 
-      {/* Animated Pulsing Rings Background */}
+      {/* Subtle background glow */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none" style={{ zIndex: 11 }}>
-        <div 
-          className="absolute w-[200px] h-[200px] rounded-full blur-3xl animate-hero-glow max-sm:w-[120px] max-sm:h-[120px]"
-          style={{ background: 'rgba(201,169,110,0.06)' }}
+        <div
+          className="absolute w-[280px] h-[280px] rounded-full blur-3xl animate-hero-glow"
+          style={{ background: 'rgba(201,169,110,0.05)' }}
         />
-        {[0, 1.33, 2.66].map((delay) => (
-          <div
-            key={delay}
-            className="absolute w-[400px] h-[400px] rounded-full animate-hero-ring max-sm:w-[300px] max-sm:h-[300px]"
-            style={{ 
-              border: '1px solid rgba(201,169,110,0.06)',
-              animationDelay: `${delay}s`,
-            }}
-          />
-        ))}
       </div>
 
-      {/* Background glow orbs */}
-      <div className={`hero-glow top-1/4 ${isRTL ? '-right-48' : '-left-48'}`} />
-      <div className={`hero-glow hero-glow-secondary top-1/3 ${isRTL ? '-left-48' : '-right-48'}`} />
-      
-      <div className="container mx-auto py-20 relative" style={{ zIndex: 20 }}>
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="container mx-auto px-4 relative" style={{ zIndex: 20 }}>
+        <div className="max-w-3xl mx-auto text-center">
           {/* Eyebrow */}
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.06, ease }}
+            transition={{ duration: 0.7, delay: 0.05, ease }}
             className="text-xs md:text-sm uppercase tracking-[0.2em] mb-6 font-medium"
             style={{ color: '#C9A96E' }}
           >
-            {isRTL ? 'מרכזיית AI למרפאות אסתטיקה' : 'VOXOPS // PATIENT INQUIRY RECOVERY SYSTEM'}
+            VOXOPS // PATIENT INQUIRY RECOVERY SYSTEM
           </motion.p>
 
-          {/* Main Headline */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 24 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.7, delay: 0.12, ease }} 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 font-display"
-          >
-            {t.hero.title}
-          </motion.h1>
-          
-          {t.hero.titleHighlight && (
-            <motion.h2 
-              initial={{ opacity: 0, y: 24 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              transition={{ duration: 0.7, delay: 0.24, ease }} 
-              className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-8 font-display"
-              style={{ color: '#C9A96E', textShadow: '0 0 40px rgba(201,169,110,0.4)' }}
-            >
-              {t.hero.titleHighlight}
-            </motion.h2>
-          )}
-
-          {/* Subtitle */}
-          <motion.p 
-            initial={{ opacity: 0, y: 24 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.7, delay: 0.36, ease }} 
-            className="text-lg max-w-2xl mx-auto mb-6 font-light md:text-xl my-[32px]"
-            style={{ color: 'rgba(255,255,255,0.6)', textShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)' }}
-          >
-            {t.hero.subtitle}
-          </motion.p>
-
-          {/* Trust Badge */}
-          <motion.div
+          {/* Headline */}
+          <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.48, ease }}
-            className="flex justify-center mb-10"
+            transition={{ duration: 0.7, delay: 0.12, ease }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 font-display leading-[1.05]"
           >
-            <div className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs ${isRTL ? 'flex-row-reverse' : ''}`} style={{ color: 'rgba(255,255,255,0.35)', textShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)' }}>
-              <span className="text-xs">🎓</span>
-              <span>{isRTL ? 'מאומן על אלפי שיחות אמיתיות עם לקוחות. עולה לאוויר ב-72 שעות.' : 'Custom-built around your services, pricing, FAQs, and booking flow. Live in 72 hours.'}</span>
-            </div>
-          </motion.div>
+            Turn patient inquiries into{' '}
+            <span style={{ color: '#C9A96E', textShadow: '0 0 40px rgba(201,169,110,0.4)' }}>
+              booked consults
+            </span>{' '}
+            in under 60 seconds.
+          </motion.h1>
 
-          {/* CTAs */}
-          <motion.div 
-            initial={{ opacity: 0, y: 24 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.7, delay: 0.6, ease }} 
-            className={`flex flex-col sm:flex-row gap-4 justify-center mb-12 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
-          >
-            <Button variant="hero" size="xl" className="group" asChild>
-              <a href="#contact" className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
-                {t.hero.ctaPrimary}
-                <ArrowRight className={`w-5 h-5 group-hover:translate-x-1 transition-transform ${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2'}`} />
-              </a>
-            </Button>
-            <Button variant="heroGlass" size="xl" className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`} asChild>
-              <a href="#how-it-works">
-                <Phone className="w-5 h-5" style={{ color: '#C9A96E' }} />
-                {t.hero.ctaSecondary}
-              </a>
-            </Button>
-          </motion.div>
-
-          {/* Trust Anchor */}
+          {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.66, ease }}
-            className="text-sm md:text-base max-w-xl mx-auto mb-12 font-light italic"
-            style={{ color: 'rgba(201,169,110,0.7)', textShadow: '0 0 40px rgba(0,0,0,0.9), 0 0 80px rgba(0,0,0,0.6)' }}
+            transition={{ duration: 0.7, delay: 0.24, ease }}
+            className="text-base md:text-lg max-w-[640px] mx-auto mb-6 font-light leading-relaxed"
+            style={{ color: 'rgba(255,255,255,0.65)', textShadow: '0 0 40px rgba(0,0,0,0.9)' }}
           >
-            Stop letting high-intent patient inquiries go cold. Respond faster, follow up automatically, and book more consults.
+            For GLP-1, HRT/TRT &amp; peptide clinics: VoxOps responds, qualifies, and follows up automatically — without adding front-desk staff.
           </motion.p>
 
-          {/* Stats Cards */}
-          <motion.div 
-            initial={{ opacity: 0, y: 24 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.7, delay: 0.72, ease }} 
-            className={`flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+          {/* Trust line */}
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.32, ease }}
+            className="text-xs md:text-sm mb-10 font-light"
+            style={{ color: 'rgba(255,255,255,0.4)' }}
           >
-            <div className="stat-card px-8 py-6 flex flex-col sm:flex-row items-center gap-6 min-w-[280px] relative overflow-hidden group cursor-pointer">
-              <div className={`text-center sm:text-${isRTL ? 'right' : 'left'} ${isRTL ? 'sm:border-l sm:pl-6' : 'sm:border-r sm:pr-6'} border-[rgba(255,255,255,0.08)] relative z-10`}>
-                <p className="label-micro mb-2">{t.hero.stats.appointments.label}</p>
-                <p className="text-4xl font-bold text-foreground font-mono">
-                  <CountUp end={1247} duration={2000} />
-                </p>
-                <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>{currentDate}</p>
-              </div>
-              
-              <div className={`text-center sm:text-${isRTL ? 'right' : 'left'} relative z-10`}>
-                <p className="label-micro mb-2">{t.hero.stats.betaSpots.label}</p>
-                <p className="text-4xl font-bold text-foreground font-mono">
-                  <CountUp end={3} duration={1500} suffix={isRTL ? ' נותרו' : ' left'} />
-                </p>
-                <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>{currentMonthYear}</p>
-              </div>
-            </div>
-          </motion.div>
+            Custom-built around your services, pricing, FAQs, and booking flow. Live in 72 hours.
+          </motion.p>
 
-          {/* Trust Badges */}
-          <TrustBadges />
-        </div>
-
-        {/* Floating Cards */}
-        <div className={`absolute bottom-10 ${isRTL ? 'right-10' : 'left-10'} hidden lg:block`}>
-          <motion.div 
-            initial={{ opacity: 0, x: isRTL ? 30 : -30 }} 
-            animate={{ opacity: 1, x: 0 }} 
-            transition={{ duration: 0.8, delay: 0.6 }} 
-            className="glass-card p-4 rounded-xl max-w-[200px] animate-float"
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.4, ease }}
+            className={`flex flex-col sm:flex-row gap-3 justify-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}
           >
-            <div className={`flex items-center gap-3 mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="w-8 h-8 rounded-full flex items-center justify-center relative" style={{ background: 'rgba(201,169,110,0.15)' }}>
-                <div className="w-3 h-3 rounded-full animate-pulse" style={{ background: '#C9A96E' }} />
-              </div>
-              <span className="label-micro">{t.hero.floatingCards.newLead}</span>
-            </div>
-            <p className="text-sm font-medium">{t.hero.floatingCards.respondedIn}</p>
-          </motion.div>
-        </div>
-
-        <div className={`absolute top-1/3 ${isRTL ? 'left-10' : 'right-10'} hidden lg:block`}>
-          <motion.div 
-            initial={{ opacity: 0, x: isRTL ? -30 : 30 }} 
-            animate={{ opacity: 1, x: 0 }} 
-            transition={{ duration: 0.8, delay: 0.8 }} 
-            className="glass-card p-4 rounded-xl max-w-[200px] animate-float" 
-            style={{ animationDelay: '3s' }}
-          >
-            <div className="text-2xl font-bold mb-1 font-mono" style={{ color: '#C9A96E' }}>+40%</div>
-            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{t.hero.floatingCards.noShowReduction}</p>
+            <Button
+              size="xl"
+              asChild
+              className="group hover:opacity-90 hover:-translate-y-px transition-all duration-300"
+              style={{
+                background: '#C9A96E',
+                color: '#000',
+                boxShadow: '0 0 20px rgba(201,169,110,0.3), 0 0 50px rgba(201,169,110,0.12)',
+              }}
+            >
+              <a href="#book-demo" className="flex items-center">
+                Get a Free Lost Lead Audit
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </Button>
+            <Button
+              variant="heroGlass"
+              size="xl"
+              asChild
+              className="flex items-center gap-2"
+            >
+              <a href="#how-it-works">
+                <Play className="w-4 h-4" style={{ color: '#C9A96E' }} />
+                Watch 3-Min Demo
+              </a>
+            </Button>
           </motion.div>
         </div>
       </div>
