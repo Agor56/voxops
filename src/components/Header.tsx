@@ -27,9 +27,6 @@ const Header = () => {
     { label: t.nav.results, href: "#contact" },
   ];
 
-  const toggleLanguage = () => {
-    setLanguage(language === "en" ? "he" : "en");
-  };
 
   return (
     <>
